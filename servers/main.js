@@ -4,20 +4,14 @@ const path = require("path");
 const url = require("url");
 const qs = require("querystring");
 const mysql = require("mysql");
-//const db = require("./dbid");
+const db = require("./dbid");
 const fs = require("fs");
 const session = require("express-session");
 const bodyParser = require("body-parser");
 const compression = require("compression");
 const FileStore = require("session-file-store")(session);
 
-var db = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "gustmdrn1234",
-  database: "login",
-});
-db.connect();
+db.db.connect();
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(compression());
@@ -90,20 +84,17 @@ app.post("/home/:userid/search", (req, res) => {
       `SELECT * FROM center WHERE c_name LIKE '%${target}%'`,
       function (error, results) {
         //보낼 부분
-        results.forEach(element => {
+        results.forEach((element) => {
           var center_info = {};
-          
         });
       }
     );
   }
-  res.send(결과물)
+  res.send(결과물);
 });
 
 //어린이집 정보 제공
-app.post("/home/:userid/search/:kindergarden",(req, res) => {
-
-})
+app.post("/home/:userid/search/:kindergarden", (req, res) => {});
 
 app.listen(3000, function () {
   console.log("Example app listening on port 3000!");
