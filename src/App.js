@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Login from './login';
-import Home from './home';
+import Home from './Home';
 
 function App () {
   const [userName, setUserName] = useState('');
