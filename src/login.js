@@ -16,7 +16,7 @@ function Login(props){
 /*
         axios({
             method : "POST",
-            url : "",
+            url : "http://192.168.0.117/",
             body : {
                 id : props.userName,
                 pwd : props.passWord
@@ -35,6 +35,7 @@ function Login(props){
 
     }
     return(
+        
         <div class='inner-container'>
             <div class='header'>Login</div>
             <div class='box'>
@@ -65,6 +66,8 @@ function Login(props){
                 <button type='button' class='login-btn' onClick={sendLoginState}>Login</button>
             </div>
         </div>
+        
+
     );
 }
 
