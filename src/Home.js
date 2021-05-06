@@ -1,6 +1,6 @@
 import React from 'react';
 
-function App(props) {
+function Home(props) {
   return(
       <div class="main">
             <div class='main_serch'>
@@ -14,4 +14,4 @@ function App(props) {
   )
 }
 
-export default App;
+export default Home;
