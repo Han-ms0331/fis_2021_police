@@ -1,11 +1,17 @@
-import React from 'react';
+import React,{ useState } from 'react';
+import Login from './login';
+import Home from './home';
 
-function App() {
-  return (
-    <div className="App">
-      Hello World!
-    </div>
-  );
+function App () {
+  const [username, setUserName] = ('');
+  const [password, setPassWord] = ('');
+  const [isLogined, setIsLogined] = ('');
+  const [uid, setUID] =('');
+
+  
+  return{
+    isLogined ? <Home /> : <Login />
+  }
 }
 
 export default App;
