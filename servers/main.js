@@ -8,16 +8,17 @@ const db = require("./dbid");
 const fs = require("fs");
 const session = require("express-session");
 const bodyParser = require("body-parser");
-const compression = require('compression');
+const compression = require("compression");
 const { Store } = require("express-session");
-
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(compression());
-app.use(session({
-    secret: 'jdslfjsjl2381@#!@3/12'
-    store: 
-}))
+app.use(
+  session({
+    secret: "jdslfjsjl2381@#!@3/12",
+    //store:
+  })
+);
 //db.connect();
 
 app.get("/", (req, res) => {
@@ -31,21 +32,19 @@ app.post("/login", (req, res) => {
   var post = req.body;
   var id = post.username;
   var password = post.password;
-  var sql = `SELECT * FROM user WHERE id=?`
+  var sql = `SELECT * FROM user WHERE id=?`;
   db.query(sql, [id], (err, result) => {
-      if(err){
-          console.log(err);
+    if (err) {
+      console.log(err);
+    } else if (!result[0]) {
+      alert("아이디를 확인해주세요");
+      response.redirect("/");
+    } else {
+      if (password === result[0].password) {
+        req.session;
       }
-      else if(!result[0]){
-        alert('아이디를 확인해주세요');
-        response.redirect('/');
-      }
-      else{
-        if(password === result[0].password){
-            req.session
-        }
-      }
-  })
+    }
+  });
 });
 
 // app.get("/home/:userid", function (req, res) {
