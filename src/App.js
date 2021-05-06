@@ -1,34 +1,17 @@
 import React, { useState } from 'react';
-import Login from './login';
-import Home from './Home';
+import Login from './login.js';
+import Home from './Home.js';
 
 function App () {
-  const [userName, setUserName] = useState('');
-  const [passWord, setPassWord] = useState('');
-  const [isLogined, setIsLogined] = useState(false);
-  const [UID, setUID] =('');
-
-  const loginState = (condition) => {
-    setIsLogined(condition);
-  }
+  const [username, setUserName] = useState('');
+  const [password, setPassWord] = useState('');
+  const [isLogined, setIsLogined] = useState('');
+  const [uid, setUID] =('');
 
   
-  return (
-
-      isLogined ? <Home /> : 
-      <Login 
-        userName = {userName}
-        setUserName = {setUserName}
-        passWord = {passWord}
-        setPassWord = {setPassWord}
-        isLogined = {isLogined}
-        setIsLogined = {setIsLogined}
-        UID = {UID}
-        setUID = {setUID}
-        loginState = {loginState}
-      />
-    
-  )
+  return(
+    isLogined ? <Home /> : <Login />
+  );
 }
 
 export default App;
