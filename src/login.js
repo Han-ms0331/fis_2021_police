@@ -4,12 +4,12 @@ import App from './App';
 
 function Login(props){
 
-    function sendLoginState()  {
+    function sendLoginState(){
         console.log(props.userName);
         console.log(props.passWord);
         console.log(props.isLogined);
 
-        props.loginstate(true);
+        props.loginState(true);
         console.log(props.isLogined);
 
 
@@ -35,34 +35,34 @@ function Login(props){
 
     }
     return(
-        <div className='inner-container'>
-            <div className='header'>Login</div>
-            <div className='box'>
-                <div className='input-group'>
-                    <label className='username'>Username</label>
+        <div class='inner-container'>
+            <div class='header'>Login</div>
+            <div class='box'>
+                <div class='input-group'>
+                    <label class='username'>Username</label>
                     <input 
                         type='text' 
                         name='userName' 
-                        className='login-input'
+                        class='login-input'
                         placeholder='Username' 
                         value={props.userName} 
                         onChange={({ target: { value }})=>props.setUserName(value)}
                     />
                 </div>
                 
-                <div className='input-group'>
-                    <label className='password'>Password</label>
+                <div class='input-group'>
+                    <label class='password'>Password</label>
                     <input 
                         type='password' 
                         name='passWord' 
-                        className='login-input' 
+                        class='login-input' 
                         placeholder='Password' 
                         value={props.passWord} 
                         onChange={({ target: { value }})=>props.setPassWord(value)}
                     />
                 </div>
 
-                <button type='button' className='login-btn' onClick={sendLoginState}>Login</button>
+                <button type='button' class='login-btn' onClick={sendLoginState}>Login</button>
             </div>
         </div>
     );
