@@ -4,20 +4,13 @@ const path = require("path");
 const url = require("url");
 const qs = require("querystring");
 const mysql = require("mysql");
-//const db = require("./dbid");
+const db = require("./dbid.js");
 const fs = require("fs");
 const session = require("express-session");
 const bodyParser = require("body-parser");
 const compression = require("compression");
 const FileStore = require("session-file-store")(session);
-
-var db = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "gustmdrn1234",
-  database: "login",
-});
-db.connect();
+db.db.connect();
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(compression());
@@ -72,39 +65,39 @@ app.post("/logout", (req, res) => {
   res.redirect("/");
 });
 
-app.get("/home/:userid", function (req, res) {
-  //userid 는 login 사용자 이름 어린이집 검색 요청시 어린이집 이름 querystring에서 ?target=
-  // var _url = url.parse(req.url, true);
-  // var target = _url.query.target;
-  // var userid = path.parse(req.params.userid).base;
-  res.send(작업물);
-});
+// app.get("/home/:userid", function (req, res) {
+//   //userid 는 login 사용자 이름 어린이집 검색 요청시 어린이집 이름 querystring에서 ?target=
+//   // var _url = url.parse(req.url, true);
+//   // var target = _url.query.target;
+//   // var userid = path.parse(req.params.userid).base;
+//   res.send(작업물);
+// });
 
-app.post("/home/:userid/search", (req, res) => {
-  // 어린이집 이름에 대한 정보만 제공
-  var post = req.body;
-  var kindergarden = post.kindergarden;
-  if (target) {
-    //target이 포함된 어린이집 출력
-    db.query(
-      `SELECT * FROM center WHERE c_name LIKE '%${target}%'`,
-      function (error, results) {
-        //보낼 부분
-        results.forEach(element => {
-          var center_info = {};
+// app.post("/home/:userid/search", (req, res) => {
+//   // 어린이집 이름에 대한 정보만 제공
+//   var post = req.body;
+//   var kindergarden = post.kindergarden;
+//   if (target) {
+//     //target이 포함된 어린이집 출력
+//     db.query(
+//       `SELECT * FROM center WHERE c_name LIKE '%${target}%'`,
+//       function (error, results) {
+//         //보낼 부분
+//         results.forEach(element => {
+//           var center_info = {};
           
-        });
-      }
-    );
-  }
-  res.send(결과물)
-});
+//         });
+//       }
+//     );
+//   }
+//   res.send(결과물)
+// });
 
-//어린이집 정보 제공
-app.post("/home/:userid/search/:kindergarden",(req, res) => {
+// //어린이집 정보 제공
+// app.post("/home/:userid/search/:kindergarden",(req, res) => {
 
-})
+// })
 
-app.listen(3000, function () {
-  console.log("Example app listening on port 3000!");
-});
+// app.listen(3000, function () {
+//   console.log("Example app listening on port 3000!");
+// });
