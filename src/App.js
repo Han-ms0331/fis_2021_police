@@ -14,7 +14,8 @@ function App () {
 
   
   return (
-    <div>
+
+      isLogined ? <Home /> : 
       <Login 
         userName = {userName}
         setUserName = {setUserName}
@@ -26,7 +27,7 @@ function App () {
         setUID = {setUID}
         loginState = {loginState}
       />
-    </div>
+    
   )
 }
 

@@ -4,14 +4,14 @@ import App from './App';
 
 function Login(props){
 
-    function show  ()  {
+    function sendLoginState()  {
         console.log(props.userName);
         console.log(props.passWord);
         console.log(props.isLogined);
-        if(props.userName==='asdf'){
-            props.loginState(true);
-        }
+
+        props.loginstate(true);
         console.log(props.isLogined);
+
 
 /*
         axios({
@@ -62,7 +62,7 @@ function Login(props){
                     />
                 </div>
 
-                <button type='button' className='login-btn' onClick={show}>Login</button>
+                <button type='button' className='login-btn' onClick={sendLoginState}>Login</button>
             </div>
         </div>
     );
