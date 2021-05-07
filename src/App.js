@@ -15,7 +15,10 @@ function App () {
   
   return (
 
-      isLogined ? <Home /> : 
+      isLogined ? <Home 
+      uid={UID}
+      
+      /> : 
       <Login 
         userName = {userName}
         setUserName = {setUserName}
