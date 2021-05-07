@@ -4,14 +4,14 @@ const path = require("path");
 const url = require("url");
 const qs = require("querystring");
 const mysql = require("mysql");
-const db = require("./dbid");
+const db = require("./dbid").db;
 const fs = require("fs");
 const session = require("express-session");
 const bodyParser = require("body-parser");
 const compression = require("compression");
 const FileStore = require("session-file-store")(session);
 
-db.db.connect();
+db.connect();
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(compression());
@@ -74,27 +74,75 @@ app.get("/home/:userid", function (req, res) {
   res.send(작업물);
 });
 
-app.post("/home/:userid/search", (req, res) => {
+app.get("/home/:userid/:target", (req, res) => {
   // 어린이집 이름에 대한 정보만 제공
-  var post = req.body;
-  var kindergarden = post.kindergarden;
+  let target = path.parse(req.params.target).base;
   if (target) {
     //target이 포함된 어린이집 출력
     db.query(
       `SELECT * FROM center WHERE c_name LIKE '%${target}%'`,
       function (error, results) {
         //보낼 부분
+        let center_info_list = []; // target이 포함된 어린이 집 목록들
         results.forEach((element) => {
-          var center_info = {};
+          //element는 results의 배열단위
+          let center_info = {};
+          center_info.center_id = element.center_id;
+          center_info.c_sido = element.c_sido;
+          center_info.c_sigungu = element.c_sigungu;
+          center_info.c_name = element.c_name;
+          center_info.c_address = element.c_address;
+          center_info_list.push(center_info);
         });
+        if (center_info_list.length === 0) {
+          res.send(false);
+        } else res.send(center_info_list);
       }
     );
   }
-  res.send(결과물);
 });
 
 //어린이집 정보 제공
-app.post("/home/:userid/search/:kindergarden", (req, res) => {});
+//시설정보, call현황, 신청접수 현황
+app.get("/home/:userid/search/:cid", (req, res) => {
+  let cid = path.parse(req.params.cid).base;
+
+  let result = {
+    centers: {},
+    calls: {},
+    applies: {},
+  };
+
+  db.query(
+    `SELECT * FROM center WHERE center_id = ${cid}`,
+    function (error, centers) {
+      if (error) {
+        throw error;
+      }
+      result.centers = centers;
+
+      db.query(
+        `SELECT * FROM call_status WHERE cid = ${cid}`,
+        function (error2, calls) {
+          if (error2) {
+            throw error;
+          }
+          result.calls = calls;
+          db.query(
+            `SELECT * FROM apply_status WHERE cid = ${cid}`,
+            function (error3, applies) {
+              if (error3) {
+                throw error;
+              }
+              result.applies = applies;
+              res.send(result);
+            }
+          );
+        }
+      );
+    }
+  );
+});
 
 app.listen(3000, function () {
   console.log("Example app listening on port 3000!");
