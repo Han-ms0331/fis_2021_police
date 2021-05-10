@@ -71,7 +71,7 @@ function Home(props) {
         //searchResult 통해서 이름 주소 전화번호 받아서 result_1 배열에 넣는 함수
         let i = 0;
         for(i=0;i<searchResult.length;i++){
-          result[i] = searchResult_template(searchResult[i].c_name,searchResult[i].c_address,searchResult[i].c_ph,searchResult[i].center_id);
+          result_1ary[i] = searchResult_template(searchResult[i].c_name,searchResult[i].c_address,searchResult[i].c_ph,searchResult[i].center_id);
         }
       }
 
