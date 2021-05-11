@@ -11,16 +11,14 @@ import axios from 'axios';
   let searchResult_1 ;
   let centerInfo ;
   let result_1obj = {
-    centerName :'',
-    centerAddr :'',
-    centerPhoneNumber :''
+    centerName: "",
+    centerAddr: "",
+    centerPhoneNumber: "",
   };
   let result_1ary = [];
   let result_2ary = [];
 
-
-
-  const centerInfo_template = (centerName,centerAddr,centerPhoneNumber) => {
+  const centerInfo_template = (centerName, centerAddr, centerPhoneNumber) => {
     const template = `
     <div class="main info header>
       <div class="main info header center-name">
@@ -51,7 +49,7 @@ import axios from 'axios';
     </div>
   `;
     return template;
-  }
+  };
 
 const searchResult_template = (num,centerName,centerAddr,centerPhoneNumber,centerID) => {
   const template = `
@@ -62,10 +60,9 @@ const searchResult_template = (num,centerName,centerAddr,centerPhoneNumber,cente
         <span id='id=${centerID}'>${centerID}</span>
         <button class="main search result list btn" onClick={onClick_info(${centerID})>선택</button>
     </li>
-  `
-  return template;
-}
-
+  `;
+    return template;
+  };
 
   //검색어를 통해 데이터를 받아오는 부분
  

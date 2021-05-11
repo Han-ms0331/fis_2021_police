@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import './css/login.css';
 import axios from 'axios';
 import App from './App';
 
@@ -37,10 +38,11 @@ function Login(props){
     return(
         
         <div class='inner-container'>
-            <div class='header'>Login</div>
-            <div class='box'>
+            <div class='header'>
+                <h2>Log-In</h2>
+            
                 <div class='input-group'>
-                    <label class='username'>Username</label>
+                    <h4>Username</h4>
                     <input 
                         type='text' 
                         name='userName' 
@@ -52,7 +54,7 @@ function Login(props){
                 </div>
                 
                 <div class='input-group'>
-                    <label class='password'>Password</label>
+                    <h4>Password</h4>
                     <input 
                         type='password' 
                         name='passWord' 
@@ -62,7 +64,7 @@ function Login(props){
                         onChange={({ target: { value }})=>props.setPassWord(value)}
                     />
                 </div>
-
+                
                 <button type='button' class='login-btn' onClick={sendLoginState}>Login</button>
             </div>
         </div>
