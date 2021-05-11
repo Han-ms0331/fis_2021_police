@@ -50,6 +50,7 @@ app.get("/", (req, res) => {
 });
 
 app.post("/login", (req, res) => {
+  console.log(req);
   if (req.session.is_logined === true && req.session.userid !== null) {
     res.redirect(`/home/${req.session.userid}`);
   }
