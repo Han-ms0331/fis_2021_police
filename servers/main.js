@@ -44,18 +44,19 @@ app.post("/login", (req, res) => {
   db.query(sql, [id], (err, result) => {
     if (err) {
       console.log(err);
+      res.send(false);
     } else if (!result[0]) {
       console.log("아이디를 확인해주세요");
-      res.redirect("/");
+      res.send(false);
     } else {
       if (password === result[0].u_pwd) {
         req.session.is_logined = true;
         req.session.userid = id;
         console.log("성공");
-        res.redirect(`/home/${id}`);
+        res.send(true);
       } else {
         console.log("비밀번호를 확인해주세요");
-        res.redirect("/");
+        res.send(false);
       }
     }
   });
@@ -68,69 +69,82 @@ app.post("/logout", (req, res) => {
 });
 
 app.get("/home/:userid", function (req, res) {
-  var userid = path.parse(req.params.userid).base;
-  res.send(userid);
+  if (req.session.is_logined) {
+    var userid = path.parse(req.params.userid).base;
+    res.send(userid);
+  }
   //로그인 성공시 userid를 반환시켜준다.
 });
 
 app.get("/home/:userid/:target", (req, res) => {
   // 어린이집 이름에 대한 정보만 제공
-  let target = path.parse(req.params.target).base;
-  if (target) {
-    //target이 포함된 어린이집 출력
-    db.query(
-      `SELECT * FROM center WHERE c_name LIKE '%${target}%'`,
-      function (error, results) {
-        //보낼 부분
-        let center_info_list = [];                     // target이 포함된 어린이 집 목록들 
-        results.forEach((element) => {                //element는 results의 배열단위
-          let center_info = {};
-          center_info.center_id = element.center_id;
-          center_info.c_sido = element.c_sido;
-          center_info.c_sigungu = element.c_sigungu;
-          center_info.c_name = element.c_name;
-          center_info.c_address = element.c_address;
-          center_info_list.push(center_info);
-        });
-        if (center_info_list.length === 0) {
-          res.send(false);
-        } else res.send(center_info_list);
-      }
-    );
-  }
+  if (req.session.is_logined) {
+    let target = path.parse(req.params.target).base;
+    if (target) {
+      //target이 포함된 어린이집 출력
+      db.query(
+        `SELECT * FROM center WHERE c_name LIKE '%${target}%'`,
+        function (error, results) {
+          //보낼 부분
+          let center_info_list = []; // target이 포함된 어린이 집 목록들
+          results.forEach((element) => {
+            //element는 results의 배열단위
+            let center_info = {};
+            center_info.center_id = element.center_id;
+            center_info.c_sido = element.c_sido;
+            center_info.c_sigungu = element.c_sigungu;
+            center_info.c_name = element.c_name;
+            center_info.c_address = element.c_address;
+            center_info_list.push(center_info);
+          });
+          if (center_info_list.length === 0) {
+            res.send(false);
+          } else res.send(center_info_list);
+        }
+      );
+    }
+  } else res.redirect("/");
 });
 
 //어린이집 정보 제공
 
 // async 와 await 과 promise로 간단히 만들어 보기
 
-const _query = async function(sql_string){
-  return new Promise((resolve, reject)=>{
+const _query = async function (sql_string) {
+  return new Promise((resolve, reject) => {
     db.query(sql_string, (error, data) => {
       if (error) {
         throw error;
       }
       resolve(data);
-    })
-  })
-}
+    });
+  });
+};
 
 app.get("/home/:userid/search/:cid", async (req, res) => {
-  try{
-    let cid = path.parse(req.params.cid).base;
-    let result = {
-      centers: {},
-      calls: {},
-      applies: {},
-    };
-    result.centers = await _query(`SELECT * FROM center WHERE center_id = ${cid}`);
-    result.calls = await _query(`SELECT * FROM call_status WHERE cid = ${cid}`);
-    result.applies = await _query(`SELECT * FROM apply_status WHERE cid = ${cid}`);
-    res.send(result);
+  if (req.session.is_logined) {
+    try {
+      let cid = path.parse(req.params.cid).base;
+      let result = {
+        centers: {},
+        calls: {},
+        applies: {},
+      };
+      result.centers = await _query(
+        `SELECT * FROM center WHERE center_id = ${cid}`
+      );
+      result.calls = await _query(
+        `SELECT * FROM call_status WHERE cid = ${cid}`
+      );
+      result.applies = await _query(
+        `SELECT * FROM apply_status WHERE cid = ${cid}`
+      );
+      res.send(result);
+    } catch {
+      res.send(Error);
+    }
   }
-  catch{
-    res.send(Error);
-  }
+  else redirect('/');
 });
 
 // app.get("/home/:userid/search/:cid", (req, res) => {
