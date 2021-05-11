@@ -37,6 +37,7 @@ app.use(
 
 app.get("/", (req, res) => {
   //로그인 화면
+  console.log(req);
     res.send('success');
 });
 
