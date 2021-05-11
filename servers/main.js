@@ -54,7 +54,7 @@ app.post("/login", (req, res) => {
     res.redirect(`/home/${req.session.userid}`);
   }
   let post = req.body;
-  console.log(post);
+  console.log(req);
   let id = post.username;
   // const { username } = req.body; 로 가능
   let password = post.password;
