@@ -11,8 +11,19 @@ const bodyParser = require("body-parser");
 const compression = require("compression");
 const { send } = require("process");
 const FileStore = require("session-file-store")(session);
+const cors = require('cors');
 db.connect();
 
+const whitelist = ['*'];
+var corsOptions = {
+  origin: function(origin, callback){
+  var isWhitelisted = whitelist.indexOf(origin) !== -1;
+  callback(null, isWhitelisted); 
+  // callback expects two parameters: error and options 
+  },
+  credentials:true
+}
+app.use( cors(corsOptions) );
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(compression());
 app.use(
