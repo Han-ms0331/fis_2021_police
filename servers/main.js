@@ -25,12 +25,12 @@ app.use(
 );
 //db.connect();
 
-app.get("/", (req, res) => {
-  //로그인 화면
-  fs.readFile("login", "utf-8", (err, data) => {
-    res.send(data);
-  });
-});
+// app.get("/", (req, res) => {
+//   //로그인 화면
+//   fs.readFile("login", "utf-8", (err, data) => {
+//     res.send(data);
+//   });
+// });
 
 app.post("/login", (req, res) => {
   if (req.session.is_logined === true && req.session.userid !== null) {
