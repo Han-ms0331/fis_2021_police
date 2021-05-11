@@ -35,16 +35,17 @@ app.use(
   })
 );
 
+app.all('/*', function(req, res, next) {
+  res.set({
+    "Access-Control-Allow-Headers": '*'
+  })
+  next();
+});
+
 app.get("/", (req, res) => {
   //로그인 화면
   console.log(req);
     res.send('success');
-});
-
-app.all('/*', function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "X-Requested-With");
-  next();
 });
 
 app.post("/login", (req, res) => {
