@@ -17,7 +17,6 @@ function App () {
 
       isLogined ? <Home 
       uid={UID}
-      
       /> : 
       <Login 
         userName = {userName}
