@@ -7,22 +7,37 @@ import './css/login.css';
 
 function Login(props){
     const getLogin = async () => {
-        const result = await axios.post("http://192.168.0.117:3000/login", {
-           
+        const result = await axios.post("http://192.168.0.117:3000/login", JSON.stringify({
             
                 username: props.userName,
                 password: props.passWord
             
-            
+        }), {
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
         });
         console.log(result);
+        //     fetch("http://192.168.0.117:3000/login", {
+        //         method: 'POST',
+        //         body: JSON.stringify({
+        //             username: props.userName,
+        //             password: props.passWord
+        //         }),
+            
+        //       }).then((result)=>{
+        //          console.log("output" + result.json());
+        //       })
+        //       .catch((error) => {
+        //         console.log(error);
+        //       });
+        // }
     }
-
     const sendLoginState= (e) => {
         console.log(props.userName);
         console.log(props.passWord);
         console.log(props.isLogined);
-       e.preventDefault();
+        e.preventDefault();
         getLogin();
        
         // await axios({
