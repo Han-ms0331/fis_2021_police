@@ -9,10 +9,21 @@ const fs = require("fs");
 const session = require("express-session");
 const bodyParser = require("body-parser");
 const compression = require("compression");
-const { send } = require("process");
+const { send, allowedNodeEnvironmentFlags } = require("process");
 const FileStore = require("session-file-store")(session);
+const cors = require('cors');
 db.connect();
 
+const whitelist = ['*'];
+var corsOptions = {
+  origin: function(origin, callback){
+  var isWhitelisted = whitelist.indexOf(origin) !== -1;
+  callback(null, isWhitelisted); 
+  // callback expects two parameters: error and options 
+  },
+  credentials:true
+}
+app.use( cors(corsOptions) );
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(compression());
 app.use(
@@ -23,20 +34,28 @@ app.use(
     store: new FileStore(),
   })
 );
-//db.connect();
 
-// app.get("/", (req, res) => {
-//   //로그인 화면
-//   fs.readFile("login", "utf-8", (err, data) => {
-//     res.send(data);
-//   });
-// });
+app.all('/*', function(req, res, next) {
+  res.set({
+    "Access-Control-Allow-Headers": '*',
+    "Access-Control-Allow-Origin" : "*",
+  })
+  next();
+});
+
+app.get("/", (req, res) => {
+  //로그인 화면
+  console.log(req);
+    res.send('success');
+});
 
 app.post("/login", (req, res) => {
+  console.log(req);
   if (req.session.is_logined === true && req.session.userid !== null) {
     res.redirect(`/home/${req.session.userid}`);
   }
   let post = req.body;
+  console.log(req);
   let id = post.username;
   // const { username } = req.body; 로 가능
   let password = post.password;
@@ -73,6 +92,7 @@ app.get("/home/:userid", function (req, res) {
     var userid = path.parse(req.params.userid).base;
     res.send(userid);
   }
+  else redirect('/');
   //로그인 성공시 userid를 반환시켜준다.
 });
 
@@ -146,6 +166,16 @@ app.get("/home/:userid/search/:cid", async (req, res) => {
   }
   else redirect('/');
 });
+
+app.post("")
+
+app.delete("/home/:userid/delete/:cid", async (req, res) => {
+
+})
+
+app.put("/home/:userid/put", async (req, res) => {
+
+})
 
 // app.get("/home/:userid/search/:cid", (req, res) => {
 //   let cid = path.parse(req.params.cid).base;
