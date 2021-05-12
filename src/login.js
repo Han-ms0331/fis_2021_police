@@ -10,10 +10,7 @@ function Login(props){
         console.log(props.passWord);
         console.log(props.isLogined);
 
-        props.loginState(true);
         console.log(props.isLogined);
-
-
 
         axios({
             method : "POST",
