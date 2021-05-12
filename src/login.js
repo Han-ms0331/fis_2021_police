@@ -4,34 +4,49 @@ import axios from 'axios';
 import App from './App';
 
 function Login(props){
-
-    function sendLoginState(){
+    const getLogin = async () => {
+        const result = await axios.post("http://192.168.0.117:3000/login", JSON.stringify({
+            
+                username: props.userName,
+                password: props.passWord
+            
+        }), {
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+        });
+        console.log(result);
+        //     fetch("http://192.168.0.117:3000/login", {
+        //         method: 'POST',
+        //         body: JSON.stringify({
+        //             username: props.userName,
+        //             password: props.passWord
+        //         }),
+            
+        //       }).then((result)=>{
+        //          console.log("output" + result.json());
+        //       })
+        //       .catch((error) => {
+        //         console.log(error);
+        //       });
+        // }
+    }
+    const sendLoginState= (e) => {
         console.log(props.userName);
         console.log(props.passWord);
         console.log(props.isLogined);
-
-        props.loginState(true);
-        console.log(props.isLogined);
-
-
-
-        axios({
-            method : "POST",
-            url : "http://192.168.0.117:3000/login",
-            body : {
-                id : props.userName,
-                pwd : props.passWord
-            },
-        })
-            .then((response) => {
-                if(response==true){
-                    props.loginState(true);
-                }
-                else props.loginState(false);
-            })
-            .catch((error) => {
-                console.log(error);
-            })
+        e.preventDefault();
+        getLogin();
+       
+        // await axios({
+        //     method: "post",
+        //     url: "http://192.168.0.117:3000/login",
+        //     data: {
+        //         username: '원보라user',
+        //         password: '1234'
+        //     }
+        // })
+            
 
 
     }
