@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import './css/login.css';
 import axios from 'axios';
-import App from './App';
+
 
 
 function Login(props){
@@ -16,7 +16,8 @@ function Login(props){
                 'Content-Type': 'application/x-www-form-urlencoded'
             }
         });
-        console.log(result);
+        console.log(result.data);
+        return result.data;
         
     }
     const sendLoginState= (e) => {
@@ -24,11 +25,11 @@ function Login(props){
         console.log(props.passWord);
         console.log(props.isLogined);
         e.preventDefault();
-        getLogin();
-       
-       
-            
+        if (getLogin()) {
+            props.setIsLogined(true);
+            console.log(props.isLogined);
 
+        }     
 
     }
     return(

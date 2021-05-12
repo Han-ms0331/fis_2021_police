@@ -1,6 +1,6 @@
 import React,{useState} from 'react';
 import axios from 'axios';
-
+import './css/Home.css'
 
 
 
@@ -96,6 +96,7 @@ const searchResult_template = (num,centerName,centerAddr,centerPhoneNumber,cente
 
       const onClick = (e) =>{
         e.preventDefault();
+        console.log(searchCenter);
         getSearchCenterList(searchCenter);
         
       }
@@ -103,41 +104,41 @@ const searchResult_template = (num,centerName,centerAddr,centerPhoneNumber,cente
 
 
     return (
-      // isLoading_1 ? (isLoading_2?
-      //   <div class="main">
-      //     <div class='main serch'>
-      //       <div class='main search box'>
-      //         <input type='text' placeholder='시설 이름 입력' class='main serch input'onChange={setSearchCenter} />
-      //         <button class='main search btn' onClick={onClick} />
-      //       </div>
-      //       <div class ='main search result'>
-      //             <ul class="main search result list ">
-      //               {result_1ary}
-      //             </ul>
-      //           </div>
-      //     </div>
-      //     <div class="main info">
-      //       {centerInfo_template}
-      //     </div>
-      // </div>
-      // :
-      //   <div class="main">
-      //     <div class='main serch'>
-      //       <div class='main search box'>
-      //         <input type='text' placeholder='시설 이름 입력' class='main serch input'onChange={setSearchCenter} />
-      //         <button class='main search btn' onClick={onClick} />
-      //       </div>
-      //       <div class ='main search result'>
-      //             <ul class="main search result list ">
-      //               {result_1ary}
-      //             </ul>
-      //           </div>
-      //     </div>
-      //     <div class="main info">
-      //       <span>시설을 선택해 주세요</span>
-      //     </div>
-      // </div>
-      // ):
+      isLoading_1 ? (isLoading_2?
+        <div class="main">
+          <div class='main serch'>
+            <div class='main search box'>
+              <input type='text' placeholder='시설 이름 입력' class='main serch input'onChange={setSearchCenter} />
+              <button class='main search btn' onClick={onClick} />
+            </div>
+            <div class ='main search result'>
+                  <ul class="main search result list ">
+                    {result_1ary}
+                  </ul>
+                </div>
+          </div>
+          <div class="main info">
+            {centerInfo_template}
+          </div>
+      </div>
+      :
+        <div class="main">
+          <div class='main serch'>
+            <div class='main search box'>
+              <input type='text' placeholder='시설 이름 입력' class='main serch input'onChange={setSearchCenter} />
+              <button class='main search btn' onClick={onClick} />
+            </div>
+            <div class ='main search result'>
+                  <ul class="main search result list ">
+                    {result_1ary}
+                  </ul>
+                </div>
+          </div>
+          <div class="main info">
+            <span>시설을 선택해 주세요</span>
+          </div>
+      </div>
+      ):
       <div class="main">
         <div class='main serch'>
           <div class='main search box'>
