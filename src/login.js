@@ -14,10 +14,10 @@ function Login(props){
         console.log(props.isLogined);
 
 
-/*
+
         axios({
             method : "POST",
-            url : "http://192.168.0.117/",
+            url : "http://192.168.0.117:3000/login",
             body : {
                 id : props.userName,
                 pwd : props.passWord
@@ -32,7 +32,7 @@ function Login(props){
             .catch((error) => {
                 console.log(error);
             })
-*/
+
 
     }
     return(
