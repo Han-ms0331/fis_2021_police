@@ -11,19 +11,20 @@ const bodyParser = require("body-parser");
 const compression = require("compression");
 const { send, allowedNodeEnvironmentFlags } = require("process");
 const FileStore = require("session-file-store")(session);
-const cors = require('cors');
+const cors = require("cors");
+const dbfunc = require("./dbfunc");
 db.connect();
 
-const whitelist = ['*'];
+const whitelist = ["*"];
 var corsOptions = {
-  origin: function(origin, callback){
-  var isWhitelisted = whitelist.indexOf(origin) !== -1;
-  callback(null, isWhitelisted); 
-  // callback expects two parameters: error and options 
+  origin: function (origin, callback) {
+    var isWhitelisted = whitelist.indexOf(origin) !== -1;
+    callback(null, isWhitelisted);
+    // callback expects two parameters: error and options
   },
-  credentials:true
-}
-app.use( cors(corsOptions) );
+  credentials: true,
+};
+app.use(cors(corsOptions));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(compression());
 app.use(
@@ -35,27 +36,24 @@ app.use(
   })
 );
 
-app.all('/*', function(req, res, next) {
+app.all("/*", function (req, res, next) {
   res.set({
-    "Access-Control-Allow-Headers": '*',
-    "Access-Control-Allow-Origin" : "*",
-  })
+    "Access-Control-Allow-Headers": "*",
+    "Access-Control-Allow-Origin": "*",
+  });
   next();
 });
 
 app.get("/", (req, res) => {
   //로그인 화면
-  console.log(req);
-    res.send('success');
+  res.send("success");
 });
 
 app.post("/login", (req, res) => {
-  console.log(req);
   if (req.session.is_logined === true && req.session.userid !== null) {
     res.redirect(`/home/${req.session.userid}`);
   }
-  let post = req.body;
-  console.log(req);
+  let post = JSON.parse(Object.keys(req.body)[0]);
   let id = post.username;
   // const { username } = req.body; 로 가능
   let password = post.password;
@@ -91,8 +89,7 @@ app.get("/home/:userid", function (req, res) {
   if (req.session.is_logined) {
     var userid = path.parse(req.params.userid).base;
     res.send(userid);
-  }
-  else redirect('/');
+  } else redirect("/");
   //로그인 성공시 userid를 반환시켜준다.
 });
 
@@ -129,17 +126,8 @@ app.get("/home/:userid/:target", (req, res) => {
 //어린이집 정보 제공
 
 // async 와 await 과 promise로 간단히 만들어 보기
+// data db에서 가져오기
 
-const _query = async function (sql_string) {
-  return new Promise((resolve, reject) => {
-    db.query(sql_string, (error, data) => {
-      if (error) {
-        throw error;
-      }
-      resolve(data);
-    });
-  });
-};
 
 app.get("/home/:userid/search/:cid", async (req, res) => {
   if (req.session.is_logined) {
@@ -150,32 +138,39 @@ app.get("/home/:userid/search/:cid", async (req, res) => {
         calls: {},
         applies: {},
       };
-      result.centers = await _query(
+      result.centers = await dbfunc.get_data(
         `SELECT * FROM center WHERE center_id = ${cid}`
       );
-      result.calls = await _query(
+      result.calls = await dbfunc.get_data(
         `SELECT * FROM call_status WHERE cid = ${cid}`
       );
-      result.applies = await _query(
+      result.applies = await dbfunc.get_data(
         `SELECT * FROM apply_status WHERE cid = ${cid}`
       );
       res.send(result);
     } catch {
       res.send(Error);
     }
-  }
-  else redirect('/');
+  } else redirect("/");
 });
 
-app.post("")
+app.post("/home/:userid/modify/:cid", async (req, res) => {
+  let cid = path.parse(req.params.cid).base;
+  let userid = path.parse(req.params.userid).base;
+  let body = req.body;
+  
+});
 
 app.delete("/home/:userid/delete/:cid", async (req, res) => {
 
-})
+});
 
-app.put("/home/:userid/put", async (req, res) => {
+app.post("/home/:userid/write/:cid", async (req, res) => {
 
-})
+});
+
+
+
 
 // app.get("/home/:userid/search/:cid", (req, res) => {
 //   let cid = path.parse(req.params.cid).base;
