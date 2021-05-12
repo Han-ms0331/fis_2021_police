@@ -67,10 +67,10 @@ app.post("/login", (req, res) => {
       res.send(false);
     } else {
       if (password === result[0].u_pwd) {
-        req.session.is_logined = true;
-        req.session.userid = id;
         console.log("성공");
         res.send(true);
+        req.session.is_logined = true;
+        req.session.userid = id;
       } else {
         console.log("비밀번호를 확인해주세요");
         res.send(false);
