@@ -68,7 +68,7 @@ app.post("/login", (req, res) => {
     } else {
       if (password === result[0].u_pwd) {
         console.log("성공");
-        res.send('true');
+        res.send(true);
         req.session.is_logined = true;
         req.session.userid = id;
       } else {
