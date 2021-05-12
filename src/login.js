@@ -1,45 +1,50 @@
 import React, { useState } from "react";
-import './css/login.css';
 import axios from 'axios';
 import App from './App';
+import './css/login.css';
+
+
 
 function Login(props){
+    const getLogin = async () => {
+        const result = await axios.post("http://192.168.0.117:3000/login", {
+           
+            
+                username: props.userName,
+                password: props.passWord
+            
+            
+        });
+        console.log(result);
+    }
 
-    function sendLoginState(){
+    const sendLoginState= (e) => {
         console.log(props.userName);
         console.log(props.passWord);
         console.log(props.isLogined);
-
-        console.log(props.isLogined);
-
-        axios({
-            method : "POST",
-            url : "http://192.168.0.117:3000/login",
-            body : {
-                id : props.userName,
-                pwd : props.passWord
-            },
-        })
-            .then((response) => {
-                if(response==true){
-                    props.loginState(true);
-                }
-                else props.loginState(false);
-            })
-            .catch((error) => {
-                console.log(error);
-            })
+       e.preventDefault();
+        getLogin();
+       
+        // await axios({
+        //     method: "post",
+        //     url: "http://192.168.0.117:3000/login",
+        //     data: {
+        //         username: '원보라user',
+        //         password: '1234'
+        //     }
+        // })
+            
 
 
     }
+    
     return(
         
         <div class='inner-container'>
-            <div class='header'>
-                <h2>Log-In</h2>
-            
+            <div class='header'>Login</div>
+            <div class='box'>
                 <div class='input-group'>
-                    <h4>Username</h4>
+                    <label class='username'>Username</label>
                     <input 
                         type='text' 
                         name='userName' 
@@ -51,7 +56,7 @@ function Login(props){
                 </div>
                 
                 <div class='input-group'>
-                    <h4>Password</h4>
+                    <label class='password'>Password</label>
                     <input 
                         type='password' 
                         name='passWord' 
@@ -61,7 +66,7 @@ function Login(props){
                         onChange={({ target: { value }})=>props.setPassWord(value)}
                     />
                 </div>
-                
+
                 <button type='button' class='login-btn' onClick={sendLoginState}>Login</button>
             </div>
         </div>
@@ -69,5 +74,26 @@ function Login(props){
 
     );
 }
+
+
+
+// function Login(props) {
+//     const getSuccess = async () => {
+      
+//             const searchResult = await axios.get(`http://192.168.0.117:3000/`,
+//                 );
+//             console.log(searchResult);
+        
+        
+//     }
+//     function onClick(e) {
+//         getSuccess();
+//     }
+//     return (
+//         <div>
+//             <button type='button' class='login-btn' onClick={onClick}>Login</button>
+//         </div>
+//     )
+// }
 
 export default Login;
