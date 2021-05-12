@@ -71,7 +71,7 @@ const searchResult_template = (num,centerName,centerAddr,centerPhoneNumber,cente
         //searchResult 통해서 이름 주소 전화번호 받아서 result_1 배열에 넣는 함수
         let i = 0;
         for(i=0;i<searchResult_1.length;i++){
-          result_1ary[is] = searchResult_template(i,searchResult_1[i].c_name,searchResult_1[i].c_address,searchResult_1[i].c_ph,searchResult_1[i].center_id);
+          result_1ary[i] = searchResult_template(i,searchResult_1[i].c_name,searchResult_1[i].c_address,searchResult_1[i].c_ph,searchResult_1[i].center_id);
         }
       }
 
