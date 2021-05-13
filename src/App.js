@@ -6,7 +6,7 @@ function App() {
   const [userName, setUserName] = useState("");
   const [passWord, setPassWord] = useState("");
   const [isLogined, setIsLogined] = useState(false);
-  const [UID, setUID] = "";
+  const [UID, setUID] = "1";
 
   const loginState = (condition) => {
     setIsLogined(condition);

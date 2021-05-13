@@ -1,25 +1,25 @@
-import React,{useState} from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
+import './css/Home.css';
+import CenterList from './CenterList.js';
 
+function Home(props) {
+	const [searchCenter, setSearchCenter] = useState('');
+	const [isLoading_1, setIsLoading_1] = useState(true);
+	const [isLoading_2, setIsLoading_2] = useState(true);
+	const [result_1ary, setResult_1ary] = useState([]);
+	const [centerInfo, setCenterInfo] = useState({
+		centerName: '',
+		centerAddr: '',
+		centerPhoneNumber: '',
+		callState_list: [],
+		applyState_list: [],
+	});
+	const [currentResult, setCurrentResult] = useState('');
+	let result_2ary = [];
 
-
-
-  function Home(props) {
-  const [searchCenter,setSearchCenter] = useState('');
-  const [isLoading_1,setIsLoading_1] = useState(true);
-  const [isLoading_2,setIsLoading_2] = useState(true);
-  let searchResult_1 ;
-  let centerInfo ;
-  let result_1obj = {
-    centerName: "",
-    centerAddr: "",
-    centerPhoneNumber: "",
-  };
-  let result_1ary = [];
-  let result_2ary = [];
-
-  const centerInfo_template = (centerName, centerAddr, centerPhoneNumber) => {
-    const template = `
+	const centerInfo_template = (centerName, centerAddr, centerPhoneNumber) => {
+		const template = `
     <div class="main info header>
       <div class="main info header center-name">
         <h2>${centerName}
@@ -48,113 +48,133 @@ import axios from 'axios';
       </button>
     </div>
   `;
-    return template;
-  };
+		return template;
+	};
 
-const searchResult_template = (num,centerName,centerAddr,centerPhoneNumber,centerID) => {
-  const template = `
-    <li class="main search result list container">
-        <span id='name=${centerName}'>${centerName}</span>
-        <span id='addr=${centerAddr}'>${centerAddr}</span>
-        <span id='phone=${centerPhoneNumber}'>${centerPhoneNumber}</span>
-        <span id='id=${centerID}'>${centerID}</span>
-        <button class="main search result list btn" onClick={onClick_info(${centerID})>선택</button>
-    </li>
-  `;
-    return template;
-  };
+	//검색어를 통해 데이터를 받아오는 부분
 
-  //검색어를 통해 데이터를 받아오는 부분
- 
-      
-      const getCenterInfoList = () => {
-        //searchResult 통해서 이름 주소 전화번호 받아서 result_1 배열에 넣는 함수
-        let i = 0;
-        for(i=0;i<searchResult_1.length;i++){
-          result_1ary[i] = searchResult_template(i,searchResult_1[i].c_name,searchResult_1[i].c_address,searchResult_1[i].c_ph,searchResult_1[i].center_id);
-        }
-      }
+	// const onClick_info = (centerID) => {
+	// 	centerID.preventDefault();
+	// 	getCenterInfo(centerID);
+	// };
 
-      const getCenterInfo = async (centerID) =>{
-        centerInfo = await axios.get(`http://192.168.0.117:3000/home/${props.uid}/search/${centerID}`);
-        centerInfo_template(centerInfo[0].c_name,centerInfo[0].c_address,centerInfo[0].c_ph);
-        setIsLoading_2(false);
-      }
+	const getSearchCenterList = async (search) => {
+		console.log(props.uid);
+		const result = await axios.get(
+			`http://192.168.0.117:3000/home/${props.uid}/${search}`
+		);
+		setResult_1ary(result);
+		console.log(isLoading_1);
+		setIsLoading_1(false);
+	};
 
-      const onClick_info = (centerID) => {
-         centerID.preventDefault();
-         getCenterInfo (centerID);
-      }
+	const onClick = (e) => {
+		e.preventDefault();
+		console.log(searchCenter);
+		getSearchCenterList(searchCenter);
+	};
+	const onChange = (e) => {
+		console.log(e.target.value);
+		setSearchCenter(`${e.target.value}`);
+	};
 
-
-      const getSearchCenterList = async (search) => { 
-        searchResult_1 = await axios.get(`http://192.168.0.117:3000/home/${props.uid}/${search}`);
-        console.log(searchResult_1);
-        getCenterInfoList();
-        setIsLoading_1(false);
-      }
-
-      const onClick = (e) =>{
-        e.preventDefault();
-        getSearchCenterList(searchCenter);
-        
-      }
-
-
-
-    return (
-      // isLoading_1 ? (isLoading_2?
-      //   <div class="main">
-      //     <div class='main serch'>
-      //       <div class='main search box'>
-      //         <input type='text' placeholder='시설 이름 입력' class='main serch input'onChange={setSearchCenter} />
-      //         <button class='main search btn' onClick={onClick} />
-      //       </div>
-      //       <div class ='main search result'>
-      //             <ul class="main search result list ">
-      //               {result_1ary}
-      //             </ul>
-      //           </div>
-      //     </div>
-      //     <div class="main info">
-      //       {centerInfo_template}
-      //     </div>
-      // </div>
-      // :
-      //   <div class="main">
-      //     <div class='main serch'>
-      //       <div class='main search box'>
-      //         <input type='text' placeholder='시설 이름 입력' class='main serch input'onChange={setSearchCenter} />
-      //         <button class='main search btn' onClick={onClick} />
-      //       </div>
-      //       <div class ='main search result'>
-      //             <ul class="main search result list ">
-      //               {result_1ary}
-      //             </ul>
-      //           </div>
-      //     </div>
-      //     <div class="main info">
-      //       <span>시설을 선택해 주세요</span>
-      //     </div>
-      // </div>
-      // ):
-      <div class="main">
-        <div class='main serch'>
-          <div class='main search box'>
-            <input type='text' placeholder='시설 이름 입력' class='main serch input' onChange={setSearchCenter} />
-            <button class='main search btn' onClick={onClick} />
-          </div>
-          <div class='main search result'>
-            <ul class="main search result list ">
+	return isLoading_1 ? (
+		//검색어 입력 안된 텅빈 페이지
+		<div class='main'>
+			<div class='main_serch'>
+				<div class='main_search_box'>
+					<input
+						type='text'
+						placeholder='시설 이름 입력'
+						name='center'
+						class='main_serch_input'
+						onChange={onChange}
+					/>
+					<button class='main_search_btn' onClick={onClick}>
+						검색
+					</button>
+				</div>
+				<div class='main_search_result'>
+					{/* <ul class="main_search result list ">
               {result_1ary}
-            </ul>
-          </div>
-          <div class="main info">
-            <span>시설을 선택해 주세요</span>
-          </div>
-        </div>
-      </div>
-    );
+            </ul> */}
+				</div>
+			</div>
+			<div class='main_info'>
+				<span>시설을 선택해 주세요</span>
+			</div>
+		</div>
+	) : isLoading_2 ? (
+		//검색어 입력 후 해당 이름의 시설 리스트를 받아온 화면
+		<div class='main'>
+			<div class='main_serch'>
+				<div class='main_search_box'>
+					<input
+						type='text'
+						placeholder='시설 이름 입력'
+						name='center'
+						class='main_serch_input'
+						onChange={onChange}
+					/>
+					<button class='main_search_btn' onClick={onClick}>
+						검색
+					</button>
+				</div>
+				<div class='main_search_result'>
+					<ul class='main_search_result_list '>
+						{result_1ary.data.map((result_1ary) => (
+							<li key={result_1ary.center_id}>
+								<CenterList
+									data={result_1ary}
+									setCurrentResult={setCurrentResult}
+									setIsLoading_2={setIsLoading_2}
+									uid={props.uid}
+									setCenterInfo={setCenterInfo}
+								/>
+							</li>
+						))}
+					</ul>
+				</div>
+			</div>
+			<div class='main_info'>
+				<span>시설을 선택해 주세요</span>
+			</div>
+		</div>
+	) : (
+		//센터 리스트중 한개를 선택하여 데이터를 오른쪽 화면에 띄우는 화면
+		<div class='main'>
+			<div class='main_serch'>
+				<div class='main_search_box'>
+					<input
+						type='text'
+						placeholder='시설 이름 입력'
+						name='center'
+						class='main_serch_input'
+						onChange={onChange}
+					/>
+					<button class='main_search_btn' onClick={onClick}>
+						검색
+					</button>
+				</div>
+				<div class='main_search_result'>
+					<ul class='main_search_result_list '>
+						{result_1ary.data.map((result_1ary) => (
+							<li>
+								<CenterList
+									data={result_1ary}
+									setCurrentResult={setCurrentResult}
+									setIsLoading_2={setIsLoading_2}
+									uid={props.uid}
+									setCenterInfo={setCenterInfo}
+								/>
+							</li>
+						))}
+					</ul>
+				</div>
+			</div>
+			<div class='main_info'>선택완료</div>
+		</div>
+	);
 }
 
 export default Home;
