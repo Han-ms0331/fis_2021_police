@@ -2,8 +2,9 @@ import React from 'react';
 import axios from 'axios';
 
 function CenterList(props) {
+	let result;
 	const getCenterInfo = async () => {
-		const result = await axios.get(
+		result = await axios.get(
 			`http://192.168.0.117:3000/home/${props.uid}/search/${props.center_id}`
 		);
 		console.log(result);

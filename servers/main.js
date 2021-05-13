@@ -147,6 +147,7 @@ app.get('/home/:userid/search/:cid', async (req, res) => {
 			result.applies = await dbfunc.get_data(
 				`SELECT * FROM apply_status WHERE cid = ${cid}`
 			);
+			console.log(result);
 			res.send(result);
 		} catch {
 			res.send(Error);
