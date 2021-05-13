@@ -133,6 +133,7 @@ app.get('/home/:userid/search/:cid', async (req, res) => {
 	if (true) {
 		try {
 			let cid = path.parse(req.params.cid).base;
+			console.log(cid);
 			let result = {
 				centers: {},
 				calls: {},
