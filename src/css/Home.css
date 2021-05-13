@@ -1,16 +1,23 @@
 .main {
 	display: flex;
+	align-items: center;
+	justify-content: space-around;
 }
 
-.search {
+.main_search {
 	display: flex;
 	flex-direction: column;
+	align-items: center;
+	border-right: 5px solid black;
 }
 
 .main_search_result_list_item {
 	display: flex;
 }
 
+.main_search_input {
+	margin-left: 10px;
+}
 .center_info {
 	margin: 5px 10px;
 }

@@ -113,6 +113,7 @@ app.get('/home/:userid/:target', (req, res) => {
 						center_info.c_sigungu = element.c_sigungu;
 						center_info.c_name = element.c_name;
 						center_info.c_address = element.c_address;
+						center_info.c_ph = element.c_ph;
 						center_info_list.push(center_info);
 					});
 					if (center_info_list.length === 0) {

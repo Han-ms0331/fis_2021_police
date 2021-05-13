@@ -9,11 +9,11 @@ function CenterList(props) {
 		);
 		console.log(result);
 		props.setCenterInfo({
-			centerName: '',
-			centerAddr: '',
+			centerName: props.data.c_name,
+			centerAddr: props.data.c_address,
 			centerPhoneNumber: '',
-			callState_list: [],
-			applyState_list: [],
+			callState_list: result.data.calls,
+			applyState_list: result.data.applies,
 		});
 	};
 	console.log(props.data);
