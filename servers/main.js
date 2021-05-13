@@ -129,32 +129,32 @@ app.get('/home/:userid/:target', (req, res) => {
 // async 와 await 과 promise로 간단히 만들어 보기
 // data db에서 가져오기
 
-app.get('/home/:userid/search/:cid', async (req, res) => {
-	if (true) {
-		try {
-			let cid = path.parse(req.params.cid).base;
-			console.log(cid);
-			let result = {
-				centers: {},
-				calls: {},
-				applies: {},
-			};
-			result.centers = await dbfunc.get_data(
-				`SELECT * FROM center WHERE center_id = ${cid}`
-			);
-			result.calls = await dbfunc.get_data(
-				`SELECT * FROM call_status WHERE cid = ${cid}`
-			);
-			result.applies = await dbfunc.get_data(
-				`SELECT * FROM apply_status WHERE cid = ${cid}`
-			);
-			console.log(result);
-			res.send(result);
-		} catch {
-			res.send(Error);
-		}
-	} else redirect('/');
-});
+// app.get('/home/:userid/search/:cid', async (req, res) => {
+// 	if (true) {
+// 		try {
+// 			let cid = path.parse(req.params.cid).base;
+// 			console.log(cid);
+// 			let result = {
+// 				centers: {},
+// 				calls: {},
+// 				applies: {},
+// 			};
+// 			result.centers = await dbfunc.get_data(
+// 				`SELECT * FROM center WHERE center_id = ${cid}`
+// 			);
+// 			result.calls = await dbfunc.get_data(
+// 				`SELECT * FROM call_status WHERE cid = ${cid}`
+// 			);
+// 			result.applies = await dbfunc.get_data(
+// 				`SELECT * FROM apply_status WHERE cid = ${cid}`
+// 			);
+// 			console.log(result);
+// 			res.send(result);
+// 		} catch {
+// 			res.send(Error);
+// 		}
+// 	} else redirect('/');
+// });
 
 app.post('/home/:userid/modify/:cid', async (req, res) => {
 	let cid = path.parse(req.params.cid).base;
@@ -166,45 +166,45 @@ app.delete('/home/:userid/delete/:cid', async (req, res) => {});
 
 app.post('/home/:userid/write/:cid', async (req, res) => {});
 
-// app.get("/home/:userid/search/:cid", (req, res) => {
-//   let cid = path.parse(req.params.cid).base;
+app.get('/home/:userid/search/:cid', (req, res) => {
+	let cid = path.parse(req.params.cid).base;
 
-//   let result = {
-//     centers: {},
-//     calls: {},
-//     applies: {},
-//   };
+	let result = {
+		centers: {},
+		calls: {},
+		applies: {},
+	};
 
-//   db.query(
-//     `SELECT * FROM center WHERE center_id = ${cid}`,
-//     function (error, centers) {
-//       if (error) {
-//         throw error;
-//       }
-//       result.centers = centers;
+	db.query(
+		`SELECT * FROM center WHERE center_id = ${cid}`,
+		function (error, centers) {
+			if (error) {
+				throw error;
+			}
+			result.centers = centers;
 
-//       db.query(
-//         `SELECT * FROM call_status WHERE cid = ${cid}`,
-//         function (error2, calls) {
-//           if (error2) {
-//             throw error;
-//           }
-//           result.calls = calls;
-//           db.query(
-//             `SELECT * FROM apply_status WHERE cid = ${cid}`,
-//             function (error3, applies) {
-//               if (error3) {
-//                 throw error;
-//               }
-//               result.applies = applies;
-//               res.send(result);
-//             }
-//           );
-//         }
-//       );
-//     }
-//   );
-// });
+			db.query(
+				`SELECT * FROM call_status WHERE cid = ${cid}`,
+				function (error2, calls) {
+					if (error2) {
+						throw error;
+					}
+					result.calls = calls;
+					db.query(
+						`SELECT * FROM apply_status WHERE cid = ${cid}`,
+						function (error3, applies) {
+							if (error3) {
+								throw error;
+							}
+							result.applies = applies;
+							res.send(result);
+						}
+					);
+				}
+			);
+		}
+	);
+});
 
 app.listen(3000, function () {
 	console.log('Example app listening on port 3000!');

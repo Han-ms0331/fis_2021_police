@@ -5,7 +5,7 @@ function CenterList(props) {
 	let result;
 	const getCenterInfo = async () => {
 		result = await axios.get(
-			`http://192.168.0.117:3000/home/${props.uid}/search/${props.center_id}`
+			`http://192.168.0.117:3000/home/${props.uid}/search/${props.data.center_id}`
 		);
 		console.log(result);
 		props.setCenterInfo({
@@ -19,7 +19,7 @@ function CenterList(props) {
 	console.log(props.data);
 	const onClick = (e) => {
 		e.preventDefault();
-		props.setCurrentResult(props.center_id);
+		props.setCurrentResult(props.data.center_id);
 		getCenterInfo();
 		props.setIsLoading_2(false);
 	};
