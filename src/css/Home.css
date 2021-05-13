@@ -1,3 +1,16 @@
 .main {
-    display: flex;
+	display: flex;
+}
+
+.search {
+	display: flex;
+	flex-direction: column;
+}
+
+.main_search_result_list_item {
+	display: flex;
+}
+
+.center_info {
+	margin: 5px 10px;
 }
