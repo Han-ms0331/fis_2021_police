@@ -99,3 +99,11 @@ INSERT INTO apply_status(cid, uid, recept_date, collect, visit_date, visit_time,
 VALUES (1,1,'2021-05-06', '완료','2021-06-10', '10:30', '30', '안양1');
 
 
+CREATE TABLE schedule(
+    no              INT                 NOT NULL    AUTO_INCREMENT      comment 'primary_key',
+    apply_no        INT                 NOT NULL                        comment 'apply_no',
+    aid             varchar(100)        NOT NULL                        comment '현장등록원',   
+    PRIMARY KEY (no),
+    FOREIGN key (apply_no) REFERENCES apply_status(no),
+    FOREIGN key (aid) REFERENCES agent(agent_id)
+);
