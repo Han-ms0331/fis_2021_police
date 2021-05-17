@@ -16,8 +16,7 @@ const AddCallState = (props) => {
 	const { open, closeSave, closeCancle, uid } = props;
 
 	return (
-		<Modal isOpen={open} onRequestClose={closeCancle} style={customStyles}>
-			{open ? (
+			open ? (
 				<div>
 					<div>
 						<span>담당자 이름: </span>
@@ -52,10 +51,9 @@ const AddCallState = (props) => {
 						<input type='text' placeholder='특이사항' />
 					</div>
 					<button onClick={closeSave}>저장</button>
-					<button onClick={closeCancle}>취소</button>
+					<button onClick={closeCancle}>닫기</button>
 				</div>
-			) : null}
-		</Modal>
+			) : null
 	);
 };
 

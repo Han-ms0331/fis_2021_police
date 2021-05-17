@@ -16,8 +16,7 @@ const AddApplyState = (props) => {
 	const { open, closeSave, closeCancle, uid } = props;
 
 	return (
-		<Modal isOpen={open} onRequestClose={closeCancle} style={customStyles}>
-			{open ? (
+			open ? (
 				<div>
 					<div>
 						<span>현장요원: </span>
@@ -36,7 +35,7 @@ const AddApplyState = (props) => {
 						<input type='date' placeholder='예약 날짜' />
 					</div>
 					<div>
-						<span>방분 예정 날짜: </span>
+						<span>방문 예정 날짜: </span>
 						<input type='date' placeholder='방분 예정 날짜' />
 					</div>
 					<div>
@@ -52,10 +51,9 @@ const AddApplyState = (props) => {
 						<input type='text' placeholder='특이사항' />
 					</div>
 					<button onClick={closeSave}>저장</button>
-					<button onClick={closeCancle}>취소</button>
+					<button onClick={closeCancle}>닫기</button>
 				</div>
-			) : null}
-		</Modal>
+			) : null
 	);
 };
 
