@@ -13,12 +13,16 @@
     "express": "^4.17.1",
     "express-session": "^1.17.1",
     "mysql": "^2.18.1",
+<<<<<<< HEAD
+    "session-file-store": "^1.5.0"
+=======
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-modal": "^3.13.1",
     "react-scripts": "4.0.3",
     "session-file-store": "^1.5.0",
     "web-vitals": "^1.1.1"
+>>>>>>> e5ed946446a1fbf30f945828a6be8ec89b7e743f
   },
   "scripts": {
     "start": "react-scripts start",
