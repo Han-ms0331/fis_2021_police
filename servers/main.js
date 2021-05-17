@@ -119,9 +119,7 @@ app.get('/home/:userid/:target', (req, res) => {
 						center_info.c_ph = element.c_ph;
 						center_info_list.push(center_info);
 					});
-					if (center_info_list.length === 0) {
-						res.send([]);
-					} else res.send(center_info_list);
+					req.send(center_info_list);
 				}
 			);
 		}
