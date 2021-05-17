@@ -68,6 +68,9 @@ app.post('/login', (req, res) => {
 			if (password === result[0].u_pwd) {
 				req.session.is_logined = true;
 				req.session.userid = id;
+				req.session.save(() => {
+					res.send('session stored');
+				  });
 				let a = {
 					userid : result[0].user_id,
 					success : true,
