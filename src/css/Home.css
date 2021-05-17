@@ -1,3 +1,35 @@
 .main {
-    display: flex;
+	display: flex;
+	justify-content: space-around;
+}
+.list {
+	list-style: none;
+}
+
+.main_search_box {
+	text-align: center;
+}
+.main_search_result_list_item {
+	display: flex;
+}
+
+.main_search_input {
+	margin-left: 10px;
+}
+.center_info {
+	margin: 5px 10px;
+}
+.main_info {
+	width: 30%;
+	height: 1000px;
+	padding-left: 30px;
+	border-left: 2px solid black;
+	display: flex;
+	flex-direction: column;
+	align-items: space;
+}
+
+.main_info_header {
+	display: flex;
+	flex-direction: column;
 }

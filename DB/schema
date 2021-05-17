@@ -104,6 +104,6 @@ CREATE TABLE schedule(
     apply_no        INT                 NOT NULL                        comment 'apply_no',
     aid             varchar(100)        NOT NULL                        comment '현장등록원',   
     PRIMARY KEY (no),
-    FOREIGN key (apply_no) REFERENCES apply_status(no),
+    FOREIGN key (apply_no) REFERENCES apply_status(no) ON DELETE cascade ON DELETE cascade,
     FOREIGN key (aid) REFERENCES agent(agent_id)
 );

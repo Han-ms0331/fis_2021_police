@@ -1,167 +1,232 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
+import axios from 'axios';
+import './css/Home.css';
+import CenterList from './CenterList.js';
+import CallState from './callState.js';
+import ApplyState from './ApplyState.js';
+import AddCallState from './AddCallState';
+import AddApplyState from './AddApplyState';
+
+const customStyles = {
+	content: {
+		top: '50%',
+		left: '50%',
+		right: 'auto',
+		bottom: 'auto',
+		marginRight: '-50%',
+		transform: 'translate(-50%, -50%)',
+	},
+};
+
+// Modal.setAppElement('#yourAppElement');
 
 function Home(props) {
-  const [searchCenter, setSearchCenter] = useState("");
-  const [isLoading_1, setIsLoading_1] = useState(true);
-  const [isLoading_2, setIsLoading_2] = useState(true);
-  let searchResult_1;
-  let centerInfo;
-  let result_1obj = {
-    centerName: "",
-    centerAddr: "",
-    centerPhoneNumber: "",
-  };
-  let result_1ary = [];
-  let result_2ary = [];
+	const [searchCenter, setSearchCenter] = useState('');
+	const [isLoading_1, setIsLoading_1] = useState(true);
+	const [isLoading_2, setIsLoading_2] = useState(true);
+	const [result_1ary, setResult_1ary] = useState([]);
+	const [centerInfo, setCenterInfo] = useState({
+		centerName: '',
+		centerAddr: '',
+		centerPhoneNumber: '',
+		centerID: '',
+		callState_list: [],
+		applyState_list: [],
+	});
+	const [currentResult, setCurrentResult] = useState(''); //현재 선택된 시설의 id
+	const [IsopenAddCall, setIsOpenAddCall] = useState(false);
+	const [addCall, setAddCall] = useState({});
+	const [IsopenAddApply, setIsOpenAddApply] = useState(false);
 
-  const centerInfo_template = (centerName, centerAddr, centerPhoneNumber) => {
-    const template = `
-    <div class="main info header>
-      <div class="main info header center-name">
-        <h2>${centerName}
-      </div>
-      <div class="main info header center-name">
-        <h2>${centerAddr}
-      </div>
-      <div class="main info header center-name">
-        <h2>${centerPhoneNumber}
-      </div>
-    </div>
-    <div class="main info call-state>
-      <ul class="main info call-state list>
-        //콜 받은 기록 리스트 출력
-      </ul>
-      <button class="main info call-state add>
-        추가
-      </button>
-    </div>
-    <div class="main info apply-state>
-      <ul class="main info apply-state list>
-        //신청접수 현황 리스트 출력
-      </ul>
-      <button class="main info apply-state add>
-        추가
-      </button>
-    </div>
-  `;
-    return template;
-  };
+	//검색어를 통해 데이터를 받아오는 부분
 
-  const searchResult_template = (
-    centerName,
-    centerAddr,
-    centerPhoneNumber,
-    centerID
-  ) => {
-    const template = `
-    <li class="main search result list container">
-        <span>${centerName}</span>
-        <span>${centerAddr}</span>
-        <span>${centerPhoneNumber}</span>
-        <button class="main search result list btn" onClick={onClick_info(centerID)}>선택</button>
-    </li>
-  `;
-    return template;
-  };
+	const getSearchCenterList = async (search) => {
+		console.log(props.uid);
+		const result = await axios.get(
+			`http://192.168.0.117:3000/home/${props.uid}/${search}`
+		);
+		setResult_1ary(result);
+		console.log(isLoading_1);
+		setIsLoading_1(false);
+	};
 
-  //검색어를 통해 데이터를 받아오는 부분
-  /*
-      
-      getCenterInfoList = () => {
-        //searchResult 통해서 이름 주소 전화번호 받아서 result_1 배열에 넣는 함수
-        let i = 0;
-        for(i=0;i<searchResult.length;i++){
-          result[i] = searchResult_template(searchResult[i].c_name,searchResult[i].c_address,searchResult[i].c_ph,searchResult[i].center_id);
-        }
-      }
+	const onClick = (e) => {
+		e.preventDefault();
+		setIsLoading_2(true);
+		console.log(searchCenter);
+		getSearchCenterList(searchCenter);
+	};
+	const onChange = (e) => {
+		console.log(e.target.value);
+		setSearchCenter(`${e.target.value}`);
+	};
 
-      getCenterInfo = (centerID) =>{
-        centerInfo = await axios.get(`http://192.168.0.117/home/${props.uid}/${centerID}`);
-        centerInfo_template(centerInfo[0].c_name,centerInfo[0].c_address,centerInfo[0].c_ph);
-        setIsLoading_2(false);
-      }
+	const openAddCall = (e) => {
+		setIsOpenAddCall(true);
+	};
+	const closeAddCall = (e) => {
+		setIsOpenAddCall(false);
+	};
+	const closeAddCallCancle = (e) => {
+		setIsOpenAddCall(false);
+	};
+	const openAddApply = (e) => {
+		setIsOpenAddApply(true);
+	};
+	const closeAddApply = (e) => {
+		setIsOpenAddApply(false);
+	};
+	const closeAddApplyCancle = (e) => {
+		setIsOpenAddApply(false);
+	};
 
-      onClick_info = (centerID) => {
-         e.preventDefault();
-         getCenterInfo (centerID);
-      }
-
-
-      getSearchCenterList = async (search) => { 
-        searchResult = await axios.get(`http://192.168.0.117/home/${props.uid}/${search}`);
-        getCenterInfoList();
-        setIsLoading_1(false);
-      }
-
-      const onClick = (e) =>{
-        e.preventDefault();
-        this.getSearchCenterList(searchCenter);
-        
-      }
-
-*/
-
-  return isLoading_1 ? (
-    isLoading_2 ? (
-      <div class="main">
-        <div class="main serch">
-          <div class="main search box">
-            <input
-              type="text"
-              placeholder="시설 이름 입력"
-              class="main serch input"
-              onChange={setSearchCenter}
-            />
-            <button class="main search btn" onClick={onCLick} />
-          </div>
-          <div class="main search result">
-            <ul class="main search result list ">{result_1}</ul>
-          </div>
-        </div>
-        <div class="main info">{centerInfo_template}</div>
-      </div>
-    ) : (
-      <div class="main">
-        <div class="main serch">
-          <div class="main search box">
-            <input
-              type="text"
-              placeholder="시설 이름 입력"
-              class="main serch input"
-              onChange={setSearchCenter}
-            />
-            <button class="main search btn" onClick={onCLick} />
-          </div>
-          <div class="main search result">
-            <ul class="main search result list ">{result_1}</ul>
-          </div>
-        </div>
-        <div class="main info">
-          <span>시설을 선택해 주세요</span>
-        </div>
-      </div>
-    )
-  ) : (
-    <div class="main">
-      <div class="main serch">
-        <div class="main search box">
-          <input
-            type="text"
-            placeholder="시설 이름 입력"
-            class="main serch input"
-            onChange={setSearchCenter}
-          />
-          <button class="main search btn" onClick={onCLick} />
-        </div>
-        <div class="main search result">
-          <ul class="main search result list ">{result_1}</ul>
-        </div>
-        <div class="main info">
-          <span>시설을 선택해 주세요</span>
-        </div>
-      </div>
-    </div>
-  );
+	return isLoading_1 ? (
+		//검색어 입력 안된 텅빈 페이지
+		<div class='main'>
+			<div class='main_serch'>
+				<div class='main_search_box'>
+					<input
+						type='text'
+						placeholder='시설 이름 입력'
+						name='center'
+						class='main_serch_input'
+						onChange={onChange}
+					/>
+					<button class='main_search_btn' onClick={onClick}>
+						검색
+					</button>
+				</div>
+				<div class='main_search_result'>
+					{/* <ul class="main_search result list ">
+              {result_1ary}
+            </ul> */}
+				</div>
+			</div>
+			<div class='main_info'>
+				<span>시설을 선택해 주세요</span>
+			</div>
+		</div>
+	) : isLoading_2 ? (
+		//검색어 입력 후 해당 이름의 시설 리스트를 받아온 화면
+		<div class='main'>
+			<div class='main_serch'>
+				<div class='main_search_box'>
+					<input
+						type='text'
+						placeholder='시설 이름 입력'
+						name='center'
+						class='main_serch_input'
+						onChange={onChange}
+					/>
+					<button class='main_search_btn' onClick={onClick}>
+						검색
+					</button>
+				</div>
+				<div class='main_search_result'>
+					<ul class='main_search_result_list list'>
+						{result_1ary.data.map((result_1ary) => (
+							<li key={result_1ary.center_id}>
+								<CenterList
+									data={result_1ary}
+									setCurrentResult={setCurrentResult}
+									setIsLoading_2={setIsLoading_2}
+									uid={props.uid}
+									setCenterInfo={setCenterInfo}
+								/>
+							</li>
+						))}
+					</ul>
+				</div>
+			</div>
+			<div class='main_info'>
+				<span>시설을 선택해 주세요</span>
+			</div>
+		</div>
+	) : (
+		//센터 리스트중 한개를 선택하여 데이터를 오른쪽 화면에 띄우는 화면
+		<div class='main'>
+			<div class='main_serch'>
+				<div class='main_search_box'>
+					<input
+						type='text'
+						placeholder='시설 이름 입력'
+						name='center'
+						class='main_serch_input'
+						onChange={onChange}
+					/>
+					<button class='main_search_btn' onClick={onClick}>
+						검색
+					</button>
+				</div>
+				<div class='main_search_result'>
+					<ul class='main_search_result_list list'>
+						{result_1ary.data.map((result_1ary) => (
+							<li>
+								<CenterList
+									data={result_1ary}
+									setCurrentResult={setCurrentResult}
+									setIsLoading_2={setIsLoading_2}
+									uid={props.uid}
+									setCenterInfo={setCenterInfo}
+								/>
+							</li>
+						))}
+					</ul>
+				</div>
+			</div>
+			<div class='main_info'>
+				<div class='main_info_header'>
+					<div class='main_info_header_center-name'>
+						<div>{centerInfo.centerName}</div>
+					</div>
+					<div class='main_info_header_center-name'>
+						<div>{centerInfo.centerAddr}</div>
+					</div>
+					<div class='main_info_header_center-name'>
+						<div>{centerInfo.centerPhoneNumber}</div>
+					</div>
+				</div>
+				<div class='main_info_call-state'>
+					<div>콜 이력</div>
+					<ul class='main_info_call-state_list list'>
+						{centerInfo.callState_list.map((data) => (
+							<li key={centerInfo.center_id}>
+								<CallState callState_list={data} />
+							</li>
+						))}
+					</ul>
+					<button class='main_info_call-state_add' onClick={openAddCall}>
+						추가
+					</button>
+					<AddCallState
+						open={IsopenAddCall}
+						closeSave={closeAddCall}
+						closeCancle={closeAddCallCancle}
+						uid={props.uid}
+					/>
+				</div>
+				<div class='main_info_apply-state'>
+					<div>참여여부 기록</div>
+					<ul class='main_info_apply-state_list list'>
+						{centerInfo.applyState_list.map((data) => (
+							<li key={centerInfo.center_id}>
+								<ApplyState applyState_list={data} />
+							</li>
+						))}
+					</ul>
+					<button class='main_info_apply-state_add' onClick={openAddApply}>
+						추가
+					</button>
+					<AddApplyState
+						open={IsopenAddApply}
+						closeSave={closeAddApply}
+						closeCancle={closeAddApplyCancle}
+						uid={props.uid}
+					/>
+				</div>
+			</div>
+		</div>
+	);
 }
 
 export default Home;
