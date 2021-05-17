@@ -1,3 +1,6 @@
+
+const db = require('./dbid').db;
+
 module.exports = {
   get_data: async function (sql_string) {
     return new Promise((resolve, reject) => {
