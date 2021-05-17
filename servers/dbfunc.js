@@ -1,5 +1,4 @@
-
-const db = require('./dbid').db;
+const db = require("./dbid").db;
 
 module.exports = {
   get_data: async function (sql_string) {
@@ -13,15 +12,15 @@ module.exports = {
     });
   },
   set_call_status: async function (post) {
-    const {cid} = post.cid;
-    const {uid} = post.uid;
-    const {date} = post.date;
-    const {participation} = post.participation;
-    const {in_out} = post.in_out;
-    const {c_manager} = post.c_manager;
-    const {m_ph} = post.m_ph;
-    const {m_email} = post.m_email;
-    const {etc} = post.etc;
+    const { cid } = post.cid;
+    const { uid } = post.uid;
+    const { date } = post.date;
+    const { participation } = post.participation;
+    const { in_out } = post.in_out;
+    const { c_manager } = post.c_manager;
+    const { m_ph } = post.m_ph;
+    const { m_email } = post.m_email;
+    const { etc } = post.etc;
     return new Promise((resolve) => {
       db.query(
         `
@@ -30,15 +29,41 @@ module.exports = {
         VALUES (${cid}, ${uid}, ${date}, ${participation}, 
         ${in_out}, ${c_manager}, ${m_ph}, ${m_email}, ${etc});`,
         (error, data) => {
-          if(error) {
+          if (error) {
             throw error;
-          }
-          else resolve(true);
+          } else resolve(true);
         }
       );
     });
   },
-  get_agent : async function (){
-    
-  }
+  get_agent_status: async function (a_id, a_visit_date) {
+    let result = {};
+    return new Promise((resolve) => {
+      db.query(
+        `SELECT * FROM agent WHERE agent_id = ${a_id}`,
+        (error, data1) => {
+          result.agent_id = data1.agent_id;
+          result.a_name = data1.a_name;
+          result.a_ph = data1.a_ph;
+          db.query(
+            `SELECT * FROM apply_status WHERE aid = ${a_id}`,
+            (error, datas2) => {
+              datas2.forEach((element) => {
+                let result2 = {};
+                let list = [];
+                if (a_visit_date === element.visit_date) 
+                {
+                  result2.visit_date = element.visit_date;
+                  result2.visit_time = element.visit_time;
+                  list.push(result2);
+                }
+              });
+              result.visit = list;
+              resolve(result);
+            }
+          );
+        }
+      );
+    });
+  },
 };
