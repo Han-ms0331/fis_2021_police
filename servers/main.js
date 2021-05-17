@@ -68,12 +68,12 @@ app.post('/login', (req, res) => {
 			if (password === result[0].u_pwd) {
 				req.session.is_logined = true;
 				req.session.userid = id;
-				let result = {
+				let a = {
 					userid : result[0].user_id,
 					success : true,
 				}
 				console.log('성공');
-				res.send(result);
+				res.send(a);
 			} else {
 				console.log('비밀번호를 확인해주세요');
 				res.send(false);
