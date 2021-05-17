@@ -5,21 +5,21 @@ function CenterList(props) {
 	let result;
 	const getCenterInfo = async () => {
 		result = await axios.get(
-			`http://192.168.0.117:3000/home/${props.uid}/search/${props.center_id}`
+			`http://192.168.0.117:3000/home/${props.uid}/search/${props.data.center_id}`
 		);
 		console.log(result);
 		props.setCenterInfo({
-			centerName: '',
-			centerAddr: '',
+			centerName: props.data.c_name,
+			centerAddr: props.data.c_address,
 			centerPhoneNumber: '',
-			callState_list: [],
-			applyState_list: [],
+			callState_list: result.data.calls,
+			applyState_list: result.data.applies,
 		});
 	};
 	console.log(props.data);
 	const onClick = (e) => {
 		e.preventDefault();
-		props.setCurrentResult(props.center_id);
+		props.setCurrentResult(props.data.center_id);
 		getCenterInfo();
 		props.setIsLoading_2(false);
 	};
