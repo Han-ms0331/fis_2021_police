@@ -120,12 +120,12 @@ app.get('/home/:userid/:target', (req, res) => {
 						center_info_list.push(center_info);
 					});
 					if (center_info_list.length === 0) {
-						res.send(false);
+						res.send([]);
 					} else res.send(center_info_list);
 				}
 			);
 		}
-	} else res.redirect('/');
+	}
 });
 
 //어린이집 정보 제공
