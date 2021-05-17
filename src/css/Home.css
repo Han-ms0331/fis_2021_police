@@ -1,16 +1,14 @@
 .main {
 	display: flex;
-	align-items: center;
 	justify-content: space-around;
 }
-
-.main_search {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	border-right: 5px solid black;
+.list {
+	list-style: none;
 }
 
+.main_search_box {
+	text-align: center;
+}
 .main_search_result_list_item {
 	display: flex;
 }
@@ -20,4 +18,18 @@
 }
 .center_info {
 	margin: 5px 10px;
+}
+.main_info {
+	width: 30%;
+	height: 1000px;
+	padding-left: 30px;
+	border-left: 2px solid black;
+	display: flex;
+	flex-direction: column;
+	align-items: space;
+}
+
+.main_info_header {
+	display: flex;
+	flex-direction: column;
 }

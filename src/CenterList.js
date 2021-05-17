@@ -11,7 +11,8 @@ function CenterList(props) {
 		props.setCenterInfo({
 			centerName: props.data.c_name,
 			centerAddr: props.data.c_address,
-			centerPhoneNumber: '',
+			centerPhoneNumber: props.data.c_ph,
+			centerID: props.data.center_id,
 			callState_list: result.data.calls,
 			applyState_list: result.data.applies,
 		});
@@ -28,6 +29,7 @@ function CenterList(props) {
 		<div class='main_search_result_list_item'>
 			<div class='center_info'>{props.data.c_name}</div>
 			<div class='center_info'>{props.data.c_address}</div>
+			<div class='center_info'>{props.data.c_ph}</div>
 			<div class='center_info'>{props.data.center_id}</div>
 			<button class='main search result list btn' onClick={onClick}>
 				선택
