@@ -98,7 +98,7 @@ app.get('/home/:userid', function (req, res) {
 
 app.get('/home/:userid/:target', (req, res) => {
 	// 어린이집 이름에 대한 정보만 제공
-	if (req.session.is_logined === true) {
+	if (true) {
 		let target = path.parse(req.params.target).base;
 		console.log(target);
 		if (target) {
