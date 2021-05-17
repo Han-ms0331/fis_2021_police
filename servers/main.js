@@ -67,10 +67,10 @@ app.post('/login', (req, res) => {
 			res.send(false);
 		} else {
 			if (password === result[0].u_pwd) {
-				console.log('성공');
-				res.send(true);
 				req.session.is_logined = true;
 				req.session.userid = id;
+				console.log('성공');
+				res.send(true);
 			} else {
 				console.log('비밀번호를 확인해주세요');
 				res.send(false);
@@ -160,6 +160,7 @@ app.post('/home/:userid/modify/:cid', async (req, res) => {
 	let cid = path.parse(req.params.cid).base;
 	let userid = path.parse(req.params.userid).base;
 	let body = req.body;
+	
 });
 
 app.delete('/home/:userid/delete/:cid', async (req, res) => {});
