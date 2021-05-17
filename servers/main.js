@@ -119,7 +119,7 @@ app.get('/home/:userid/:target', (req, res) => {
 						center_info.c_ph = element.c_ph;
 						center_info_list.push(center_info);
 					});
-					req.send(center_info_list);
+					res.send(center_info_list);
 				}
 			);
 		}
