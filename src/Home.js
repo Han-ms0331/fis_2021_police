@@ -195,16 +195,16 @@ function Home(props) {
 							</li>
 						))}
 					</ul>
-					<button class='main_info_call-state_add' onClick={openAddCall}>
-						추가
-					</button>
-					<AddCallState
-						open={IsopenAddCall}
-						closeSave={closeAddCall}
-						closeCancle={closeAddCallCancle}
-						uid={props.uid}
-					/>
 				</div>
+				<button class='main_info_call-state_add' onClick={openAddCall}>
+					추가
+				</button>
+				<AddCallState
+					open={IsopenAddCall}
+					closeSave={closeAddCall}
+					closeCancle={closeAddCallCancle}
+					uid={props.uid}
+				/>
 				<div class='main_info_apply-state'>
 					<div>참여여부 기록</div>
 					<ul class='main_info_apply-state_list list'>
@@ -214,16 +214,16 @@ function Home(props) {
 							</li>
 						))}
 					</ul>
-					<button class='main_info_apply-state_add' onClick={openAddApply}>
-						추가
-					</button>
-					<AddApplyState
-						open={IsopenAddApply}
-						closeSave={closeAddApply}
-						closeCancle={closeAddApplyCancle}
-						uid={props.uid}
-					/>
 				</div>
+				<button class='main_info_apply-state_add' onClick={openAddApply}>
+					추가
+				</button>
+				<AddApplyState
+					open={IsopenAddApply}
+					closeSave={closeAddApply}
+					closeCancle={closeAddApplyCancle}
+					uid={props.uid}
+				/>
 			</div>
 		</div>
 	);
