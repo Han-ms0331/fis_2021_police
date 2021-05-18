@@ -13,13 +13,16 @@ function SearchAgent(props) {
 	};
 	const getSchedule = async () => {
 		const result = await axios.get(
-			`http://192.168.0.117/home/get_agent/${region}/${date}`
+			`http://192.168.0.117:3000/home/get_agent/${region}/${date}`
 		);
 		console.log(result);
 	};
-	const onClick = () => {
+	const onClick = (e) => {
+		e.preventDefault();
 		getSchedule();
 	};
+	console.log(region);
+	console.log(date);
 	return (
 		<div class='searchAgent'>
 			<div class='searchAgent_aid'>
@@ -33,7 +36,7 @@ function SearchAgent(props) {
 					styles='width:500px;'
 				/>
 			</div>
-			<button onclick={onClick}>검색</button>
+			<button onClick={onClick}>검색</button>
 		</div>
 	);
 }
