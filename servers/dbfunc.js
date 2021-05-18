@@ -38,6 +38,7 @@ module.exports = {
   },
   get_agent_status: async function (a_id, a_visit_date) {
     let result = {};
+    console.log(a_id, a_visit_date);
     return new Promise((resolve) => {
       db.query(
         `SELECT * FROM agent WHERE agent_id = '${a_id}'`,
@@ -49,7 +50,6 @@ module.exports = {
           db.query(
             `SELECT * FROM apply_status WHERE aid = '${a_id}'`,
             (error, datas2) => {
-              console.log(data1, datas2);
               datas2.forEach((element) => {
                 let result2 = {};
                 if (a_visit_date === element.visit_date) 
@@ -58,6 +58,7 @@ module.exports = {
                   result2.visit_time = element.visit_time;
                   list.push(result2);
                 }
+                console.log(result2);
               });
               result.visit = list;
               resolve(result);
