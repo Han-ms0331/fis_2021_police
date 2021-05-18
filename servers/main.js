@@ -207,8 +207,8 @@ app.get("/schedule/:date", (req, res) => {
         // res.send(false);
       }
 
-      let temp_cid = store_schedule.map((data) => {
-        db.query(
+      let temp_cid = store_schedule.map(async (data) => {
+        await db.query(
           `SELECT c_name, c_address FROM center WHERE center_id = ${data.cid}`,
           function (error2, store_center) {
             if (error2) {
@@ -222,7 +222,7 @@ app.get("/schedule/:date", (req, res) => {
           }
         );
       });
-      console.log(temp_cid); //안나옴 ,,,,ㅡㅡㅡㅡㅡㅡ
+      console.log(temp_cid.data); //안나옴 ,,,,ㅡㅡㅡㅡㅡㅡ
       res.send(temp_cid);
     }
   );
