@@ -203,28 +203,29 @@ app.get("/schedule/:date", (req, res) => {
   		FROM apply_status
   		WHERE visit_date = '${date}' AND latest = 1
   		ORDER BY visit_time;`,
-    function (error, store_schedule) {
+    function async(error, store_schedule) {
       if (error) {
         console.log(error);
         // res.send(false);
       }
 
-      let temp_cid = store_schedule.map(async (data) => {
+      for (let i = 0; i < store_schedule.length; i++) {
         await db.query(
-          `SELECT c_name, c_address FROM center WHERE center_id = ${data.cid}`,
+          `SELECT c_name, c_address FROM center WHERE center_id = ${store_schedule[i].cid}`,
           function (error2, store_center) {
             if (error2) {
               console.log(error2);
               //   res.send(false);
             }
-            store_schedule.c_name = store_center[0].c_name;
-            store_schedule.c_address = store_center[0].c_address;
+            store_schedule[i].c_name = store_center[0].c_name;
+            store_schedule[i].c_address = store_center[0].c_address;
             console.log(store_schedule);
             return store_schedule;
           }
         );
-      });
-      console.log(temp_cid.data); //안나옴 ,,,,ㅡㅡㅡㅡㅡㅡ
+      }
+
+      console.log(temp_cid); //안나옴 ,,,,ㅡㅡㅡㅡㅡㅡ
       res.send(temp_cid);
     }
   );
