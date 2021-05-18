@@ -168,8 +168,6 @@ app.post("/home/:userid/modify/:cid", async (req, res) => {
   let body = req.body;
 });
 
-app.delete("/home/:userid/delete/:cid", async (req, res) => {});
-
 app.post("/home/call_write/:cid", async (req, res) => {
   const cid = path.parse(req.params.cid).base;
   let post = JSON.parse(Object.keys(req.body)[0]);
@@ -182,7 +180,7 @@ app.get("/home/get_agent/:a_region/:visited_date", async (req, res) => {
   let visit_date = path.parse(req.params.visit_date).base;
   db.query(
     `SELECT * FROM agent WHERE agent_id LIKE '%${a_region}%'`,
-    (error, datas) => {
+    async (error, datas) => {
 		let result = [];
 		datas.forEach(element => {
 			agent_id = element.agent_id;
