@@ -13,11 +13,11 @@ module.exports = {
   },
   set_call_status: async function (post) {
     const { cid } = post.cid;
-    const { uid } = post.uid;
+    const { c_manager } = post.c_manager;
     const { date } = post.date;
     const { participation } = post.participation;
     const { in_out } = post.in_out;
-    const { c_manager } = post.c_manager;
+    const { u_id } = post.u_id;
     const { m_ph } = post.m_ph;
     const { m_email } = post.m_email;
     const { etc } = post.etc;

@@ -49,9 +49,6 @@ app.get("/", (req, res) => {
 });
 
 app.post("/login", (req, res) => {
-  if (req.session.is_logined === true && req.session.userid !== null) {
-    res.redirect(`/home/${req.session.userid}`);
-  }
   let post = JSON.parse(Object.keys(req.body)[0]);
   let id = post.username;
   // const { username } = req.body; 로 가능
@@ -73,6 +70,7 @@ app.post("/login", (req, res) => {
         });
         let a = {
           userid: result[0].user_id,
+          username : result[0].u_name,
           success: true,
         };
         console.log("성공");
@@ -88,15 +86,13 @@ app.post("/login", (req, res) => {
 app.post("/logout", (req, res) => {
   req.session.remove("userid");
   req.session.remove("is_logined");
-  res.redirect("/");
 });
 
-app.get("/home/:userid", function (req, res) {
-  if (req.session.is_logined === true) {
+app.get("/home/:userid", function (req, res) {   //uid 반환
+  if (true) {
     var userid = path.parse(req.params.userid).base;
     res.send(userid);
-  } else redirect("not logined");
-  //로그인 성공시 userid를 반환시켜준다.
+  }
 });
 
 app.get("/home/:userid/:target", (req, res) => {
@@ -160,11 +156,11 @@ app.get("/home/:userid/search/:cid", async (req, res) => {
 
 app.post("/home/call_write/:cid", async (req, res) => {
   const cid = path.parse(req.params.cid).base;
-  console.log(req);
   let post = JSON.parse(Object.keys(req.body)[0]);
+  post.cid = cid;
   console.log(post);
   let result = await dbfunc.set_call_status(post);
-  console.log()
+  console.log(result);
   res.send(result);
 });
 
