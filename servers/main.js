@@ -195,8 +195,9 @@ app.post("/home/applysave", (req, res) => {
 });
 
 app.get("/schedule/:date", (req, res) => {
+  console.log("bdfore");
   const date = path.parse(req.params.date).base;
-  console.log(date);
+  console.log("after");
 
   db.query(
     `SELECT aid, visit_time, estimate_num, cid
