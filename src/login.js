@@ -37,7 +37,6 @@ function Login(props){
         <div class='inner-container'>
             <div class='header'>
                 <h2>Log-In</h2>
-            
                 <div class='input-group'>
                     <h4>Username</h4>
                     <input 
