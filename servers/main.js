@@ -160,10 +160,14 @@ app.get("/home/get_agent/:a_region/:visit_date", async (req, res) => {
   await db.query(
     `SELECT * FROM agent WHERE agent_id LIKE '%${a_region}%'`,
     async (error, datas) => {
-      for (let i = 0; datas[i] != null; i++) {
-        let agent_id = await datas[i].agent_id;
-        let result2 = await dbfunc.get_agent_status(agent_id, visit_date);
-        result.push(result2);
+      if (error) {
+        console.log(error);
+      } else {
+        for (let i = 0; datas[i] != null; i++) {
+          let agent_id = await datas[i].agent_id;
+          let result2 = await dbfunc.get_agent_status(agent_id, visit_date);
+          result.push(result2);
+        }
       }
     }
   );
