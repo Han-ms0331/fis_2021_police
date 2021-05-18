@@ -104,7 +104,6 @@ app.get("/home/:userid/:target", (req, res) => {
   // 어린이집 이름에 대한 정보만 제공
   if (true) {
     let target = path.parse(req.params.target).base;
-    console.log(target);
     if (target) {
       //target이 포함된 어린이집 출력
       db.query(
@@ -139,7 +138,6 @@ app.get("/home/:userid/search/:cid", async (req, res) => {
   if (true) {
     try {
       let cid = path.parse(req.params.cid).base;
-      console.log(cid);
       let result = {
         centers: {},
         calls: {},
@@ -154,18 +152,11 @@ app.get("/home/:userid/search/:cid", async (req, res) => {
       result.applies = await dbfunc.get_data(
         `SELECT * FROM apply_status WHERE cid = ${cid}`
       );
-      console.log(result);
       res.send(result);
     } catch {
       res.send(Error);
     }
   }
-});
-
-app.post("/home/:userid/modify/:cid", async (req, res) => {
-  let cid = path.parse(req.params.cid).base;
-  let userid = path.parse(req.params.userid).base;
-  let body = req.body;
 });
 
 app.post("/home/call_write/:cid", async (req, res) => {
