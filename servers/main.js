@@ -226,6 +226,7 @@ app.get("/schedule/:date", (req, res) => {
         console.log(err);
         // res.send(false);
       }
+      console.log(store_schedule); //나오냐????????
       let temp_cid = store_schedule.map((data) => {
         db.query(
           `SELECT c_name, c_address FROM center WHERE cid = ${data.cid}`,
@@ -240,7 +241,7 @@ app.get("/schedule/:date", (req, res) => {
           }
         );
       });
-      console.log(temp_cid);
+      console.log(temp_cid); //안나옴 ,,,,ㅡㅡㅡㅡㅡㅡ
       res.send(temp_cid);
     }
   );
