@@ -153,18 +153,30 @@ app.post("/home/call_write/:cid", async (req, res) => {
   console.log(result);
   res.send(result);
 });
-
 app.get("/home/get_agent/:a_region/:visit_date", async (req, res) => {
   let a_region = path.parse(req.params.a_region).base;
   let visit_date = path.parse(req.params.visit_date).base;
   db.query(
     `SELECT * FROM agent WHERE agent_id LIKE '%${a_region}%'`,
     async (error, datas) => {
+<<<<<<< HEAD
       let result = [];
       for(let i = 0; datas[i] != null; i++){
         let agent_id = datas[i].agent_id;
         let result2 = await dbfunc.get_agent_status(agent_id, visit_date);
         result.push(result2);
+=======
+      try {
+        let result = [];
+        datas.forEach(async (element) => {
+          let agent_id = element.agent_id;
+          result.push(dbfunc.get_agent_status(agent_id, visit_date));
+          console.log(result);
+          res.send(result);
+        });
+      } catch {
+        console.log(Error);
+>>>>>>> 41371bdcc129c6661455cb2b690665192f995549
       }
       console.log(result);
       res.send(result);
@@ -199,37 +211,37 @@ app.get("/schedule/:date", (req, res) => {
   const date = path.parse(req.params.date).base;
   console.log(req);
   console.log(date);
+  res.send("seccessssssss");
+  //   db.query(
+  //     `SELECT aid, visit_time, estimate_num, cid
+  // 		FROM apply_status
+  // 		WHERE visit_date = '${date}' AND latest = 1
+  // 		ORDER BY visit_time;`,
+  //     function (error, store_schedule) {
+  //       if (error) {
+  //         console.log(error);
+  //         // res.send(false);
+  //       }
 
-  db.query(
-    `SELECT aid, visit_time, estimate_num, cid
-		FROM apply_status
-		WHERE visit_date = '${date}' AND latest = 1
-		ORDER BY visit_time;`,
-    function (error, store_schedule) {
-      if (error) {
-        console.log(error);
-        // res.send(false);
-      }
-
-      let temp_cid = store_schedule.map((data) => {
-        db.query(
-          `SELECT c_name, c_address FROM center WHERE center_id = ${data.cid}`,
-          function (error2, store_center) {
-            if (error2) {
-              console.log(error2);
-              //   res.send(false);
-            }
-            store_schedule.c_name = store_center[0].c_name;
-            store_schedule.c_address = store_center[0].c_address;
-            //console.log(store_schedule);
-            return store_schedule;
-          }
-        );
-      });
-      //console.log(temp_cid); //안나옴 ,,,,ㅡㅡㅡㅡㅡㅡ
-      res.send(temp_cid);
-    }
-  );
+  //       let temp_cid = store_schedule.map((data) => {
+  //         db.query(
+  //           `SELECT c_name, c_address FROM center WHERE center_id = ${data.cid}`,
+  //           function (error2, store_center) {
+  //             if (error2) {
+  //               console.log(error2);
+  //               //   res.send(false);
+  //             }
+  //             store_schedule.c_name = store_center[0].c_name;
+  //             store_schedule.c_address = store_center[0].c_address;
+  //             //console.log(store_schedule);
+  //             return store_schedule;
+  //           }
+  //         );
+  //       });
+  //       //console.log(temp_cid); //안나옴 ,,,,ㅡㅡㅡㅡㅡㅡ
+  //       res.send(temp_cid);
+  //     }
+  //   );
 });
 
 app.listen(3000, function () {
