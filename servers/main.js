@@ -220,6 +220,7 @@ app.get("/schedule/:date", (req, res) => {
         console.log(error);
         // res.send(false);
       }
+
       let temp_cid = store_schedule.map((data) => {
         db.query(
           `SELECT c_name, c_address FROM center WHERE center_id = ${data.cid}`,
@@ -229,8 +230,8 @@ app.get("/schedule/:date", (req, res) => {
               //   res.send(false);
             }
 
-            store_schedule.c_name = store_center[0].c_name;
-            store_schedule.c_address = store_center[0].c_address;
+            store_schedule["c_name"] = store_center[0].c_name;
+            store_schedule["c_address"] = store_center[0].c_address;
             console.log(store_schedule);
             return store_schedule;
           }
