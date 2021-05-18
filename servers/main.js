@@ -184,6 +184,7 @@ app.get("/home/get_agent/:a_region/:visited_date", async (req, res) => {
 
 app.post("/home/applysave", (req, res) => {
   let post = JSON.parse(Object.keys(req.body)[0]);
+  console.log(post);
   let sql = `INSERT INTO apply_status(cid, uid, recept_date, collect, visit_date, visit_time, estimate_num, aid, latest)
   VALUES (${post.cid}, ${post.uid}, ${post.recept_date}, ${post.collect}, ${post.visit_date}, ${post.visit_time}, ${post.estimate_num}, ${post.aid},1);`;
 
