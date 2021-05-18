@@ -9,19 +9,6 @@ import AddApplyState from './AddApplyState';
 import { Redirect } from 'react-router';
 import SearchAgent from './SearchAgent';
 
-const customStyles = {
-	content: {
-		top: '50%',
-		left: '50%',
-		right: 'auto',
-		bottom: 'auto',
-		marginRight: '-50%',
-		transform: 'translate(-50%, -50%)',
-	},
-};
-
-// Modal.setAppElement('#yourAppElement');
-
 function Home(props) {
 	const [searchCenter, setSearchCenter] = useState('');
 	const [isLoading_1, setIsLoading_1] = useState(true);

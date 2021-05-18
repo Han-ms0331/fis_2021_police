@@ -1,7 +1,8 @@
 import axios from 'axios';
 import React, { useState } from 'react';
+import { Redirect } from 'react-router';
 
-function Schedule() {
+function Schedule(props) {
 	const [date, setDate] = useState('');
 
 	const onChange = (e) => {
@@ -19,7 +20,8 @@ function Schedule() {
 		e.preventDefault();
 		getSchedule();
 	};
-	return (
+	props.setIsLogined(localStorage.getItem('isLogined'));
+	return props.isLogined ? (
 		<div class='main'>
 			<div class='main_search_box'>
 				<input
@@ -34,6 +36,8 @@ function Schedule() {
 				</button>
 			</div>
 		</div>
+	) : (
+		<Redirect to='/' />
 	);
 }
 
