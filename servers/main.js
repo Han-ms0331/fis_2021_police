@@ -187,18 +187,22 @@ app.get("/home/get_agent/:a_region/:visit_date", async (req, res) => {
     async (error, datas) => {
 >>>>>>> 2c06a9a619e6497d8c9f8dc9c408e69c7c7e7954
         let result = [];
-        datas.forEach(async (element) => {
+        await datas.forEach(async (element) => {
           let agent_id = element.agent_id;
           let result2 = await dbfunc.get_agent_status(agent_id, visit_date);
           result.push(result2);
         });
         console.log(result);
 <<<<<<< HEAD
+<<<<<<< HEAD
         res.send(result);
 >>>>>>> dad0c409404deca3b6359b1869d314a5585b7642
 =======
         await res.send(result);
 >>>>>>> 2c06a9a619e6497d8c9f8dc9c408e69c7c7e7954
+=======
+        res.send(result);
+>>>>>>> 47c058cce6973334ea356bbdbca30830b49d87a6
     }
   );
 });
