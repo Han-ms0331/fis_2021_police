@@ -214,12 +214,12 @@ app.post("/home/applysave", (req, res) => {
 });
 
 app.get("/schedule/:date", (req, res) => {
-  let date = path.parse(req.params.date).base;
-
+  const date = path.parse(req.params.date).base;
+  console.log(date);
   db.query(
     `SELECT aid, visit_time, estimate_num, cid
 		FROM apply_status
-		WHERE visit_date = ${date} AND latest = 1
+		WHERE visit_date = '${date}' AND latest = 1
 		ORDER BY visit_time;`,
     function (error, store_schedule) {
       if (error) {
