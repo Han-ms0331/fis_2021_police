@@ -198,7 +198,7 @@ app.post("/home/applysave", (req, res) => {
 });
 
 app.get("/schedule/:date", (req, res) => {
-  const date = path.parse(req.params.date).base;
+  const date = path.parse(req.params.date);
   console.log(req);
   console.log(date);
 
