@@ -225,7 +225,6 @@ app.get("/schedule/:date", (req, res) => {
         // res.send(false);
       }
       let temp_cid = store_schedule.map((data) => {
-        console.log(data.cid);
         db.query(
           `SELECT c_name, c_address FROM center WHERE center_id = ${data.cid}`,
           function (error2, store_center) {
@@ -233,7 +232,7 @@ app.get("/schedule/:date", (req, res) => {
               console.log(error2);
               //   res.send(false);
             }
-            // console.log(data.cid);
+            console.log(store_center);
             store_schedule.c_name = store_center.c_name;
             store_schedule.c_address = store_center.c_address;
             //console.log(store_schedule);
