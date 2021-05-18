@@ -215,7 +215,6 @@ app.post("/home/applysave", (req, res) => {
 
 app.get("/schedule/:date", (req, res) => {
   const date = path.parse(req.params.date).base;
-  console.log(date);
   db.query(
     `SELECT aid, visit_time, estimate_num, cid
 		FROM apply_status
@@ -226,9 +225,9 @@ app.get("/schedule/:date", (req, res) => {
         console.log(err);
         // res.send(false);
       }
-      console.log(store_schedule); //나오냐????????
       let temp_cid = store_schedule.map((data) => {
         db.query(
+			console.log(data.cid);
           `SELECT c_name, c_address FROM center WHERE cid = ${data.cid}`,
           function (error2, store_center) {
             if (error2) {
