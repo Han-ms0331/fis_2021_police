@@ -21,6 +21,8 @@ module.exports = {
     const { m_ph } = post;
     const { m_email } = post;
     const { etc } = post;
+    cid = Number(cid);
+    uid = Number(uid);
     return new Promise((resolve) => {
       db.query(
         `
