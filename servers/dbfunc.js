@@ -51,7 +51,6 @@ module.exports = {
             `SELECT * FROM apply_status WHERE aid = '${a_id}'`,
             (error, datas2) => {
               datas2.forEach((element) => {
-                console.log(element);
                 let result2 = {};
                   result2.visit_date = element.visit_date;
                   result2.visit_time = element.visit_time;
