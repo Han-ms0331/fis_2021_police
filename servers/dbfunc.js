@@ -27,7 +27,7 @@ module.exports = {
         INSERT INTO call_status( cid, uid, date, participation, 
         in_out, c_manager, m_ph, m_email, etc )
         VALUES (${cid}, ${uid}, ${date}, ${participation}, 
-        ${in_out}, ${c_manager}, ${m_ph}, ${m_email}, ${etc});`,
+        ${in_out}, ${c_manager}, ${m_ph}, ${m_email}, ${etc})`,
         (error, data) => {
           if (error) {
             throw error;
