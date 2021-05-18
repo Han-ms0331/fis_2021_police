@@ -49,14 +49,14 @@ module.exports = {
           db.query(
             `SELECT * FROM apply_status WHERE aid = '${a_id}'`,
             (error, datas2) => {
-              datas2.forEach((element) => {
+              for(let i = 0; datas2[i] != null; i++){
                 let result2 = {};
-                if (element.visit_date == a_visit_date) {
+                if (datas2[i].visit_date == a_visit_date) {
                   result2.visit_date = element.visit_date;
                   result2.visit_time = element.visit_time;
                   list.push(result2);
                 }
-              });
+              }
               result.visit = list;
               console.log(result);
               resolve(result);
