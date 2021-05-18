@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import Login from './login';
 import Home from './Home';
 import Schedule from './TotalSchedule';
+import Navigation from './Navigation';
+import Logout from './Logout';
 import { BrowserRouter, Route } from 'react-router-dom';
 
 function App() {
@@ -16,6 +18,8 @@ function App() {
 
 	return (
 		<BrowserRouter>
+			{isLogined ? <Navigation /> : null}
+
 			<Route
 				path='/'
 				render={() => (
@@ -39,7 +43,18 @@ function App() {
 					<Home isLogined={isLogined} setIsLogined={setIsLogined} />
 				)}
 			/>
-			<Route path='/schedule' render={() => <Schedule />} />
+			<Route
+				path='/schedule'
+				render={() => (
+					<Schedule isLogined={isLogined} setIsLogined={setIsLogined} />
+				)}
+			/>
+			<Route
+				path='/logout'
+				render={() => (
+					<Logout isLogined={isLogined} setIsLogined={setIsLogined} />
+				)}
+			/>
 		</BrowserRouter>
 	);
 }
