@@ -1,32 +1,45 @@
-import React, { useState } from "react";
-import Login from "./login";
-import Home from "./Home";
+import React, { useState } from 'react';
+import Login from './login';
+import Home from './Home';
+import { BrowserRouter, Route } from 'react-router-dom';
 
 function App() {
-  const [userName, setUserName] = useState("");
-  const [passWord, setPassWord] = useState("");
-  const [isLogined, setIsLogined] = useState(false);
-  const [UID, setUID] = "1";
+	const [userName, setUserName] = useState('');
+	const [passWord, setPassWord] = useState('');
+	const [isLogined, setIsLogined] = useState(false);
+	const [UID, setUID] = useState('');
 
-  const loginState = (condition) => {
-    setIsLogined(condition);
-  };
+	const loginState = (condition) => {
+		setIsLogined(condition);
+	};
 
-  return isLogined ? (
-    <Home uid={UID} />
-  ) : (
-    <Login
-      userName={userName}
-      setUserName={setUserName}
-      passWord={passWord}
-      setPassWord={setPassWord}
-      isLogined={isLogined}
-      setIsLogined={setIsLogined}
-      UID={UID}
-      setUID={setUID}
-      loginState={loginState}
-    />
-  );
+	return (
+		<BrowserRouter>
+			<Route
+				path='/'
+				render={() => (
+					<Login
+						userName={userName}
+						setUserName={setUserName}
+						passWord={passWord}
+						setPassWord={setPassWord}
+						isLogined={isLogined}
+						setIsLogined={setIsLogined}
+						UID={UID}
+						setUID={setUID}
+						loginState={loginState}
+					/>
+				)}
+				exact
+			/>
+			<Route
+				path='/home'
+				render={() => (
+					<Home isLogined={isLogined} setIsLogined={setIsLogined} />
+				)}
+			/>
+		</BrowserRouter>
+	);
 }
 
 export default App;
