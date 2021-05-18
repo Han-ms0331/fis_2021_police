@@ -228,7 +228,6 @@ app.get("/schedule/:date", (req, res) => {
       res.send(temp_cid);
     }
   );
-  res.send(true);
 });
 
 app.listen(3000, function () {
