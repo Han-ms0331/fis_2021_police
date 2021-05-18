@@ -159,24 +159,11 @@ app.get("/home/get_agent/:a_region/:visit_date", async (req, res) => {
   db.query(
     `SELECT * FROM agent WHERE agent_id LIKE '%${a_region}%'`,
     async (error, datas) => {
-<<<<<<< HEAD
       let result = [];
-      for(let i = 0; datas[i] != null; i++){
+      for (let i = 0; datas[i] != null; i++) {
         let agent_id = datas[i].agent_id;
         let result2 = await dbfunc.get_agent_status(agent_id, visit_date);
         result.push(result2);
-=======
-      try {
-        let result = [];
-        datas.forEach(async (element) => {
-          let agent_id = element.agent_id;
-          result.push(dbfunc.get_agent_status(agent_id, visit_date));
-          console.log(result);
-          res.send(result);
-        });
-      } catch {
-        console.log(Error);
->>>>>>> 41371bdcc129c6661455cb2b690665192f995549
       }
       console.log(result);
       res.send(result);
@@ -208,9 +195,7 @@ app.post("/home/applysave", (req, res) => {
 });
 
 app.get("/schedule/:date", (req, res) => {
-	console.log('전');
   const date = path.parse(req.params.date).base;
-  console.log('후');
   console.log(date);
 
   db.query(
