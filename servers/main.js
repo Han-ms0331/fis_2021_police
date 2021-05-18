@@ -171,7 +171,6 @@ app.get("/home/get_agent/:a_region/:visit_date", async (req, res) => {
   db.query(
     `SELECT * FROM agent WHERE agent_id LIKE '%${a_region}%'`,
     async (error, datas) => {
-      try {
         let result = [];
         datas.forEach(async (element) => {
           let agent_id = element.agent_id;
@@ -180,9 +179,6 @@ app.get("/home/get_agent/:a_region/:visit_date", async (req, res) => {
         });
         console.log(result);
         res.send(result);
-      } catch {
-        console.log(Error);
-      }
     }
   );
 });

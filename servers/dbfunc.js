@@ -43,9 +43,9 @@ module.exports = {
         `SELECT * FROM agent WHERE agent_id = '${a_id}'`,
         (error, data1) => {
           console.log(data1);
-          result.agent_id = data1.agent_id;
-          result.a_name = data1.a_name;
-          result.a_ph = data1.a_ph;
+          result.agent_id = data1[0].agent_id;
+          result.a_name = data1[0].a_name;
+          result.a_ph = data1[0].a_ph;
           let list = [];
           db.query(
             `SELECT * FROM apply_status WHERE aid = '${a_id}'`,
