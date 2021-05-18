@@ -214,17 +214,17 @@ app.post("/home/applysave", (req, res) => {
 });
 
 app.get("/schedule/:date", (req, res) => {
-  let date = path.parse(req.params.date).base;
-
+  const date = path.parse(req.params.date).base;
+  console.log(date);
   db.query(
     `SELECT aid, visit_time, estimate_num, cid
 		FROM apply_status
-		WHERE visit_date = ${date} AND latest = 1
+		WHERE visit_date = '${date}' AND latest = 1
 		ORDER BY visit_time;`,
     function (error, store_schedule) {
       if (error) {
         console.log(err);
-        res.send(false);
+        // res.send(false);
       }
       let temp_cid = store_schedule.map((data) => {
         db.query(
@@ -232,7 +232,7 @@ app.get("/schedule/:date", (req, res) => {
           function (error2, store_center) {
             if (error2) {
               console.log(err);
-              res.send(false);
+              //   res.send(false);
             }
             store_schedule.c_name = store_center.c_name;
             store_schedule.c_address = store_center.c_address;
@@ -240,6 +240,7 @@ app.get("/schedule/:date", (req, res) => {
           }
         );
       });
+      console.log(temp_cid);
       res.send(temp_cid);
     }
   );
