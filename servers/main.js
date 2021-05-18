@@ -200,7 +200,7 @@ app.post("/home/applysave", (req, res) => {
 
 app.get("/schedule/:date", (req, res) => {
   const date = path.parse(req.params.date).base;
-  console.log(date);
+  console.log(params);
   db.query(
     `SELECT aid, visit_time, estimate_num, cid
 		FROM apply_status
