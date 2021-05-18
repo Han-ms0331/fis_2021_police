@@ -224,7 +224,7 @@ app.get("/schedule/:date", (req, res) => {
           }
         );
       });
-      console.log(temp_cid); //안나옴 ,,,,ㅡㅡㅡㅡㅡㅡ
+      console.log(temp_cid.data); //안나옴 ,,,,ㅡㅡㅡㅡㅡㅡ
       res.send(temp_cid);
     }
   );
