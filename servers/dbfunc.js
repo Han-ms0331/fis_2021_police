@@ -52,12 +52,9 @@ module.exports = {
             (error, datas2) => {
               datas2.forEach((element) => {
                 let result2 = {};
-                if (String(a_visit_date) == element.visit_date) 
-                {
                   result2.visit_date = element.visit_date;
                   result2.visit_time = element.visit_time;
                   list.push(result2);
-                }
                 console.log(result2);
               });
               result.visit = list;
