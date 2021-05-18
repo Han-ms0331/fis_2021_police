@@ -51,6 +51,7 @@ module.exports = {
             (error, datas2) => {
               for(let i = 0; datas2[i] != null; i++){
                 let result2 = {};
+                console.log(a_visit_date, datas2[i].visit_date)
                 if (datas2[i].visit_date == a_visit_date) {
                   result2.visit_date = datas2[i].visit_date;
                   result2.visit_time = datas2[i].visit_time;
