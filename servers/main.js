@@ -208,8 +208,9 @@ app.post("/home/applysave", (req, res) => {
 });
 
 app.get("/schedule/:date", (req, res) => {
+	console.log('전');
   const date = path.parse(req.params.date).base;
-  console.log(req);
+  console.log('후');
   console.log(date);
 
   db.query(
