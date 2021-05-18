@@ -21,7 +21,8 @@ CREATE TABLE center(
 INSERT INTO center( c_sido, c_sigungu, c_name, c_type, c_status, c_address, c_zipcode, c_ph, c_fax_num, c_people, c_hp_address, c_latitude, c_longitude )
 VALUES ('경기도', '동안구', '땡땡어린이집', '국공립', '정상', '안양시 동안구 동안로 어쩌구', '00000', '031-000-0000', '031-000-0011', '20', 'https://뭐쩌고', '37.0', '127.0'); 
 
-
+INSERT INTO center( c_sido, c_sigungu, c_name, c_type, c_status, c_address, c_zipcode, c_ph, c_fax_num, c_people, c_hp_address, c_latitude, c_longitude )
+VALUES ('서울', '어디구', '땡땡유치원', '국공립', '정상', '서울 어디구 어쩌구', '00001', '02-000-0000', '02-000-0011', '20', 'https://뭐쩌고', '37.1', '127.1'); 
 
 
 
@@ -34,7 +35,7 @@ CREATE TABLE user(
 );
 
 INSERT INTO user( u_name, u_pwd, u_ph) VALUES ('원보라user', '1234','010-4057-0750');
-
+INSERT INTO user( u_name, u_pwd, u_ph) VALUES ('한명수user', '1234','010-2565-5898');
 
 
 
@@ -50,6 +51,7 @@ CREATE TABLE agent(
 );
 
 INSERT INTO agent( agent_id, a_name, a_ph, a_address, a_latitude, a_longitude ) VALUES ('안양1', '원보라agent', '010-7777-7777', '경기도 안양시', '37.0', '127.0');
+INSERT INTO agent( agent_id, a_name, a_ph, a_address, a_latitude, a_longitude ) VALUES ('노원1', '고준영agent', '010-7777-7779', '서울시 노원구', '37.1', '127.1');
 
 
 
