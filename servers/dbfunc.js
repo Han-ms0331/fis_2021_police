@@ -58,7 +58,6 @@ module.exports = {
                 }
               }
               result.visit = list;
-              console.log("이건 아님 : ", result);
               resolve(result);
               return;
             }
