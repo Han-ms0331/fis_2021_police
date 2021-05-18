@@ -85,16 +85,23 @@ function AddCallState(props){
 
 	const send = async() => {
 		console.log(name);
-		const result = await axios.post("/home/call_write/:cid", JSON.stringify({
-			name: name,
-			date: date,
-			bound: bound,
-			email: email,
-			digit: digit,
-			attend: attend,
-			recorder: recorder,
-			guitar: guitar
-		}))
+		console.log(date);
+		console.log(bound);
+		console.log(email);
+		console.log(digit);
+		console.log(attend);
+		console.log(recorder);
+		console.log(guitar);
+		const result = await axios.post("http://192.168.0.117:3000/home/call_write/:cid", JSON.stringify({
+		 	c_manager: name,
+		  	date: date,
+		  	in_out: bound,
+		  	m_email: email,
+		  	m_ph: digit,
+		  	participation: attend,
+		  	uid: recorder,
+		 	etc: guitar
+		  }))
 	}
 
 	return (

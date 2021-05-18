@@ -4,7 +4,6 @@ function SearchAgent(props){
 
     return (
         <div>
-            
         </div>
     );
 }
