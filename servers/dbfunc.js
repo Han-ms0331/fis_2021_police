@@ -37,8 +37,8 @@ module.exports = {
     });
   },
   get_agent_status: async function (a_id, a_visit_date) {
-    let result = {};
     return new Promise((resolve) => {
+      let result = {};
       db.query(
         `SELECT * FROM agent WHERE agent_id = '${a_id}'`,
         (error, data1) => {
