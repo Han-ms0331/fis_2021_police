@@ -13,7 +13,6 @@ const { send, allowedNodeEnvironmentFlags } = require("process");
 const FileStore = require("session-file-store")(session);
 const cors = require("cors");
 const dbfunc = require("./dbfunc");
-const { Agent } = require("http");
 db.connect();
 
 const whitelist = ["*"];
@@ -104,7 +103,6 @@ app.get("/home/:userid/:target", (req, res) => {
   // 어린이집 이름에 대한 정보만 제공
   if (true) {
     let target = path.parse(req.params.target).base;
-    console.log(target);
     if (target) {
       //target이 포함된 어린이집 출력
       db.query(
@@ -139,7 +137,6 @@ app.get("/home/:userid/search/:cid", async (req, res) => {
   if (true) {
     try {
       let cid = path.parse(req.params.cid).base;
-      console.log(cid);
       let result = {
         centers: {},
         calls: {},
@@ -154,7 +151,6 @@ app.get("/home/:userid/search/:cid", async (req, res) => {
       result.applies = await dbfunc.get_data(
         `SELECT * FROM apply_status WHERE cid = ${cid}`
       );
-      console.log(result);
       res.send(result);
     } catch {
       res.send(Error);
@@ -162,18 +158,13 @@ app.get("/home/:userid/search/:cid", async (req, res) => {
   }
 });
 
-app.post("/home/:userid/modify/:cid", async (req, res) => {
-  let cid = path.parse(req.params.cid).base;
-  let userid = path.parse(req.params.userid).base;
-  let body = req.body;
-});
-
-app.delete("/home/:userid/delete/:cid", async (req, res) => {});
-
 app.post("/home/call_write/:cid", async (req, res) => {
   const cid = path.parse(req.params.cid).base;
+  console.log(req);
   let post = JSON.parse(Object.keys(req.body)[0]);
+  console.log(post);
   let result = await dbfunc.set_call_status(post);
+  console.log()
   res.send(result);
 });
 
@@ -182,9 +173,9 @@ app.get("/home/get_agent/:a_region/:visited_date", async (req, res) => {
   let visit_date = path.parse(req.params.visit_date).base;
   db.query(
     `SELECT * FROM agent WHERE agent_id LIKE '%${a_region}%'`,
-    (error, datas) => {
+    async (error, datas) => {
 		let result = [];
-		datas.forEach(element => {
+		datas.forEach(async (element) => {
 			agent_id = element.agent_id;
 			let result2 = await dbfunc.get_agent_status(agent_id, visit_date);
 			result.push(result2);
