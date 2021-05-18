@@ -70,7 +70,7 @@ app.post("/login", (req, res) => {
         });
         let a = {
           userid: result[0].user_id,
-          username : result[0].u_name,
+          username: result[0].u_name,
           success: true,
         };
         console.log("성공");
@@ -88,7 +88,8 @@ app.post("/logout", (req, res) => {
   req.session.remove("is_logined");
 });
 
-app.get("/home/:userid", function (req, res) {   //uid 반환
+app.get("/home/:userid", function (req, res) {
+  //uid 반환
   if (true) {
     var userid = path.parse(req.params.userid).base;
     res.send(userid);
@@ -170,55 +171,72 @@ app.get("/home/get_agent/:a_region/:visited_date", async (req, res) => {
   db.query(
     `SELECT * FROM agent WHERE agent_id LIKE '%${a_region}%'`,
     async (error, datas) => {
-		let result = [];
-		datas.forEach(async (element) => {
-			agent_id = element.agent_id;
-			let result2 = await dbfunc.get_agent_status(agent_id, visit_date);
-			result.push(result2);
-		});
-		res.send(result);
-	}
+      let result = [];
+      datas.forEach(async (element) => {
+        agent_id = element.agent_id;
+        let result2 = await dbfunc.get_agent_status(agent_id, visit_date);
+        result.push(result2);
+      });
+      res.send(result);
+    }
   );
 });
 
-// app.get('/home/:userid/search/:cid', (req, res) => {
-// 	let cid = path.parse(req.params.cid).base;
+app.post("/home/applysave", (req, res) => {
+  let post = JSON.parse(Object.keys(req.body)[0]);
+  console.log(post);
+  let sql = `INSERT INTO apply_status(cid, uid, recept_date, collect, visit_date, visit_time, estimate_num, aid, latest)
+  VALUES (${post.cid}, ${post.uid}, '${post.recept_date}', '${post.collect}', '${post.visit_date}', '${post.visit_time}', '${post.estimate_num}', '${post.aid}',1);`;
 
-// 	let result = {
-// 		centers: {},
-// 		calls: {},
-// 		applies: {},
-// 	};
+  db.query(
+    `UPDATE apply_status SET latest=0 WHERE cid=${post.cid};`,
+    (err, update_apply) => {
+      //같은 시설 수정전 정보들 latest=0 만들기
+      if (err) {
+        console.log(err);
+        //  res.send(false);
+      }
+      db.query(sql, (err, store_apply) => {
+        if (err) {
+          console.log(err);
+          //   res.send(false);
+        }
+        res.send(true);
+      });
+    }
+  );
+});
 
-// 	db.query(
-// 		`SELECT * FROM center WHERE center_id = ${cid}`,
-// 		function (error, centers) {
-// 			if (error) {
-// 				throw error;
-// 			}
-// 			result.centers = centers;
+// app.get("/schedule", (req, res) => {
+//   let date = path.parse(req.params.???????).base;
 
-// 			db.query(
-// 				`SELECT * FROM call_status WHERE cid = ${cid}`,
-// 				function (error2, calls) {
-// 					if (error2) {
-// 						throw error;
-// 					}
-// 					result.calls = calls;
-// 					db.query(
-// 						`SELECT * FROM apply_status WHERE cid = ${cid}`,
-// 						function (error3, applies) {
-// 							if (error3) {
-// 								throw error;
-// 							}
-// 							result.applies = applies;
-// 							res.send(result);
-// 						}
-// 					);
-// 				}
-// 			);
-// 		}
-// 	);
+//   db.query(
+//     `SELECT aid, visit_time, estimate_num, cid
+// 		FROM apply_status
+// 		WHERE visit_date = ${date} AND latest = 1
+// 		ORDER BY visit_time;`,
+//     function (error, store_schedule) {
+//       if (error) {
+//         console.log(err);
+//         res.send(false);
+//       }
+//       let temp_cid = store_schedule.map((data) => {
+//         db.query(
+//           `SELECT c_name, c_address FROM center WHERE cid = ${data.cid}`,
+//           function (error2, store_center) {
+//             if (error2) {
+//               console.log(err);
+//               res.send(false);
+//             }
+//             store_schedule.c_name = store_center.c_name;
+//             store_schedule.c_address = store_center.c_address;
+//             return store_schedule;
+//           }
+//         );
+//       });
+//       res.send(temp_cid);
+//     }
+//   );
 // });
 
 app.listen(3000, function () {
