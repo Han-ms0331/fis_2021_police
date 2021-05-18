@@ -42,6 +42,7 @@ module.exports = {
       db.query(
         `SELECT * FROM agent WHERE agent_id = '${a_id}'`,
         (error, data1) => {
+          console.log(data1);
           result.agent_id = data1.agent_id;
           result.a_name = data1.a_name;
           result.a_ph = data1.a_ph;
