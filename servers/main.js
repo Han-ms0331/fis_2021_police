@@ -194,12 +194,12 @@ app.post("/home/applysave", (req, res) => {
       //같은 시설 수정전 정보들 latest=0 만들기
       if (err) {
         console.log(err);
-        res.send(false);
+        //  res.send(false);
       }
       db.query(sql, (err, store_apply) => {
         if (err) {
           console.log(err);
-          res.send(false);
+          //   res.send(false);
         }
         res.send(true);
       });
