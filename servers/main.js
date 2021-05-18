@@ -170,7 +170,7 @@ app.get("/home/get_agent/:a_region/:visit_date", async (req, res) => {
   let visit_date = path.parse(req.params.visit_date).base;
   db.query(
     `SELECT * FROM agent WHERE agent_id LIKE '%${a_region}%'`,
-    async (error, datas) => {
+    (error, datas) => {
         let result = [];
         datas.forEach(async (element) => {
           let agent_id = element.agent_id;
