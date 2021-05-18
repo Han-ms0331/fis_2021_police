@@ -233,9 +233,10 @@ app.get("/schedule/:date", (req, res) => {
               console.log(error2);
               //   res.send(false);
             }
+            console.log(data.cid);
             store_schedule.c_name = store_center.c_name;
             store_schedule.c_address = store_center.c_address;
-            console.log(store_schedule);
+            //console.log(store_schedule);
             return store_schedule;
           }
         );
