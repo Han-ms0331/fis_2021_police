@@ -45,12 +45,12 @@ module.exports = {
           result.agent_id = data1.agent_id;
           result.a_name = data1.a_name;
           result.a_ph = data1.a_ph;
+          let list = [];
           db.query(
             `SELECT * FROM apply_status WHERE aid = '${a_id}'`,
             (error, datas2) => {
               datas2.forEach((element) => {
                 let result2 = {};
-                let list = [];
                 if (a_visit_date === element.visit_date) 
                 {
                   result2.visit_date = element.visit_date;
