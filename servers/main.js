@@ -192,7 +192,7 @@ app.post("/home/applysave", (req, res) => {
     `UPDATE apply_status SET latest=0 WHERE cid=${post.cid};`,
     (err, update_apply) => {
       //같은 시설 수정전 정보들 latest=0 만들기
-      if (error) {
+      if (err) {
         console.log(err);
         res.send(false);
       }
@@ -201,7 +201,7 @@ app.post("/home/applysave", (req, res) => {
           console.log(err);
           res.send(false);
         }
-        res.send("희희");
+        res.send(true);
       });
     }
   );
