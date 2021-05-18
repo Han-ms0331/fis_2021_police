@@ -227,7 +227,7 @@ app.get("/schedule/:date", (req, res) => {
       }
       let temp_cid = store_schedule.map((data) => {
         db.query(
-			console.log(data.cid);
+			console.log(data);
           `SELECT c_name, c_address FROM center WHERE cid = ${data.cid}`,
           function (error2, store_center) {
             if (error2) {
