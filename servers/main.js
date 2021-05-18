@@ -171,14 +171,14 @@ app.get("/home/get_agent/:a_region/:visit_date", async (req, res) => {
   db.query(
     `SELECT * FROM agent WHERE agent_id LIKE '%${a_region}%'`,
     async (error, datas) => {
-        let result = [];
-        datas.forEach(async (element) => {
-          let agent_id = element.agent_id;
-          let result2 = await dbfunc.get_agent_status(agent_id, visit_date);
-          result.push(result2);
-        });
-        console.log(result);
-        res.send(result);
+      let result = [];
+      datas.forEach(async (element) => {
+        let agent_id = element.agent_id;
+        let result2 = await dbfunc.get_agent_status(agent_id, visit_date);
+        result.push(result2);
+      });
+      console.log(result);
+      res.send(result);
     }
   );
 });
@@ -230,14 +230,14 @@ app.get("/schedule/:date", (req, res) => {
               //   res.send(false);
             }
 
-            store_schedule["c_name"] = store_center[0].c_name;
-            store_schedule["c_address"] = store_center[0].c_address;
+            store_schedule.c_name = "store_center[0].c_name";
+            store_schedule.c_address = "store_center[0].c_address";
             console.log(store_schedule);
             return store_schedule;
           }
         );
       });
-      console.log(temp_cid); //안나옴 ,,,,ㅡㅡㅡㅡㅡㅡ
+      //console.log(temp_cid); //안나옴 ,,,,ㅡㅡㅡㅡㅡㅡ
       res.send(temp_cid);
     }
   );
