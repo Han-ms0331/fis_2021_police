@@ -197,6 +197,7 @@ app.post("/home/applysave", (req, res) => {
     }
   );
 });
+
 app.get("/schedule/:date", (req, res) => {
   const date = path.parse(req.params.date).base;
   db.query(
@@ -209,6 +210,7 @@ app.get("/schedule/:date", (req, res) => {
         console.log(error);
         // res.send(false);
       }
+
       let temp_cid = store_schedule.map((data) => {
         db.query(
           `SELECT c_name, c_address FROM center WHERE center_id = ${data.cid}`,
@@ -217,6 +219,7 @@ app.get("/schedule/:date", (req, res) => {
               console.log(error2);
               //   res.send(false);
             }
+
             store_schedule.c_name = store_center[0].c_name;
             store_schedule.c_address = store_center[0].c_address;
             console.log(store_schedule);
@@ -229,6 +232,7 @@ app.get("/schedule/:date", (req, res) => {
     }
   );
 });
+
 app.listen(3000, function () {
   console.log("Example app listening on port 3000!");
 });
