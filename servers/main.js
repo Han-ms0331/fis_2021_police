@@ -193,7 +193,7 @@ app.post("/home/applysave", (req, res) => {
   );
 });
 
-app.get("/schedule/:date", (req, res) => {
+app.get("/schedule/:date", async (req, res) => {
   const date = path.parse(req.params.date).base;
 
   db.query(
@@ -221,7 +221,7 @@ app.get("/schedule/:date", (req, res) => {
           }
         );
       }
-
+      console.log(store_schedule);
       res.send(store_schedule);
     }
   );
