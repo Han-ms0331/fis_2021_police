@@ -88,22 +88,84 @@ CREATE TABLE apply_status(
     visit_date      date                NOT NULL                        comment '방문날짜',                    
     visit_time      varchar(100)        NOT NULL                        comment '방문시간',                            
     estimate_num    varchar(100)        NOT NULL                        comment '예상인원',                
-    aid             varchar(100)        NOT NULL                        comment '현장등록원',                                
+    aid             varchar(100)        NOT NULL                        comment '현장등록원',  
+//    etc             varchar(300)        NOT NULL                        comment '기타 및 비고',         
+    latest          INT                 NOT NULL                        comment '가장 마지막 저장된 정보 1로 저장'                     
     PRIMARY KEY (no),
     FOREIGN key (cid) REFERENCES center(center_id),
     FOREIGN key (uid) REFERENCES user(user_id),
     FOREIGN key (aid) REFERENCES agent(agent_id)
 );
 
+alter table apply_status add latest INT not null comment '가장 마지막 저장된 정보 1로 저장'
+
+
+
+
+
 INSERT INTO apply_status(cid, uid, recept_date, collect, visit_date, visit_time, estimate_num, aid)
 VALUES (1,1,'2021-05-06', '완료','2021-06-10', '10:30', '30', '안양1');
+
+INSERT INTO apply_status(cid, uid, recept_date, collect, visit_date, visit_time, estimate_num, aid)
+VALUES (1,1,'2021-05-06', '완료','2021-06-10', '09:30', '50', '안양1');
+
+INSERT INTO apply_status(cid, uid, recept_date, collect, visit_date, visit_time, estimate_num, aid)
+VALUES (1,1,'2021-05-07', '완료','2021-06-11', '09:30', '20', '안양1');
+
+INSERT INTO apply_status(cid, uid, recept_date, collect, visit_date, visit_time, estimate_num, aid,latest)
+VALUES (1,1,'2021-05-07', '완료','2021-06-11', '12:30', '20', '안양1',1);
+
 
 
 CREATE TABLE schedule(
     no              INT                 NOT NULL    AUTO_INCREMENT      comment 'primary_key',
     apply_no        INT                 NOT NULL                        comment 'apply_no',
     aid             varchar(100)        NOT NULL                        comment '현장등록원',   
+    cid             BIGINT              NOT NULL                        comment 'center_id',
     PRIMARY KEY (no),
-    FOREIGN key (apply_no) REFERENCES apply_status(no) ON DELETE cascade ON DELETE cascade,
-    FOREIGN key (aid) REFERENCES agent(agent_id)
+    FOREIGN key (apply_no) REFERENCES apply_status(no) ON DELETE cascade ON UPDATE cascade,
+    FOREIGN key (aid) REFERENCES agent(agent_id),
+    FOREIGN key (cid) REFERENCES center(center_id)
 );
+INSERT INTO schedule(apply_no, aid, cid)
+VALUES (1,'안양1',1);
+
+SELECT S.apply_no
+FROM schedule AS S
+WHERE S.visit_date = ${date}
+
+SELECT S.aid, A.visit_time, A.estimate_num
+FROM schedule AS S RIGHT JOIN apply_status AS A
+ON A.no = ( SELECT S.apply_no
+            FROM schedule AS S
+            WHERE S.visit_date = ${date}
+          )
+ORDER BY A.visit_time;
+
+
+
+
+SELECT S.aid, A.visit_time, A.estimate_num
+FROM schedule AS S RIGHT JOIN apply_status AS A
+ON S.apply_no = A.no AND A.visit_date = ${date}
+ORDER BY A.visit_time;
+
+SELECT C.c_name , C.c_address
+FROM schedule AS S RIGHT JOIN center AS C
+ON S.cid = C.center_id
+ORDER BY A.visit_time;
+
+
+
+SELECT aid, visit_time, estimate_num, cid, max(no)
+FROM apply_status
+WHERE visit_date = '2021-06-10'
+GROUP BY cid
+ORDER BY visit_time;
+
+
+SELECT  A1.no, A1.aid, A1.visit_time, A1.estimate_num, A1.cid
+FROM apply_status as A1
+(SELECT  max(no),aid, A1.visit_time, A1.estimate_num, A1.cid FROM apply_status GROUP BY cid) as A2
+WHERE visit_date = '2021-06-10' AND A1.no = A2.no
+ORDER BY visit_time;

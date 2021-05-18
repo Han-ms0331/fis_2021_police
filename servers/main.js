@@ -208,6 +208,103 @@ app.get('/home/:userid/search/:cid', (req, res) => {
 	);
 });
 
+
+
+app.post('/home/applysave', (req, res) => {
+	let post = JSON.parse(Object.keys(req.body)[0]);
+	let aid = post.;
+  let collect = ;
+  let estimate_num=;
+  let recept_date=;
+  let visit_date=;
+  let visit_time=;
+  let uid=;
+  let cid=;
+  let sql = `INSERT INTO apply_status(cid, uid, recept_date, collect, visit_date, visit_time, estimate_num, aid, latest)
+  VALUES (${cid}, ${uid}, ${recept_date}, ${collect}, ${visit_date}, ${visit_time}, ${estimate_num}, ${aid},1);`;
+
+  db.query(`UPDATE apply_status SET latest=0 WHERE cid=${cid};`,(err,update_apply)=>{ //같은 시설 수정전 정보들 latest=0 만들기
+	if (error) {
+		console.log(err);
+		res.send(false);
+	}
+	db.query(sql, (err, store_apply) => {
+		if (err) {
+			console.log(err);
+			res.send(false);
+		} 
+		res.send('희희');
+	});
+});
+  
+// 	db.query(sql, (err, store_apply) => {
+// 		if (err) {
+// 			console.log(err);
+// 			res.send(false);
+// 		} 
+    // console.log(store_apply);
+	  // db.query(`SELECT max(no) FROM apply_status WHERE ${cid} = (SELECT cid FROM apply_status)`, (err, applyno) => {
+    //   if (err) {
+    //     console.log(err);
+		//   	res.send(false);
+		//   } 
+    //   db.query(`INSERT INTO schedule(apply_no, aid) VALUES(${applyno},${aid})`, (err, store_schedule) => {
+    //     if (err) {
+    //       console.log(err);
+    //       res.send(false);
+    //     } 
+    //     console.log(store_schedule);
+    // res.send('희희');
+    //     })
+    // })
+// 	});
+// });
+
+
+
+app.get('/schedule', (req, res) => {
+  let date = path.parse(req.params.?????).base;
+
+  let result = {
+		centers: {},
+		calls: {},
+		applies: {},
+	};
+
+	db.query(
+		`SELECT * FROM center WHERE center_id = ${cid}`,
+		function (error, centers) {
+			if (error) {
+				throw error;
+			}
+			result.centers = centers;
+
+			db.query(
+				`SELECT * FROM call_status WHERE cid = ${cid}`,
+				function (error2, calls) {
+					if (error2) {
+						throw error;
+					}
+					result.calls = calls;
+					db.query(
+						`SELECT * FROM apply_status WHERE cid = ${cid}`,
+						function (error3, applies) {
+							if (error3) {
+								throw error;
+							}
+							result.applies = applies;
+							res.send(result);
+						}
+					);
+				}
+			);
+		}
+	);
+});
+}
+
+
+
 app.listen(3000, function () {
 	console.log('Example app listening on port 3000!');
 });
