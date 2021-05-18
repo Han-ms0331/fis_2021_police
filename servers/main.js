@@ -199,7 +199,7 @@ app.get("/schedule/:date", (req, res) => {
   console.log("bdfore");
   const date = path.parse(req.params.date).base;
   console.log("after");
-  console.log(req);
+  console.log(date);
 
   //   db.query(
   //     `SELECT aid, visit_time, estimate_num, cid
