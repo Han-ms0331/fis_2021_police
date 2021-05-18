@@ -58,8 +58,8 @@ module.exports = {
                 }
               }
               result.visit = list;
-              console.log(result);
               resolve(result);
+              return;
             }
           );
         }
