@@ -188,7 +188,7 @@ app.post("/home/applysave", (req, res) => {
   VALUES (${post.cid}, ${post.uid}, ${post.recept_date}, ${post.collect}, ${post.visit_date}, ${post.visit_time}, ${post.estimate_num}, ${post.aid},1);`;
 
   db.query(
-    `UPDATE apply_status SET latest=0 WHERE cid=${cid};`,
+    `UPDATE apply_status SET latest=0 WHERE cid=${post.cid};`,
     (err, update_apply) => {
       //같은 시설 수정전 정보들 latest=0 만들기
       if (error) {
