@@ -165,9 +165,9 @@ app.get("/home/get_agent/:a_region/:visit_date", async (req, res) => {
           let agent_id = element.agent_id;
           let result2 = await dbfunc.get_agent_status(agent_id, visit_date);
           result.push(result2);
+          console.log(result);
+          res.send(result);
         });
-        console.log(result);
-        res.send(result);
       } catch {
         console.log(Error);
       }
