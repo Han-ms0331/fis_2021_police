@@ -157,10 +157,9 @@ ORDER BY A.visit_time;
 
 
 
-SELECT aid, visit_time, estimate_num, cid, max(no)
+SELECT aid, visit_time, estimate_num, cid
 FROM apply_status
-WHERE visit_date = '2021-06-10'
-GROUP BY cid
+WHERE visit_date = '2021-06-10' AND latest = 1
 ORDER BY visit_time;
 
 

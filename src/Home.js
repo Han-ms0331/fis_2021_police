@@ -80,107 +80,101 @@ function Home(props) {
 		setIsOpenAddApply(false);
 	};
 
-	return isLoading_1 ? (
-		//검색어 입력 안된 텅빈 페이지
-		<div class='main'>
-			<div class='main_serch'>
-				<div class='main_search_box'>
-					<input
-						type='text'
-						placeholder='시설 이름 입력'
-						name='center'
-						class='main_serch_input'
-						onChange={onChange}
-					/>
-					<button class='main_search_btn' onClick={onClick}>
-						검색
-					</button>
-				</div>
-				<div class='main_search_result'>
-					{/* <ul class="main_search result list ">
+	props.setIsLogined(localStorage.getItem('isLogined'));
+
+	return props.isLogined ? (
+		isLoading_1 ? (
+			//검색어 입력 안된 텅빈 페이지
+			<div class='main'>
+				<div class='main_serch'>
+					<div class='main_search_box'>
+						<input
+							type='text'
+							placeholder='시설 이름 입력'
+							name='center'
+							class='main_serch_input'
+							onChange={onChange}
+						/>
+						<button class='main_search_btn' onClick={onClick}>
+							검색
+						</button>
+					</div>
+					<div class='main_search_result'>
+						{/* <ul class="main_search result list ">
               {result_1ary}
             </ul> */}
-				</div>
-			</div>
-			<div class='main_info'>
-				<span>시설을 선택해 주세요</span>
-			</div>
-		</div>
-	) : isLoading_2 ? (
-		//검색어 입력 후 해당 이름의 시설 리스트를 받아온 화면
-		<div class='main'>
-			<div class='main_serch'>
-				<div class='main_search_box'>
-					<input
-						type='text'
-						placeholder='시설 이름 입력'
-						name='center'
-						class='main_serch_input'
-						onChange={onChange}
-					/>
-					<button class='main_search_btn' onClick={onClick}>
-						검색
-					</button>
-				</div>
-				<div class='main_search_result'>
-					<ul class='main_search_result_list list'>
-						{result_1ary.data.map((result_1ary) => (
-							<li key={result_1ary.center_id}>
-								<CenterList
-									data={result_1ary}
-									setCurrentResult={setCurrentResult}
-									setIsLoading_2={setIsLoading_2}
-									uid={props.uid}
-									setCenterInfo={setCenterInfo}
-								/>
-							</li>
-						))}
-					</ul>
-				</div>
-			</div>
-			<div class='main_info'>
-				<span>시설을 선택해 주세요</span>
-			</div>
-		</div>
-	) : (
-		//센터 리스트중 한개를 선택하여 데이터를 오른쪽 화면에 띄우는 화면
-		<div class='main'>
-			<div class='main_serch'>
-				<div class='main_search_box'>
-					<input
-						type='text'
-						placeholder='시설 이름 입력'
-						name='center'
-						class='main_serch_input'
-						onChange={onChange}
-					/>
-					<button class='main_search_btn' onClick={onClick}>
-						검색
-					</button>
-				</div>
-				<div class='main_search_result'>
-					<ul class='main_search_result_list list'>
-						{result_1ary.data.map((result_1ary) => (
-							<li>
-								<CenterList
-									data={result_1ary}
-									setCurrentResult={setCurrentResult}
-									setIsLoading_2={setIsLoading_2}
-									uid={props.uid}
-									setCenterInfo={setCenterInfo}
-								/>
-							</li>
-						))}
-					</ul>
-				</div>
-			</div>
-			<div class='main_info'>
-				<div class='main_info_header'>
-					<div class='main_info_header_center-name'>
-						<div>{centerInfo.centerName}</div>
 					</div>
-					<div class='main_info_header_center-name'>
-						<div>{centerInfo.centerAddr}</div>
+				</div>
+				<div class='main_info'>
+					<span>시설을 선택해 주세요</span>
+				</div>
+			</div>
+		) : isLoading_2 ? (
+			//검색어 입력 후 해당 이름의 시설 리스트를 받아온 화면
+			<div class='main'>
+				<div class='main_serch'>
+					<div class='main_search_box'>
+						<input
+							type='text'
+							placeholder='시설 이름 입력'
+							name='center'
+							class='main_serch_input'
+							onChange={onChange}
+						/>
+						<button class='main_search_btn' onClick={onClick}>
+							검색
+						</button>
+					</div>
+					<div class='main_search_result'>
+						<ul class='main_search_result_list list'>
+							{result_1ary.data.map((result_1ary) => (
+								<li key={result_1ary.center_id}>
+									<CenterList
+										data={result_1ary}
+										setCurrentResult={setCurrentResult}
+										setIsLoading_2={setIsLoading_2}
+										uid={props.uid}
+										setCenterInfo={setCenterInfo}
+									/>
+								</li>
+							))}
+						</ul>
+					</div>
+				</div>
+				<div class='main_info'>
+					<span>시설을 선택해 주세요</span>
+				</div>
+			</div>
+		) : (
+			//센터 리스트중 한개를 선택하여 데이터를 오른쪽 화면에 띄우는 화면
+			<div class='main'>
+				<div class='main_serch'>
+					<div class='main_search_box'>
+						<input
+							type='text'
+							placeholder='시설 이름 입력'
+							name='center'
+							class='main_serch_input'
+							onChange={onChange}
+						/>
+						<button class='main_search_btn' onClick={onClick}>
+							검색
+						</button>
+					</div>
+					<div class='main_search_result'>
+						<ul class='main_search_result_list list'>
+							{result_1ary.data.map((result_1ary) => (
+								<li>
+									<CenterList
+										data={result_1ary}
+										setCurrentResult={setCurrentResult}
+										setIsLoading_2={setIsLoading_2}
+										uid={props.uid}
+										setCenterInfo={setCenterInfo}
+									/>
+								</li>
+							))}
+						</ul>
 					</div>
 					<div class='main_info_header_center-name'>
 						<div>{centerInfo.centerPhoneNumber}</div>
@@ -195,16 +189,16 @@ function Home(props) {
 							</li>
 						))}
 					</ul>
-					<button class='main_info_call-state_add' onClick={openAddCall}>
-						추가
-					</button>
-					<AddCallState
-						open={IsopenAddCall}
-						closeSave={closeAddCall}
-						closeCancle={closeAddCallCancle}
-						uid={props.uid}
-					/>
 				</div>
+				<button class='main_info_call-state_add' onClick={openAddCall}>
+					추가
+				</button>
+				<AddCallState
+					open={IsopenAddCall}
+					closeSave={closeAddCall}
+					closeCancle={closeAddCallCancle}
+					uid={props.uid}
+				/>
 				<div class='main_info_apply-state'>
 					<div>참여여부 기록</div>
 					<ul class='main_info_apply-state_list list'>
@@ -214,18 +208,20 @@ function Home(props) {
 							</li>
 						))}
 					</ul>
-					<button class='main_info_apply-state_add' onClick={openAddApply}>
-						추가
-					</button>
-					<AddApplyState
-						open={IsopenAddApply}
-						closeSave={closeAddApply}
-						closeCancle={closeAddApplyCancle}
-						uid={props.uid}
-					/>
 				</div>
+				<button class='main_info_apply-state_add' onClick={openAddApply}>
+					추가
+				</button>
+				<AddApplyState
+					open={IsopenAddApply}
+					closeSave={closeAddApply}
+					closeCancle={closeAddApplyCancle}
+					uid={props.uid}
+				/>
 			</div>
-		</div>
+		)
+	) : (
+		<div>로그인 먼저 하세요</div>
 	);
 }
 
