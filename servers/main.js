@@ -160,8 +160,8 @@ app.get("/home/get_agent/:a_region/:visit_date", async (req, res) => {
     `SELECT * FROM agent WHERE agent_id LIKE '%${a_region}%'`,
     async (error, datas) => {
       try {
-          let result = [];
-          datas.forEach(async (element) => {
+        let result = [];
+        datas.forEach(async (element) => {
           let agent_id = element.agent_id;
           let result2 = await dbfunc.get_agent_status(agent_id, visit_date);
           result.push(result2);
@@ -210,7 +210,7 @@ app.get("/schedule/:date", (req, res) => {
         console.log(error);
         // res.send(false);
       }
-
+      console.log(store_schedule);
       let temp_cid = store_schedule.map((data) => {
         db.query(
           `SELECT c_name, c_address FROM center WHERE center_id = ${data.cid}`,
@@ -219,10 +219,9 @@ app.get("/schedule/:date", (req, res) => {
               console.log(error2);
               //   res.send(false);
             }
-
             store_schedule.c_name = store_center[0].c_name;
             store_schedule.c_address = store_center[0].c_address;
-            console.log(store_schedule);
+            //console.log(store_schedule);
             return store_schedule;
           }
         );
