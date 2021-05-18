@@ -214,7 +214,6 @@ app.post("/home/applysave", (req, res) => {
 
 app.get("/schedule/:date", (req, res) => {
   const date = path.parse(req.params.date).base;
-  console.log(date);
   db.query(
     `SELECT aid, visit_time, estimate_num, cid
 		FROM apply_status
@@ -227,6 +226,7 @@ app.get("/schedule/:date", (req, res) => {
       }
       let temp_cid = store_schedule.map((data) => {
         db.query(
+			console.log(data[]);
           `SELECT c_name, c_address FROM center WHERE cid = ${data.cid}`,
           function (error2, store_center) {
             if (error2) {
@@ -239,7 +239,7 @@ app.get("/schedule/:date", (req, res) => {
           }
         );
       });
-      console.log(temp_cid);
+      console.log(temp_cid); //안나옴 ,,,,ㅡㅡㅡㅡㅡㅡ
       res.send(temp_cid);
     }
   );
