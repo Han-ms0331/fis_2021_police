@@ -235,6 +235,7 @@ app.get("/schedule/:date", (req, res) => {
             }
             store_schedule.c_name = store_center.c_name;
             store_schedule.c_address = store_center.c_address;
+            console.log(store_schedule);
             return store_schedule;
           }
         );
