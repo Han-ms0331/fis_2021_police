@@ -12,22 +12,22 @@ module.exports = {
     });
   },
   set_call_status: async function (post) {
-    const { cid } = post.cid;
-    const { c_manager } = post.c_manager;
-    const { date } = post.date;
-    const { participation } = post.participation;
-    const { in_out } = post.in_out;
-    const { u_id } = post.u_id;
-    const { m_ph } = post.m_ph;
-    const { m_email } = post.m_email;
-    const { etc } = post.etc;
+    const { cid } = post;
+    const { c_manager } = post;
+    const { date } = post;
+    const { participation } = post;
+    const { in_out } = post;
+    const { uid } = post;
+    const { m_ph } = post;
+    const { m_email } = post;
+    const { etc } = post;
     return new Promise((resolve) => {
       db.query(
         `
         INSERT INTO call_status( cid, uid, date, participation, 
         in_out, c_manager, m_ph, m_email, etc )
-        VALUES (${cid}, ${uid}, ${date}, ${participation}, 
-        ${in_out}, ${c_manager}, ${m_ph}, ${m_email}, ${etc});`,
+        VALUES (${cid}, ${uid}, '${date}', '${participation}', 
+        '${in_out}', '${c_manager}', '${m_ph}', '${m_email}', '${etc}')`,
         (error, data) => {
           if (error) {
             throw error;
