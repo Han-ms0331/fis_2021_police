@@ -49,6 +49,7 @@ module.exports = {
           db.query(
             `SELECT * FROM apply_status WHERE aid = '${a_id}'`,
             (error, datas2) => {
+              console.log(data1, data2);
               datas2.forEach((element) => {
                 let result2 = {};
                 if (a_visit_date === element.visit_date) 
