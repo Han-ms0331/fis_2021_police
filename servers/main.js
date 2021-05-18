@@ -219,12 +219,12 @@ app.get("/schedule/:date", (req, res) => {
             }
             store_schedule.c_name = store_center[0].c_name;
             store_schedule.c_address = store_center[0].c_address;
-            //console.log(store_schedule);
+            console.log(store_schedule);
             return store_schedule;
           }
         );
       });
-      //console.log(temp_cid); //안나옴 ,,,,ㅡㅡㅡㅡㅡㅡ
+      console.log(temp_cid); //안나옴 ,,,,ㅡㅡㅡㅡㅡㅡ
       res.send(temp_cid);
     }
   );
