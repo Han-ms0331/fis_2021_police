@@ -186,7 +186,7 @@ app.post("/home/applysave", (req, res) => {
   let post = JSON.parse(Object.keys(req.body)[0]);
   console.log(post);
   let sql = `INSERT INTO apply_status(cid, uid, recept_date, collect, visit_date, visit_time, estimate_num, aid, latest)
-  VALUES (${post.cid}, ${post.uid}, ${post.recept_date}, ${post.collect}, ${post.visit_date}, ${post.visit_time}, ${post.estimate_num}, ${post.aid},1);`;
+  VALUES (${post.cid}, ${post.uid}, '${post.recept_date}', '${post.collect}', '${post.visit_date}', '${post.visit_time}', '${post.estimate_num}', '${post.aid}',1);`;
 
   db.query(
     `UPDATE apply_status SET latest=0 WHERE cid=${post.cid};`,
