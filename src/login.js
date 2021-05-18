@@ -22,6 +22,8 @@ function Login(props) {
 		if (result.data.success) {
 			props.setIsLogined(true);
 			localStorage.setItem('isLogined', true);
+			localStorage.setItem('userName', result.data.username);
+			localStorage.setItem('userID', result.data.userid);
 			props.setUID(result.data.userID);
 		}
 	};
@@ -37,6 +39,8 @@ function Login(props) {
 
 	props.setIsLogined(localStorage.getItem('isLogined'));
 	return props.isLogined ? (
+		<Redirect to='/home' />
+	) : (
 		<div class='inner-container'>
 			<div class='header'>
 				<h2>Log-In</h2>
@@ -70,8 +74,6 @@ function Login(props) {
 				</button>
 			</div>
 		</div>
-	) : (
-		<Redirect to='/home' />
 	);
 }
 
