@@ -163,7 +163,7 @@ app.get("/home/get_agent/:a_region/:visit_date", async (req, res) => {
       for (let i = 0; datas[i] != null; i++) {
         let agent_id = await datas[i].agent_id;
         let result2 = await dbfunc.get_agent_status(agent_id, visit_date);
-        console.log("result2 :",result2);
+        console.log("result2 :", result2);
         result.push(result2);
         console.log(result);
         res.send(result);
@@ -199,7 +199,7 @@ app.get("/schedule/:date", (req, res) => {
   console.log("bdfore");
   const date = path.parse(req.params.date).base;
   console.log("after");
-  console.log(date);
+  console.log(req);
 
   //   db.query(
   //     `SELECT aid, visit_time, estimate_num, cid
