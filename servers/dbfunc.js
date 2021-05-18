@@ -38,10 +38,10 @@ module.exports = {
   },
   get_agent_status: async function (a_id, a_visit_date) {
     return new Promise((resolve) => {
-      let result = {};
       db.query(
         `SELECT * FROM agent WHERE agent_id = '${a_id}'`,
         (error, data1) => {
+          let result = {};
           result.agent_id = data1[0].agent_id;
           result.a_name = data1[0].a_name;
           result.a_ph = data1[0].a_ph;
