@@ -12,12 +12,12 @@ module.exports = {
     });
   },
   set_call_status: async function (post) {
-    const { cid } = post;
+    let { cid } = post;
     const { c_manager } = post;
     const { date } = post;
     const { participation } = post;
     const { in_out } = post;
-    const { uid } = post;
+    let { uid } = post;
     const { m_ph } = post;
     const { m_email } = post;
     const { etc } = post;
