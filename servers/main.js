@@ -208,7 +208,7 @@ app.get("/schedule/:date", async (req, res) => {
       }
 
       for (let i = 0; i < store_schedule.length; i++) {
-        await db.query(
+        db.query(
           `SELECT c_name, c_address FROM center WHERE center_id = ${store_schedule[i].cid}`,
           function (error2, store_center) {
             if (error2) {
