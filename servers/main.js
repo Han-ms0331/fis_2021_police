@@ -156,12 +156,12 @@ app.post("/home/call_write/:cid", async (req, res) => {
 app.get("/home/get_agent/:a_region/:visit_date", async (req, res) => {
   let a_region = path.parse(req.params.a_region).base;
   let visit_date = path.parse(req.params.visit_date).base;
-  let result = [];
   db.query(
     `SELECT * FROM agent WHERE agent_id LIKE '%${a_region}%'`,
     async (error, datas) => {
       try {
-        datas.forEach(async (element) => {
+          let result = [];
+          datas.forEach(async (element) => {
           let agent_id = element.agent_id;
           let result2 = await dbfunc.get_agent_status(agent_id, visit_date);
           result.push(result2);
