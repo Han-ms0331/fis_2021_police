@@ -170,6 +170,7 @@ app.get("/home/get_agent/:a_region/:visit_date", async (req, res) => {
   let visit_date = path.parse(req.params.visit_date).base;
   db.query(
     `SELECT * FROM agent WHERE agent_id LIKE '%${a_region}%'`,
+<<<<<<< HEAD
     async (error, datas) => {
       let result = [];
       datas.forEach(async (element) => {
@@ -179,6 +180,17 @@ app.get("/home/get_agent/:a_region/:visit_date", async (req, res) => {
       });
       console.log(result);
       res.send(result);
+=======
+    (error, datas) => {
+        let result = [];
+        datas.forEach(async (element) => {
+          let agent_id = element.agent_id;
+          let result2 = await dbfunc.get_agent_status(agent_id, visit_date);
+          result.push(result2);
+        });
+        console.log(result);
+        res.send(result);
+>>>>>>> dad0c409404deca3b6359b1869d314a5585b7642
     }
   );
 });
@@ -230,8 +242,8 @@ app.get("/schedule/:date", (req, res) => {
               //   res.send(false);
             }
 
-            store_schedule.c_name = "store_center[0].c_name";
-            store_schedule.c_address = "store_center[0].c_address";
+            store_schedule.c_name = store_center[0].c_name;
+            store_schedule.c_address = store_center[0].c_address;
             console.log(store_schedule);
             return store_schedule;
           }

@@ -42,7 +42,6 @@ module.exports = {
       db.query(
         `SELECT * FROM agent WHERE agent_id = '${a_id}'`,
         (error, data1) => {
-          console.log(data1);
           result.agent_id = data1[0].agent_id;
           result.a_name = data1[0].a_name;
           result.a_ph = data1[0].a_ph;
@@ -52,9 +51,11 @@ module.exports = {
             (error, datas2) => {
               datas2.forEach((element) => {
                 let result2 = {};
+                if (visit_date == a_visit_date) {
                   result2.visit_date = element.visit_date;
                   result2.visit_time = element.visit_time;
                   list.push(result2);
+                }
               });
               result.visit = list;
               console.log(result);
