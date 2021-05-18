@@ -193,7 +193,7 @@ app.post("/home/applysave", (req, res) => {
   );
 });
 
-app.get("/schedule/:date", (req, res) => {
+app.get("/schedule/:date", async (req, res) => {
   const date = path.parse(req.params.date).base;
 
   db.query(
@@ -201,7 +201,7 @@ app.get("/schedule/:date", (req, res) => {
   		FROM apply_status
   		WHERE visit_date = '${date}' AND latest = 1
   		ORDER BY visit_time;`,
-    function async(error, store_schedule) {
+    function (error, store_schedule) {
       if (error) {
         console.log(error);
         // res.send(false);
@@ -218,13 +218,11 @@ app.get("/schedule/:date", (req, res) => {
             store_schedule[i].c_name = store_center[0].c_name;
             store_schedule[i].c_address = store_center[0].c_address;
             console.log(store_schedule);
-            return store_schedule;
           }
         );
       }
 
-      console.log(temp_cid); //안나옴 ,,,,ㅡㅡㅡㅡㅡㅡ
-      res.send(temp_cid);
+      res.send(store_schedule);
     }
   );
 });
