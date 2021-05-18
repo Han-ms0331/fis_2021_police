@@ -62,7 +62,7 @@ CREATE TABLE call_status(
     no              INT                 NOT NULL    AUTO_INCREMENT      comment 'primary_key',
     cid             BIGINT              NOT NULL                        comment 'center_id',
     uid             INT                 NOT NULL                        comment 'user_id',  
-    date            date                NOT NULL                        comment '입력날짜',
+    date            varchar(100)        NOT NULL                        comment '입력날짜',
     participation   varchar(100)        NOT NULL                        comment '참여여부(참여/거부/보류/기타)',
     in_out          varchar(100)        NOT NULL                        comment '접수방법',
     c_manager       varchar(100)        NOT NULL                        comment '시설 담당자 성명',
@@ -77,7 +77,7 @@ CREATE TABLE call_status(
 INSERT INTO call_status( cid, uid, date, participation, in_out, c_manager, m_ph, m_email, etc ) 
 VALUES (1, 1, '2021-05-06', '참여', 'in', '담당자이름', '010-1234-5678', 'email@gmail.com', '9시에는 안됨');
 
-
+ALTER TABLE call_status MODIFY date varchar(100);
 
 
 
@@ -87,7 +87,7 @@ CREATE TABLE apply_status(
     uid             INT                 NOT NULL                        comment 'user_id',
     recept_date     varchar(100)        NOT NULL                        comment '접수일',
     collect         varchar(100)        NOT NULL                        comment '취합여부',        
-    visit_date      date                NOT NULL                        comment '방문날짜',                    
+    visit_date      varchar(100)        NOT NULL                        comment '방문날짜',                    
     visit_time      varchar(100)        NOT NULL                        comment '방문시간',                            
     estimate_num    varchar(100)        NOT NULL                        comment '예상인원',                
     aid             varchar(100)        NOT NULL                        comment '현장등록원',  
@@ -101,7 +101,7 @@ CREATE TABLE apply_status(
 
 alter table apply_status add latest INT not null comment '가장 마지막 저장된 정보 1로 저장'
 
-
+ALTER TABLE apply_status MODIFY visit_date varchar(100);
 
 
 
