@@ -13,7 +13,6 @@ const { send, allowedNodeEnvironmentFlags } = require("process");
 const FileStore = require("session-file-store")(session);
 const cors = require("cors");
 const dbfunc = require("./dbfunc");
-const { Agent } = require("http");
 db.connect();
 
 const whitelist = ["*"];
@@ -161,8 +160,11 @@ app.get("/home/:userid/search/:cid", async (req, res) => {
 
 app.post("/home/call_write/:cid", async (req, res) => {
   const cid = path.parse(req.params.cid).base;
+  console.log(req);
   let post = JSON.parse(Object.keys(req.body)[0]);
+  console.log(post);
   let result = await dbfunc.set_call_status(post);
+  console.log()
   res.send(result);
 });
 
