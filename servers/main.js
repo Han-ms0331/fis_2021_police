@@ -165,9 +165,9 @@ app.get("/home/get_agent/:a_region/:visit_date", async (req, res) => {
         let agent_id = datas[i].agent_id;
         let result2 = await dbfunc.get_agent_status(agent_id, visit_date);
         result.push(result2);
-        console.log(result);
-        res.send(result);
       }
+      console.log(result);
+      res.send(result);
     }
   );
 });
@@ -196,7 +196,7 @@ app.post("/home/applysave", (req, res) => {
 });
 
 app.get("/schedule/:date", (req, res) => {
-  const date = path.parse(req.params.date);
+  const date = path.parse(req.params.date).base;
   console.log(req);
   console.log(date);
 
