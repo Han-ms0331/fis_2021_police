@@ -163,7 +163,7 @@ app.get("/home/get_agent/:a_region/:visit_date", async (req, res) => {
       for (let i = 0; datas[i] != null; i++) {
         let agent_id = await datas[i].agent_id;
         let result2 = await dbfunc.get_agent_status(agent_id, visit_date);
-        console.log("result2 :",result2);
+        console.log("result2 :", result2);
         result.push(result2);
         console.log(result);
         res.send(result);
@@ -199,38 +199,39 @@ app.get("/schedule/:date", (req, res) => {
   console.log("bdfore");
   const date = path.parse(req.params.date).base;
   console.log("after");
-  console.log(date);
+  console.log(req);
 
-  db.query(
-    `SELECT aid, visit_time, estimate_num, cid
-		FROM apply_status
-		WHERE visit_date = '${date}' AND latest = 1
-		ORDER BY visit_time;`,
-    function (error, store_schedule) {
-      if (error) {
-        console.log(error);
-        // res.send(false);
-      }
+  //   db.query(
+  //     `SELECT aid, visit_time, estimate_num, cid
+  // 		FROM apply_status
+  // 		WHERE visit_date = '${date}' AND latest = 1
+  // 		ORDER BY visit_time;`,
+  //     function (error, store_schedule) {
+  //       if (error) {
+  //         console.log(error);
+  //         // res.send(false);
+  //       }
 
-      let temp_cid = store_schedule.map((data) => {
-        db.query(
-          `SELECT c_name, c_address FROM center WHERE center_id = ${data.cid}`,
-          function (error2, store_center) {
-            if (error2) {
-              console.log(error2);
-              //   res.send(false);
-            }
-            store_schedule.c_name = store_center[0].c_name;
-            store_schedule.c_address = store_center[0].c_address;
-            //console.log(store_schedule);
-            return store_schedule;
-          }
-        );
-      });
-      //console.log(temp_cid); //안나옴 ,,,,ㅡㅡㅡㅡㅡㅡ
-      res.send(temp_cid);
-    }
-  );
+  //       let temp_cid = store_schedule.map((data) => {
+  //         db.query(
+  //           `SELECT c_name, c_address FROM center WHERE center_id = ${data.cid}`,
+  //           function (error2, store_center) {
+  //             if (error2) {
+  //               console.log(error2);
+  //               //   res.send(false);
+  //             }
+  //             store_schedule.c_name = store_center[0].c_name;
+  //             store_schedule.c_address = store_center[0].c_address;
+  //             //console.log(store_schedule);
+  //             return store_schedule;
+  //           }
+  //         );
+  //       });
+  //       //console.log(temp_cid); //안나옴 ,,,,ㅡㅡㅡㅡㅡㅡ
+  //       res.send(temp_cid);
+  //     }
+  //   );
+  res.send(true);
 });
 
 // app.get("/schedule/:date", (req, res) => {
