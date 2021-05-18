@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Login from './login';
 import Home from './Home';
+import Schedule from './TotalSchedule';
 import { BrowserRouter, Route } from 'react-router-dom';
 
 function App() {
@@ -38,6 +39,7 @@ function App() {
 					<Home isLogined={isLogined} setIsLogined={setIsLogined} />
 				)}
 			/>
+			<Route path='/schedule' render={() => <Schedule />} />
 		</BrowserRouter>
 	);
 }
