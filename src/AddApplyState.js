@@ -62,28 +62,29 @@ function AddApplyState(props) {
 			})
 		);
 		closeSave();
-		// const result = await axios.post("/home/call_write/:cid", JSON.stringify({
-		//  	agent: agent,
-		//  	progress: progress,
-		//  	expectNumber: expectNumber,
-		//  	currentDate: currentDate,
-		//  	expectDate: expectDate,
-		//  	expectTime: expectTime,
-		//  	recorder: recorder,
-		//  	guitar: guitar
-		// }))
+		window.location.reload();
 	};
 
 	return open ? (
 		<div>
 			<div>
 				<span>현장요원: </span>
-				<input type='text' placeholder='현장요원' onChange={handleAgent} />
+				<input 
+					type='text' 
+					placeholder='현장요원'
+					onChange={handleAgent} 
+				/>
 			</div>
+
 			<div>
 				<span>진행여부: </span>
-				<input type='text' placeholder='진행여부' onChange={handleProgress} />
+				<input 
+					type='text' 
+					placeholder='진행여부' 
+					onChange={handleProgress} 
+				/>
 			</div>
+
 			<div>
 				<span>예상 인원: </span>
 				<input
@@ -92,6 +93,7 @@ function AddApplyState(props) {
 					onChange={handleExpectNumber}
 				/>
 			</div>
+
 			<div>
 				<span>예약 날짜: </span>
 				<input
@@ -100,6 +102,7 @@ function AddApplyState(props) {
 					onChange={handleCurrentDate}
 				/>
 			</div>
+
 			<div>
 				<span>방문 예정 날짜: </span>
 				<input
@@ -108,6 +111,7 @@ function AddApplyState(props) {
 					onChange={handleExpectDate}
 				/>
 			</div>
+
 			<div>
 				<span>방문 예정 시간: </span>
 				<input
@@ -116,6 +120,7 @@ function AddApplyState(props) {
 					onChange={handleExpectTime}
 				/>
 			</div>
+
 			<div>
 				<span>기록자 이름: </span>
 				<input
@@ -125,12 +130,19 @@ function AddApplyState(props) {
 					onChange={handleRecorder}
 				/>
 			</div>
+
 			<div>
 				<span>특이사항: </span>
-				<input type='text' placeholder='특이사항' onChange={handleGuitar} />
+				<input 
+					type='text' 
+					placeholder='특이사항' 
+					onChange={handleGuitar} 
+				/>
 			</div>
+
 			<button onClick={send}>저장</button>
 			<button onClick={closeCancle}>닫기</button>
+			
 		</div>
 	) : null;
 }
