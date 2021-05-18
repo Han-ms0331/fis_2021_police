@@ -156,7 +156,7 @@ app.post("/home/call_write/:cid", async (req, res) => {
 app.get("/home/get_agent/:a_region/:visit_date", async (req, res) => {
   let a_region = path.parse(req.params.a_region).base;
   let visit_date = path.parse(req.params.visit_date).base;
-  db.query(
+  await db.query(
     `SELECT * FROM agent WHERE agent_id LIKE '%${a_region}%'`,
     async (error, datas) => {
       let result = [];
