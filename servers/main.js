@@ -221,20 +221,21 @@ app.get("/schedule/:date", (req, res) => {
 		ORDER BY visit_time;`,
     function (error, store_schedule) {
       if (error) {
-        console.log(err);
+        console.log(error);
         // res.send(false);
       }
       let temp_cid = store_schedule.map((data) => {
         console.log(data);
         db.query(
-          `SELECT c_name, c_address FROM center WHERE cid = ${data.cid}`,
+          `SELECT c_name, c_address FROM center WHERE center_id = ${data.cid}`,
           function (error2, store_center) {
             if (error2) {
-              console.log(err);
+              console.log(error2);
               //   res.send(false);
             }
             store_schedule.c_name = store_center.c_name;
             store_schedule.c_address = store_center.c_address;
+            console.log(store_schedule);
             return store_schedule;
           }
         );
