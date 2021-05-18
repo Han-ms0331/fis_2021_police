@@ -47,11 +47,10 @@ module.exports = {
           result.a_ph = data1[0].a_ph;
           let list = [];
           db.query(
-            `SELECT * FROM apply_status WHERE aid = '${a_id}'`,
+            `SELECT * FROM apply_status WHERE aid = '${a_id}' and latest = 1`,
             (error, datas2) => {
               for(let i = 0; datas2[i] != null; i++){
                 let result2 = {};
-                console.log(a_visit_date, datas2[i].visit_date)
                 if (datas2[i].visit_date == a_visit_date) {
                   result2.visit_date = datas2[i].visit_date;
                   result2.visit_time = datas2[i].visit_time;
