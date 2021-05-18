@@ -176,58 +176,48 @@ function Home(props) {
 							))}
 						</ul>
 					</div>
-				</div>
-				<div class='main_info'>
-					<div class='main_info_header'>
-						<div class='main_info_header_center-name'>
-							<div>{centerInfo.centerName}</div>
-						</div>
-						<div class='main_info_header_center-name'>
-							<div>{centerInfo.centerAddr}</div>
-						</div>
-						<div class='main_info_header_center-name'>
-							<div>{centerInfo.centerPhoneNumber}</div>
-						</div>
-					</div>
-					<div class='main_info_call-state'>
-						<div>콜 이력</div>
-						<ul class='main_info_call-state_list list'>
-							{centerInfo.callState_list.map((data) => (
-								<li key={centerInfo.center_id}>
-									<CallState callState_list={data} />
-								</li>
-							))}
-						</ul>
-						<button class='main_info_call-state_add' onClick={openAddCall}>
-							추가
-						</button>
-						<AddCallState
-							open={IsopenAddCall}
-							closeSave={closeAddCall}
-							closeCancle={closeAddCallCancle}
-							uid={props.uid}
-						/>
-					</div>
-					<div class='main_info_apply-state'>
-						<div>참여여부 기록</div>
-						<ul class='main_info_apply-state_list list'>
-							{centerInfo.applyState_list.map((data) => (
-								<li key={centerInfo.center_id}>
-									<ApplyState applyState_list={data} />
-								</li>
-							))}
-						</ul>
-						<button class='main_info_apply-state_add' onClick={openAddApply}>
-							추가
-						</button>
-						<AddApplyState
-							open={IsopenAddApply}
-							closeSave={closeAddApply}
-							closeCancle={closeAddApplyCancle}
-							uid={props.uid}
-						/>
+					<div class='main_info_header_center-name'>
+						<div>{centerInfo.centerPhoneNumber}</div>
 					</div>
 				</div>
+				<div class='main_info_call-state'>
+					<div>콜 이력</div>
+					<ul class='main_info_call-state_list list'>
+						{centerInfo.callState_list.map((data) => (
+							<li key={centerInfo.center_id}>
+								<CallState callState_list={data} />
+							</li>
+						))}
+					</ul>
+				</div>
+				<button class='main_info_call-state_add' onClick={openAddCall}>
+					추가
+				</button>
+				<AddCallState
+					open={IsopenAddCall}
+					closeSave={closeAddCall}
+					closeCancle={closeAddCallCancle}
+					uid={props.uid}
+				/>
+				<div class='main_info_apply-state'>
+					<div>참여여부 기록</div>
+					<ul class='main_info_apply-state_list list'>
+						{centerInfo.applyState_list.map((data) => (
+							<li key={centerInfo.center_id}>
+								<ApplyState applyState_list={data} />
+							</li>
+						))}
+					</ul>
+				</div>
+				<button class='main_info_apply-state_add' onClick={openAddApply}>
+					추가
+				</button>
+				<AddApplyState
+					open={IsopenAddApply}
+					closeSave={closeAddApply}
+					closeCancle={closeAddApplyCancle}
+					uid={props.uid}
+				/>
 			</div>
 		)
 	) : (
