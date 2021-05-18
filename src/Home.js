@@ -6,6 +6,8 @@ import CallState from './callState.js';
 import ApplyState from './ApplyState.js';
 import AddCallState from './AddCallState';
 import AddApplyState from './AddApplyState';
+import { Redirect } from 'react-router';
+import SearchAgent from './SearchAgent';
 
 const customStyles = {
 	content: {
@@ -37,7 +39,7 @@ function Home(props) {
 	const [IsopenAddCall, setIsOpenAddCall] = useState(false);
 	const [addCall, setAddCall] = useState({});
 	const [IsopenAddApply, setIsOpenAddApply] = useState(false);
-
+	const [IsSave, setIsSave] = useState(false);
 	//검색어를 통해 데이터를 받아오는 부분
 
 	const getSearchCenterList = async (search) => {
@@ -65,6 +67,7 @@ function Home(props) {
 		setIsOpenAddCall(true);
 	};
 	const closeAddCall = (e) => {
+		alert('저장되었습니다');
 		setIsOpenAddCall(false);
 	};
 	const closeAddCallCancle = (e) => {
@@ -74,6 +77,7 @@ function Home(props) {
 		setIsOpenAddApply(true);
 	};
 	const closeAddApply = (e) => {
+		alert('저장되었습니다');
 		setIsOpenAddApply(false);
 	};
 	const closeAddApplyCancle = (e) => {
@@ -176,52 +180,64 @@ function Home(props) {
 							))}
 						</ul>
 					</div>
-					<div class='main_info_header_center-name'>
+				</div>
+				<div class='main_info'>
+					<div class='main_info_header'>
+						<div>{centerInfo.centerName}</div>
+						<div>{centerInfo.centerAddr}</div>
 						<div>{centerInfo.centerPhoneNumber}</div>
 					</div>
+
+					<div class='main_info_call-state'>
+						<div>콜 이력</div>
+						<ul class='main_info_call-state_list list'>
+							{centerInfo.callState_list.map((data) => (
+								<li key={centerInfo.center_id} class='list-items'>
+									<CallState callState_list={data} />
+								</li>
+							))}
+						</ul>
+					</div>
+					<button class='main_info_call-state_add' onClick={openAddCall}>
+						추가
+					</button>
+					<AddCallState
+						open={IsopenAddCall}
+						closeSave={closeAddCall}
+						closeCancle={closeAddCallCancle}
+						uid={props.uid}
+						centerID={centerInfo.centerID}
+						IsSave={IsSave}
+						setIsSave={setIsSave}
+					/>
+					<div class='main_info_apply-state'>
+						<div>참여여부 기록</div>
+						<ul class='main_info_apply-state_list list'>
+							{centerInfo.applyState_list.map((data) => (
+								<li key={centerInfo.center_id} class='list-items'>
+									<ApplyState applyState_list={data} />
+								</li>
+							))}
+						</ul>
+					</div>
+					<button class='main_info_apply-state_add' onClick={openAddApply}>
+						추가
+					</button>
+					<AddApplyState
+						open={IsopenAddApply}
+						closeSave={closeAddApply}
+						closeCancle={closeAddApplyCancle}
+						uid={props.uid}
+						cid={centerInfo.centerID}
+					/>
+					<div class='agent-search'>
+						<SearchAgent />
+					</div>
 				</div>
-				<div class='main_info_call-state'>
-					<div>콜 이력</div>
-					<ul class='main_info_call-state_list list'>
-						{centerInfo.callState_list.map((data) => (
-							<li key={centerInfo.center_id}>
-								<CallState callState_list={data} />
-							</li>
-						))}
-					</ul>
-				</div>
-				<button class='main_info_call-state_add' onClick={openAddCall}>
-					추가
-				</button>
-				<AddCallState
-					open={IsopenAddCall}
-					closeSave={closeAddCall}
-					closeCancle={closeAddCallCancle}
-					uid={props.uid}
-				/>
-				<div class='main_info_apply-state'>
-					<div>참여여부 기록</div>
-					<ul class='main_info_apply-state_list list'>
-						{centerInfo.applyState_list.map((data) => (
-							<li key={centerInfo.center_id}>
-								<ApplyState applyState_list={data} />
-							</li>
-						))}
-					</ul>
-				</div>
-				<button class='main_info_apply-state_add' onClick={openAddApply}>
-					추가
-				</button>
-				<AddApplyState
-					open={IsopenAddApply}
-					closeSave={closeAddApply}
-					closeCancle={closeAddApplyCancle}
-					uid={props.uid}
-				/>
 			</div>
 		)
 	) : (
-		<div>로그인 먼저 하세요</div>
+		<Redirect to='/' />
 	);
 }
 

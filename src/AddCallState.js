@@ -92,8 +92,9 @@ function AddCallState(props) {
 		console.log(attend);
 		console.log(recorder);
 		console.log(guitar);
+		console.log(props.centerID);
 		const result = await axios.post(
-			'http://192.168.0.117:3000/home/call_write/:cid',
+			`http://192.168.0.117:3000/home/call_write/${props.centerID}`,
 			JSON.stringify({
 				c_manager: name,
 				date: date,
@@ -101,11 +102,11 @@ function AddCallState(props) {
 				m_email: email,
 				m_ph: digit,
 				participation: attend,
-				uid: recorder,
+				uid: localStorage.getItem('userID'),
 				etc: guitar,
 			})
 		);
-		console.log(result);
+		closeSave();
 	};
 
 	return open ? (
