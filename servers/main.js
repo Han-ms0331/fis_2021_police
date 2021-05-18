@@ -168,16 +168,22 @@ app.post("/home/call_write/:cid", async (req, res) => {
 app.get("/home/get_agent/:a_region/:visited_date", async (req, res) => {
   let a_region = path.parse(req.params.a_region).base;
   let visit_date = path.parse(req.params.visit_date).base;
+  console.log(req);
   db.query(
     `SELECT * FROM agent WHERE agent_id LIKE '%${a_region}%'`,
     async (error, datas) => {
-      let result = [];
-      datas.forEach(async (element) => {
-        agent_id = element.agent_id;
-        let result2 = await dbfunc.get_agent_status(agent_id, visit_date);
-        result.push(result2);
-      });
-      res.send(result);
+      try {
+        let result = [];
+        datas.forEach(async (element) => {
+          agent_id = element.agent_id;
+          let result2 = await dbfunc.get_agent_status(agent_id, visit_date);
+          result.push(result2);
+        });
+        console.log(result);
+        res.send(result);
+      } catch {
+        console.log(Error);
+      }
     }
   );
 });
@@ -207,37 +213,37 @@ app.post("/home/applysave", (req, res) => {
   );
 });
 
-// app.get("/schedule", (req, res) => {
-//   let date = path.parse(req.params.???????).base;
+app.get("/schedule/:date", (req, res) => {
+  let date = path.parse(req.params.date).base;
 
-//   db.query(
-//     `SELECT aid, visit_time, estimate_num, cid
-// 		FROM apply_status
-// 		WHERE visit_date = ${date} AND latest = 1
-// 		ORDER BY visit_time;`,
-//     function (error, store_schedule) {
-//       if (error) {
-//         console.log(err);
-//         res.send(false);
-//       }
-//       let temp_cid = store_schedule.map((data) => {
-//         db.query(
-//           `SELECT c_name, c_address FROM center WHERE cid = ${data.cid}`,
-//           function (error2, store_center) {
-//             if (error2) {
-//               console.log(err);
-//               res.send(false);
-//             }
-//             store_schedule.c_name = store_center.c_name;
-//             store_schedule.c_address = store_center.c_address;
-//             return store_schedule;
-//           }
-//         );
-//       });
-//       res.send(temp_cid);
-//     }
-//   );
-// });
+  db.query(
+    `SELECT aid, visit_time, estimate_num, cid
+		FROM apply_status
+		WHERE visit_date = ${date} AND latest = 1
+		ORDER BY visit_time;`,
+    function (error, store_schedule) {
+      if (error) {
+        console.log(err);
+        res.send(false);
+      }
+      let temp_cid = store_schedule.map((data) => {
+        db.query(
+          `SELECT c_name, c_address FROM center WHERE cid = ${data.cid}`,
+          function (error2, store_center) {
+            if (error2) {
+              console.log(err);
+              res.send(false);
+            }
+            store_schedule.c_name = store_center.c_name;
+            store_schedule.c_address = store_center.c_address;
+            return store_schedule;
+          }
+        );
+      });
+      res.send(temp_cid);
+    }
+  );
+});
 
 app.listen(3000, function () {
   console.log("Example app listening on port 3000!");
