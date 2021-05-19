@@ -74,7 +74,6 @@ function AddCallState(props) {
 			})
 		);
 		closeSave();
-		window.location.reload();
 	};
 
 	return open ? (
@@ -162,7 +161,6 @@ function AddCallState(props) {
 
 			<button onClick={send}>저장</button>
 			<button onClick={closeCancle}>닫기</button>
-
 		</div>
 	) : null;
 }
