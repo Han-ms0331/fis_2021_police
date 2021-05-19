@@ -195,36 +195,41 @@ app.post("/home/applysave", (req, res) => {
 
 app.get("/schedule/:date", async (req, res) => {
   const date = path.parse(req.params.date).base;
-
-  db.query(
-    `SELECT aid, visit_time, estimate_num, cid
-  		FROM apply_status
-  		WHERE visit_date = '${date}' AND latest = 1
-  		ORDER BY visit_time;`,
-    await function (error, store_schedule) {
-      if (error) {
-        console.log(error);
-        // res.send(false);
-      }
-
-      for (let i = 0; i < store_schedule.length; i++) {
-        db.query(
-          `SELECT c_name, c_address FROM center WHERE center_id = ${store_schedule[i].cid}`,
-          function (error2, store_center) {
-            if (error2) {
-              console.log(error2);
-              //   res.send(false);
-            }
-            store_schedule[i].c_name = store_center[0].c_name;
-            store_schedule[i].c_address = store_center[0].c_address;
-            console.log(store_schedule);
+  function scan() {
+    return new Promise(function (resolve, reject) {
+      db.query(
+        `SELECT aid, visit_time, estimate_num, cid
+				  FROM apply_status
+				  WHERE visit_date = '${date}' AND latest = 1
+				  ORDER BY visit_time;`,
+        function (error, store_schedule) {
+          if (error) {
+            console.log(error);
+            // res.send(false);
           }
-        );
-      }
-      console.log(store_schedule);
-      res.send(store_schedule);
-    }
-  );
+
+          for (let i = 0; i < store_schedule.length; i++) {
+            db.query(
+              `SELECT c_name, c_address FROM center WHERE center_id = ${store_schedule[i].cid}`,
+              function (error2, store_center) {
+                if (error2) {
+                  console.log(error2);
+                  //   res.send(false);
+                }
+                store_schedule[i].c_name = store_center[0].c_name;
+                store_schedule[i].c_address = store_center[0].c_address;
+                resolve(store_schedule);
+              }
+            );
+          }
+        }
+      );
+    });
+  }
+
+  scan().then((result) => {
+    res.send(store_schedule);
+  });
 });
 
 app.listen(3000, function () {
