@@ -31,7 +31,7 @@ function CenterList(props) {
 			<div class='center_info'>{props.data.c_address}</div>
 			<div class='center_info'>{props.data.c_ph}</div>
 			<div class='center_info'>{props.data.center_id}</div>
-			<button class='main search result list btn' onClick={onClick}>
+			<button class='main_search_result_list_btn' onClick={onClick}>
 				선택
 			</button>
 		</div>

@@ -13,8 +13,8 @@ const { send, allowedNodeEnvironmentFlags } = require("process");
 const FileStore = require("session-file-store")(session);
 const cors = require("cors");
 const dbfunc = require("./dbfunc");
+const sche = require("./sche");
 db.connect();
-
 const whitelist = ["*"];
 var corsOptions = {
   origin: function (origin, callback) {
@@ -35,7 +35,6 @@ app.use(
     store: new FileStore(),
   })
 );
-
 app.all("/*", function (req, res, next) {
   res.set({
     "Access-Control-Allow-Headers": "*",
@@ -43,11 +42,9 @@ app.all("/*", function (req, res, next) {
   });
   next();
 });
-
 app.get("/", (req, res) => {
   res.send("success");
 });
-
 app.post("/login", (req, res) => {
   let post = JSON.parse(Object.keys(req.body)[0]);
   let id = post.username;
@@ -82,12 +79,10 @@ app.post("/login", (req, res) => {
     }
   });
 });
-
 app.post("/logout", (req, res) => {
   req.session.remove("userid");
   req.session.remove("is_logined");
 });
-
 app.get("/home/:userid", function (req, res) {
   //uid 반환
   if (true) {
@@ -95,7 +90,6 @@ app.get("/home/:userid", function (req, res) {
     res.send(userid);
   }
 });
-
 app.get("/home/:userid/:target", (req, res) => {
   // 어린이집 이름에 대한 정보만 제공
   if (true) {
@@ -124,12 +118,9 @@ app.get("/home/:userid/:target", (req, res) => {
     }
   }
 });
-
 //어린이집 정보 제공
-
 // async 와 await 과 promise로 간단히 만들어 보기
 // data db에서 가져오기
-
 app.get("/home/:userid/search/:cid", async (req, res) => {
   if (true) {
     try {
@@ -154,7 +145,6 @@ app.get("/home/:userid/search/:cid", async (req, res) => {
     }
   }
 });
-
 app.post("/home/call_write/:cid", async (req, res) => {
   const cid = path.parse(req.params.cid).base;
   let post = JSON.parse(Object.keys(req.body)[0]);
@@ -164,35 +154,27 @@ app.post("/home/call_write/:cid", async (req, res) => {
   console.log(result);
   res.send(result);
 });
-
 app.get("/home/get_agent/:a_region/:visit_date", async (req, res) => {
   let a_region = path.parse(req.params.a_region).base;
   let visit_date = path.parse(req.params.visit_date).base;
-  db.query(
+  let result = [];
+  await db.query(
     `SELECT * FROM agent WHERE agent_id LIKE '%${a_region}%'`,
     async (error, datas) => {
-      try {
-        let result = [];
-        datas.forEach(async (element) => {
-          let agent_id = element.agent_id;
-          let result2 = await dbfunc.get_agent_status(agent_id, visit_date);
-          result.push(result2);
-        });
-        console.log(result);
-        res.send(result);
-      } catch {
-        console.log(Error);
+      for (let i = 0; datas[i] != null; i++) {
+        let agent_id = await datas[i].agent_id;
+        let result2 = await dbfunc.get_agent_status(agent_id, visit_date);
+        result.push(result2);
       }
+      res.send(result);
     }
   );
 });
-
 app.post("/home/applysave", (req, res) => {
   let post = JSON.parse(Object.keys(req.body)[0]);
   console.log(post);
   let sql = `INSERT INTO apply_status(cid, uid, recept_date, collect, visit_date, visit_time, estimate_num, aid, latest)
   VALUES (${post.cid}, ${post.uid}, '${post.recept_date}', '${post.collect}', '${post.visit_date}', '${post.visit_time}', '${post.estimate_num}', '${post.aid}',1);`;
-
   db.query(
     `UPDATE apply_status SET latest=0 WHERE cid=${post.cid};`,
     (err, update_apply) => {
@@ -212,39 +194,10 @@ app.post("/home/applysave", (req, res) => {
   );
 });
 
-app.get("/schedule/:date", (req, res) => {
+app.get("/schedule/:date", async (req, res) => {
   const date = path.parse(req.params.date).base;
-  db.query(
-    `SELECT aid, visit_time, estimate_num, cid
-		FROM apply_status
-		WHERE visit_date = '${date}' AND latest = 1
-		ORDER BY visit_time;`,
-    function (error, store_schedule) {
-      if (error) {
-        console.log(error);
-        // res.send(false);
-      }
-      let temp_cid = store_schedule.map((data) => {
-        console.log(data);
-        db.query(
-          `SELECT c_name, c_address FROM center WHERE center_id = ${data.cid}`,
-          function (error2, store_center) {
-            if (error2) {
-              console.log(error2);
-              //   res.send(false);
-            }
-            console.log(data.cid);
-            store_schedule.c_name = store_center.c_name;
-            store_schedule.c_address = store_center.c_address;
-            //console.log(store_schedule);
-            return store_schedule;
-          }
-        );
-      });
-      console.log(temp_cid); //안나옴 ,,,,ㅡㅡㅡㅡㅡㅡ
-      res.send(temp_cid);
-    }
-  );
+  const result = await sche.sche(date);
+  res.send(result);
 });
 
 app.listen(3000, function () {

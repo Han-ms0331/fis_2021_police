@@ -61,7 +61,11 @@ function AddCallState(props) {
 				etc: recordContent.guitar,
 			})
 		);
+<<<<<<< HEAD
 		closeSave();	
+=======
+		closeSave();
+>>>>>>> 89953f4038ae13c0af20d5b373c6ee1e07e29d8e
 	};
 
 	if(open)
@@ -90,6 +94,7 @@ function AddCallState(props) {
 		</div>
 
 		<div>
+<<<<<<< HEAD
 			<span>인/아웃바운드: </span>
 			<input
 				name='bound'
@@ -117,6 +122,91 @@ function AddCallState(props) {
 				placeholder='담당자 전화번호'
 				onChange={getValue}
 			/>
+=======
+			<div>
+				<span>담당자 이름: </span>
+				<input
+					name='name'
+					type='text'
+					placeholder='담당자 이름'
+					onChange={handleName}
+				/>
+			</div>
+
+			<div>
+				<span>연락일자: </span>
+				<input
+					name='date'
+					type='date'
+					placeholder='연락일자'
+					onChange={handleDate}
+				/>
+			</div>
+
+			<div>
+				<span>인/아웃바운드: </span>
+				<input
+					name='bound'
+					type='text'
+					placeholder='인/아웃바운드'
+					onChange={handleBound}
+				/>
+			</div>
+
+			<div>
+				<span>담당자 이메일 주소: </span>
+				<input
+					name='email'
+					type='text'
+					placeholder='담당자 이메일 주소'
+					onChange={handleEmail}
+				/>
+			</div>
+
+			<div>
+				<span>담당자 전화번호: </span>
+				<input
+					name='number'
+					type='text'
+					placeholder='담당자 전화번호'
+					onChange={handleDigit}
+				/>
+			</div>
+
+			<div>
+				<span>시설 참여 여부: </span>
+				<input
+					name='attend'
+					type='text'
+					placeholder='시설 참여 여부'
+					onChange={handleAttend}
+				/>
+			</div>
+
+			<div>
+				<span>기록자 이름: </span>
+				<input
+					name='recorder'
+					type='text'
+					placeholder='기록자 이름'
+					value={localStorage.getItem('userName')}
+					onChange={handleRecorder}
+				/>
+			</div>
+
+			<div>
+				<span>특이사항: </span>
+				<input
+					name='guitar'
+					type='text'
+					placeholder='특이사항'
+					onChange={handleGuitar}
+				/>
+			</div>
+
+			<button onClick={send}>저장</button>
+			<button onClick={closeCancle}>닫기</button>
+>>>>>>> 89953f4038ae13c0af20d5b373c6ee1e07e29d8e
 		</div>
 
 		<div>
