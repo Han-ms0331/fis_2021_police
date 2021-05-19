@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Modal from 'react-modal';
 import axios from 'axios';
 import './css/Home.css';
 import CenterList from './CenterList.js';
@@ -184,11 +185,21 @@ function Home(props) {
 								</li>
 							))}
 						</ul>
+						<AddCallState
+							// IsLoading_2={setIsLoading_2}
+							open={IsopenAddCall}
+							closeSave={closeAddCall}
+							closeCancle={closeAddCallCancle}
+							uid={props.uid}
+							centerID={centerInfo.centerID}
+							IsSave={IsSave}
+							setIsSave={setIsSave}
+						/>
 					</div>
 					<button class='main_info_call-state_add' onClick={openAddCall}>
-						추가
+							추가
 					</button>
-					<AddCallState
+				 	{/* <AddCallState
 						open={IsopenAddCall}
 						closeSave={closeAddCall}
 						closeCancle={closeAddCallCancle}
@@ -196,7 +207,7 @@ function Home(props) {
 						centerID={centerInfo.centerID}
 						IsSave={IsSave}
 						setIsSave={setIsSave}
-					/>
+					/>  */}
 					<div class='main_info_apply-state'>
 						<div>참여여부 기록</div>
 						<ul class='main_info_apply-state_list list'>
