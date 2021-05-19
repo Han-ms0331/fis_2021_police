@@ -37,29 +37,27 @@ module.exports = {
     });
   },
   get_agent_status: async function (a_id, a_visit_date) {
-    let result = {};
-    console.log(a_id, a_visit_date);
     return new Promise((resolve) => {
       db.query(
         `SELECT * FROM agent WHERE agent_id = '${a_id}'`,
         (error, data1) => {
-          result.agent_id = data1.agent_id;
-          result.a_name = data1.a_name;
-          result.a_ph = data1.a_ph;
+          let result = {};
+          result.agent_id = data1[0].agent_id;
+          result.a_name = data1[0].a_name;
+          result.a_ph = data1[0].a_ph;
           let list = [];
           db.query(
-            `SELECT * FROM apply_status WHERE aid = '${a_id}'`,
+            `SELECT * FROM apply_status WHERE aid = '${a_id}' and latest = 1`,
             (error, datas2) => {
-              datas2.forEach((element) => {
+              for(let i = 0; datas2[i] != null; i++){
                 let result2 = {};
-                if (String(a_visit_date) === element.visit_date) 
-                {
-                  result2.visit_date = element.visit_date;
-                  result2.visit_time = element.visit_time;
+                if (datas2[i].visit_date == a_visit_date) {
+                  result2.visit_date = datas2[i].visit_date;
+                  result2.visit_time = datas2[i].visit_time;
+                  result2.estimate_num = datas2[i].estimate_num;
                   list.push(result2);
                 }
-                console.log(result2);
-              });
+              }
               result.visit = list;
               resolve(result);
             }
