@@ -238,13 +238,8 @@ app.get("/schedule/:date", (req, res) => {
   //     res.send(resolvedData);
   //   }
   scan().then((resolvedData) => {
-    async function sendData() {
-      resolvedData = await scan();
-      console.log(resolvedData);
-      res.send(resolvedData);
-    }
-    // console.log(resolvedData);
-    // res.send(resolvedData);
+    console.log(resolvedData);
+    res.send(resolvedData);
   });
 });
 
