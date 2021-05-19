@@ -206,27 +206,6 @@ function Home(props) {
 							</ul>
 						</div>
 					</div>
-<<<<<<< HEAD
-				</div>
-				<div class='main_info'>
-					<div class='main_info_header'>
-						<div>{centerInfo.centerName}</div>
-						<div>{centerInfo.centerAddr}</div>
-						<div>{centerInfo.centerPhoneNumber}</div>
-					</div>
-
-					<div class='main_info_call-state'>
-						<div>콜 이력</div>
-						<ul class='main_info_call-state_list list'>
-							{centerInfo.callState_list.map((data) => (
-								<li key={centerInfo.center_id} class='list-items'>
-									<CallState callState_list={data} />
-								</li>
-							))}
-						</ul>
-						<AddCallState
-							// IsLoading_2={setIsLoading_2}
-=======
 					<div class='main_info'>
 						<div class='main_info_header'>
 							<div>{centerInfo.centerName}</div>
@@ -249,7 +228,6 @@ function Home(props) {
 							추가
 						</button>
 						<AddCallState
->>>>>>> 89953f4038ae13c0af20d5b373c6ee1e07e29d8e
 							open={IsopenAddCall}
 							closeSave={closeAddCall}
 							closeCancle={closeAddCallCancle}
@@ -258,43 +236,6 @@ function Home(props) {
 							IsSave={IsSave}
 							setIsSave={setIsSave}
 						/>
-<<<<<<< HEAD
-					</div>
-					<button class='main_info_call-state_add' onClick={openAddCall}>
-							추가
-					</button>
-				 	{/* <AddCallState
-						open={IsopenAddCall}
-						closeSave={closeAddCall}
-						closeCancle={closeAddCallCancle}
-						uid={props.uid}
-						centerID={centerInfo.centerID}
-						IsSave={IsSave}
-						setIsSave={setIsSave}
-					/>  */}
-					<div class='main_info_apply-state'>
-						<div>참여여부 기록</div>
-						<ul class='main_info_apply-state_list list'>
-							{centerInfo.applyState_list.map((data) => (
-								<li key={centerInfo.center_id} class='list-items'>
-									<ApplyState applyState_list={data} />
-								</li>
-							))}
-						</ul>
-					</div>
-					<button class='main_info_apply-state_add' onClick={openAddApply}>
-						추가
-					</button>
-					<AddApplyState
-						open={IsopenAddApply}
-						closeSave={closeAddApply}
-						closeCancle={closeAddApplyCancle}
-						uid={props.uid}
-						cid={centerInfo.centerID}
-					/>
-					<div class='agent-search'>
-						<SearchAgent />
-=======
 						<div class='info-header'>참여여부 기록</div>
 						<div class='main_info_apply-state'>
 							<ul class='main_info_apply-state_list list'>
@@ -317,7 +258,6 @@ function Home(props) {
 							uid={props.uid}
 							cid={centerInfo.centerID}
 						/>
->>>>>>> 89953f4038ae13c0af20d5b373c6ee1e07e29d8e
 					</div>
 				</div>
 				<div class='agent-search'>

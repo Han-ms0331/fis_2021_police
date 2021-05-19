@@ -1,10 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './css/Navigation.css';
-<<<<<<< HEAD
-
-=======
->>>>>>> 89953f4038ae13c0af20d5b373c6ee1e07e29d8e
 function Navigation() {
 	return (
 		<div class='navigation-container'>

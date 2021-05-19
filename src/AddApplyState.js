@@ -76,38 +76,18 @@ function AddApplyState(props) {
 			})
 		);
 		closeSave();
-<<<<<<< HEAD
-		//window.location.reload();
-=======
->>>>>>> 89953f4038ae13c0af20d5b373c6ee1e07e29d8e
 	};
 
 	return open ? (
 		<div>
 			<div>
 				<span>현장요원: </span>
-<<<<<<< HEAD
-				<input 
-					type='text' 
-					placeholder='현장요원'
-					onChange={getValue} 
-				/>
-=======
-				<input type='text' placeholder='현장요원' onChange={handleAgent} />
->>>>>>> 89953f4038ae13c0af20d5b373c6ee1e07e29d8e
+				<input type='text' placeholder='현장요원' onChange={getValue} />
 			</div>
 
 			<div>
 				<span>진행여부: </span>
-<<<<<<< HEAD
-				<input 
-					type='text' 
-					placeholder='진행여부' 
-					onChange={getValue} 
-				/>
-=======
-				<input type='text' placeholder='진행여부' onChange={handleProgress} />
->>>>>>> 89953f4038ae13c0af20d5b373c6ee1e07e29d8e
+				<input type='text' placeholder='진행여부' onChange={getValue} />
 			</div>
 
 			<div>
@@ -158,15 +138,7 @@ function AddApplyState(props) {
 
 			<div>
 				<span>특이사항: </span>
-<<<<<<< HEAD
-				<input 
-					type='text' 
-					placeholder='특이사항' 
-					onChange={getValue} 
-				/>
-=======
-				<input type='text' placeholder='특이사항' onChange={handleGuitar} />
->>>>>>> 89953f4038ae13c0af20d5b373c6ee1e07e29d8e
+				<input type='text' placeholder='특이사항' onChange={getValue} />
 			</div>
 
 			<div class='add data'>
