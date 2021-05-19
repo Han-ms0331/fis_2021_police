@@ -197,7 +197,7 @@ app.get("/schedule/:date", async (req, res) => {
   const date = path.parse(req.params.date).base;
   let resultdata = {};
   function scan() {
-    return new Promise(function (resolve, reject) {
+    return new Promise(function async(resolve, reject) {
       db.query(
         `SELECT aid, visit_time, estimate_num, cid
 				  FROM apply_status
@@ -224,7 +224,7 @@ app.get("/schedule/:date", async (req, res) => {
               }
             );
           }
-          resolve(resultdata);
+          await resolve(resultdata);
           console.log(resultdata);
         }
       );
