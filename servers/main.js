@@ -193,7 +193,7 @@ app.post("/home/applysave", (req, res) => {
   );
 });
 
-app.get("/schedule/:date", async (req, res) => {
+app.get("/schedule/:date", (req, res) => {
   const date = path.parse(req.params.date).base;
   let resultdata = {};
   function scan() {
@@ -210,7 +210,7 @@ app.get("/schedule/:date", async (req, res) => {
           }
 
           for (let i = 0; i < store_schedule.length; i++) {
-            db.query(
+            await db.query(
               `SELECT c_name, c_address FROM center WHERE center_id = ${store_schedule[i].cid}`,
               function (error2, store_center) {
                 if (error2) {
@@ -224,7 +224,7 @@ app.get("/schedule/:date", async (req, res) => {
               }
             );
           }
-          await resolve(resultdata);
+          resolve(resultdata);
           console.log(resultdata);
         }
       );
