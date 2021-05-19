@@ -196,36 +196,52 @@ app.post("/home/applysave", (req, res) => {
 app.get("/schedule/:date", (req, res) => {
   const date = path.parse(req.params.date).base;
 
-  db.query(
-    `SELECT aid, visit_time, estimate_num, cid
-  		FROM apply_status
-  		WHERE visit_date = '${date}' AND latest = 1
-  		ORDER BY visit_time;`,
-    function (error, store_schedule) {
-      if (error) {
-        console.log(error);
-        // res.send(false);
-      }
-
-      let temp_cid = store_schedule.map(async (data) => {
-        await db.query(
-          `SELECT c_name, c_address FROM center WHERE center_id = ${data.cid}`,
-          function (error2, store_center) {
-            if (error2) {
-              console.log(error2);
-              //   res.send(false);
-            }
-            store_schedule.c_name = store_center[0].c_name;
-            store_schedule.c_address = store_center[0].c_address;
-            console.log(store_schedule);
-            return store_schedule;
+  function scan() {
+    return new Promise(function (resolve, reject) {
+      db.query(
+        `SELECT aid, visit_time, estimate_num, cid
+				  FROM apply_status
+				  WHERE visit_date = '${date}' AND latest = 1
+				  ORDER BY visit_time;`,
+        function (error, store_schedule) {
+          if (error) {
+            console.log(error);
+            // res.send(false);
           }
-        );
-      });
-      console.log(temp_cid.data); //안나옴 ,,,,ㅡㅡㅡㅡㅡㅡ
-      res.send(temp_cid);
-    }
-  );
+
+          for (let i = 0; i < store_schedule.length; i++) {
+            db.query(
+              `SELECT c_name, c_address FROM center WHERE center_id = ${store_schedule[i].cid}`,
+              async function (error2, store_center) {
+                if (error2) {
+                  console.log(error2);
+                  //   res.send(false);
+                }
+
+                store_schedule[i].c_name = store_center[0].c_name;
+                store_schedule[i].c_address = store_center[0].c_address;
+
+                //console.log(store_schedule);
+                await resolve(store_schedule);
+                console.log(store_schedule);
+              }
+            );
+          }
+          //resolve(store_schedule);
+          //console.log(resultdata);
+        }
+      );
+    });
+  }
+  //   async function sendData() {
+  //     let resolvedData = await scan();
+  //     console.log(resolvedData);
+  //     res.send(resolvedData);
+  //   }
+  scan().then((resolvedData) => {
+    // console.log(resolvedData);
+    res.send(resolvedData);
+  });
 });
 
 app.listen(3000, function () {
