@@ -217,8 +217,9 @@ app.get("/schedule/:date", async (req, res) => {
                   console.log(error2);
                   //   res.send(false);
                 }
-                store_schedule[i].c_name = store_center[i].c_name;
-                store_schedule[i].c_address = store_center[i].c_address;
+                console.log(store_center);
+                store_schedule[i].c_name = store_center[0].c_name;
+                store_schedule[i].c_address = store_center[0].c_address;
 
                 resolve(store_schedule);
               }
@@ -230,7 +231,7 @@ app.get("/schedule/:date", async (req, res) => {
   }
 
   scan().then((resolvedData) => {
-    console.log(resolvedData);
+    //console.log(resolvedData);
     res.send(resolvedData);
   });
 });
