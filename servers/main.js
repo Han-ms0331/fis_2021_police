@@ -240,7 +240,7 @@ app.get("/schedule/:date", (req, res) => {
   //     console.log(resolvedData);
   //     res.send(resolvedData);
   //   }
-  scan().then((resolvedData) => {
+  await scan().then((resolvedData) => {
     console.log(resolvedData);
     res.send(resolvedData);
   });
