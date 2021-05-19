@@ -223,6 +223,7 @@ app.get("/schedule/:date", async (req, res) => {
               }
             );
           }
+          console.log(store_schedule);
           resultdata = store_schedule;
           resolve(resultdata);
         }
@@ -231,7 +232,7 @@ app.get("/schedule/:date", async (req, res) => {
   }
 
   scan().then((resolvedData) => {
-    console.log(resolvedData);
+    // console.log(resolvedData);
     res.send(resolvedData);
   });
 });
