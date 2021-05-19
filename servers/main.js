@@ -195,7 +195,7 @@ app.post("/home/applysave", (req, res) => {
 
 app.get("/schedule/:date", (req, res) => {
   const date = path.parse(req.params.date).base;
-  let resultdata = {};
+
   function scan() {
     return new Promise(function (resolve, reject) {
       db.query(
@@ -232,15 +232,20 @@ app.get("/schedule/:date", (req, res) => {
       );
     });
   }
-  async function sendData() {
-    let resolvedData = await scan();
-    console.log(resolvedData);
-    res.send(resolvedData);
-  }
-  //   scan().then((resolvedData) => {
+  //   async function sendData() {
+  //     let resolvedData = await scan();
   //     console.log(resolvedData);
   //     res.send(resolvedData);
-  //   });
+  //   }
+  scan().then((resolvedData) => {
+    async function sendData() {
+      resolvedData = await scan();
+      console.log(resolvedData);
+      res.send(resolvedData);
+    }
+    // console.log(resolvedData);
+    // res.send(resolvedData);
+  });
 });
 
 app.listen(3000, function () {
