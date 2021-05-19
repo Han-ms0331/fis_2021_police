@@ -223,6 +223,7 @@ app.get("/schedule/:date", (req, res) => {
 
                 console.log(store_schedule);
                 resolve(store_schedule);
+                console.log(store_schedule);
               }
             );
           }
@@ -238,7 +239,7 @@ app.get("/schedule/:date", (req, res) => {
   //     res.send(resolvedData);
   //   }
   scan().then((resolvedData) => {
-    console.log(resolvedData);
+    // console.log(resolvedData);
     res.send(resolvedData);
   });
 });
