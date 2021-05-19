@@ -217,8 +217,8 @@ app.get("/schedule/:date", async (req, res) => {
                   console.log(error2);
                   //   res.send(false);
                 }
-                store_schedule[i].c_name = store_center[0].c_name;
-                store_schedule[i].c_address = store_center[0].c_address;
+                store_schedule[i].c_name = store_center[i].c_name;
+                store_schedule[i].c_address = store_center[i].c_address;
 
                 resolve(store_schedule);
               }
