@@ -203,7 +203,7 @@ app.get("/schedule/:date", (req, res) => {
 				  FROM apply_status
 				  WHERE visit_date = '${date}' AND latest = 1
 				  ORDER BY visit_time;`,
-        async function (error, store_schedule) {
+        function (error, store_schedule) {
           if (error) {
             console.log(error);
             // res.send(false);
@@ -222,7 +222,7 @@ app.get("/schedule/:date", (req, res) => {
                 store_schedule[i].c_address = store_center[0].c_address;
 
                 console.log(store_schedule);
-                await resolve(store_schedule);
+                resolve(store_schedule);
               }
             );
           }
@@ -232,12 +232,16 @@ app.get("/schedule/:date", (req, res) => {
       );
     });
   }
-
-  scan().then((resolvedData) => {
-    console.log(resolvedData);
+async function sendData(){
+	let resolvedData= await scan();
+	console.log(resolvedData);
     res.send(resolvedData);
-  });
-});
+}
+//   scan().then((resolvedData) => {
+//     console.log(resolvedData);
+//     res.send(resolvedData);
+//   });
+// });
 
 app.listen(3000, function () {
   console.log("Example app listening on port 3000!");
