@@ -195,7 +195,7 @@ app.post("/home/applysave", (req, res) => {
 
 app.get("/schedule/:date", async (req, res) => {
   const date = path.parse(req.params.date).base;
-
+  let resultdata;
   function scan() {
     return new Promise(function (resolve, reject) {
       db.query(
@@ -223,7 +223,8 @@ app.get("/schedule/:date", async (req, res) => {
               }
             );
           }
-          resolve(store_schedule);
+          resultdata = store_schedule;
+          resolve(resultdata);
         }
       );
     });
