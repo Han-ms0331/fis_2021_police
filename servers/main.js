@@ -220,13 +220,13 @@ app.get("/schedule/:date", (req, res) => {
 
                 store_schedule[i].c_name = store_center[0].c_name;
                 store_schedule[i].c_address = store_center[0].c_address;
-                resultdata = resultdata + store_schedule;
-                console.log(resultdata);
+                // resultdata = resultdata + store_schedule;
+                console.log(store_schedule);
               }
             );
           }
           resolve(resultdata);
-          console.log(resultdata);
+          //console.log(resultdata);
         }
       );
     });
