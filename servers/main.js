@@ -193,7 +193,7 @@ app.post("/home/applysave", (req, res) => {
   );
 });
 
-app.get("/schedule/:date", (req, res) => {
+app.get("/schedule/:date", async (req, res) => {
   const date = path.parse(req.params.date).base;
 
   function scan() {
