@@ -54,6 +54,7 @@ module.exports = {
                 if (datas2[i].visit_date == a_visit_date) {
                   result2.visit_date = datas2[i].visit_date;
                   result2.visit_time = datas2[i].visit_time;
+                  result2.estimate_num = datas2[i].estimate_num;
                   list.push(result2);
                 }
               }
