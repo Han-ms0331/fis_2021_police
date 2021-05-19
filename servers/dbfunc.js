@@ -60,7 +60,6 @@ module.exports = {
               }
               result.visit = list;
               resolve(result);
-              return;
             }
           );
         }
