@@ -232,16 +232,16 @@ app.get("/schedule/:date", (req, res) => {
       );
     });
   }
-async function sendData(){
-	let resolvedData= await scan();
-	console.log(resolvedData);
+  async function sendData() {
+    let resolvedData = await scan();
+    console.log(resolvedData);
     res.send(resolvedData);
-}
-//   scan().then((resolvedData) => {
-//     console.log(resolvedData);
-//     res.send(resolvedData);
-//   });
-// });
+  }
+  //   scan().then((resolvedData) => {
+  //     console.log(resolvedData);
+  //     res.send(resolvedData);
+  //   });
+});
 
 app.listen(3000, function () {
   console.log("Example app listening on port 3000!");
