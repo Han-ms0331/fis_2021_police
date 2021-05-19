@@ -197,7 +197,7 @@ app.get("/schedule/:date", (req, res) => {
   const date = path.parse(req.params.date).base;
   let resultdata = {};
   function scan() {
-    return new Promise(function async(resolve, reject) {
+    return new Promise(function (resolve, reject) {
       db.query(
         `SELECT aid, visit_time, estimate_num, cid
 				  FROM apply_status
@@ -210,7 +210,7 @@ app.get("/schedule/:date", (req, res) => {
           }
 
           for (let i = 0; i < store_schedule.length; i++) {
-            await db.query(
+            db.query(
               `SELECT c_name, c_address FROM center WHERE center_id = ${store_schedule[i].cid}`,
               function (error2, store_center) {
                 if (error2) {
@@ -221,6 +221,7 @@ app.get("/schedule/:date", (req, res) => {
                 store_schedule[i].c_name = store_center[0].c_name;
                 store_schedule[i].c_address = store_center[0].c_address;
                 resultdata = resultdata + store_schedule;
+                console.log(resultdata);
               }
             );
           }
