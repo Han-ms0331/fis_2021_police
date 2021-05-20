@@ -51,11 +51,17 @@ function Schedule(props) {
 								<div class='search-date-c_address result'>시설주소</div>
 							</div>
 						</li>
-						{result_ary.map((data) => (
-							<li key={data} class='list-items search-schedule-items'>
-								<SearchDate search_result={data} />
+						{result_ary !== '' ? (
+							result_ary.map((data) => (
+								<li key={data} class='list-items search-schedule-items'>
+									<SearchDate search_result={data} />
+								</li>
+							))
+						) : (
+							<li>
+								<div>해당 날짜에 일정이 없습니다.</div>
 							</li>
-						))}
+						)}
 					</ul>
 				</div>
 			</div>
