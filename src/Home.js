@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Modal from 'react-modal';
 import axios from 'axios';
 import './css/Home.css';
 import CenterList from './CenterList.js';
