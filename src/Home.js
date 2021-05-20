@@ -218,7 +218,14 @@ function Home(props) {
 									<li
 										key={centerInfo.center_id}
 										class='list-items call-state_items'>
-										<CallState callState_list={data} />
+										<CallState
+											callState_list={data}
+											data={result_1ary}
+											setCurrentResult={setCurrentResult}
+											setIsLoading_2={setIsLoading_2}
+											uid={props.uid}
+											setCenterInfo={setCenterInfo}
+										/>
 									</li>
 								))}
 							</ul>
