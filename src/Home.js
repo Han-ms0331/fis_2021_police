@@ -36,7 +36,7 @@ function Home(props) {
 			`http://192.168.0.117:3000/home/${props.uid}/${search}`
 		);
 		setResult_1ary(result);
-		console.log(isLoading_1);
+		console.log(result);
 		setIsLoading_1(false);
 	};
 
@@ -141,19 +141,21 @@ function Home(props) {
 									</div>
 								</li>
 
-								{result_1ary.data.map((result_1ary) => (
-									<li
-										key={result_1ary.center_id}
-										class='list-items search-centerlist'>
-										<CenterList
-											data={result_1ary}
-											setCurrentResult={setCurrentResult}
-											setIsLoading_2={setIsLoading_2}
-											uid={props.uid}
-											setCenterInfo={setCenterInfo}
-										/>
-									</li>
-								))}
+								{result_1ary.data !== 'undefined'
+									? result_1ary.data.map((result_1ary) => (
+											<li
+												key={result_1ary.center_id}
+												class='list-items search-centerlist'>
+												<CenterList
+													data={result_1ary}
+													setCurrentResult={setCurrentResult}
+													setIsLoading_2={setIsLoading_2}
+													uid={props.uid}
+													setCenterInfo={setCenterInfo}
+												/>
+											</li>
+									  ))
+									: null}
 							</ul>
 						</div>
 					</div>
