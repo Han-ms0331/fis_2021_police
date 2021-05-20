@@ -4,28 +4,6 @@ import axios from 'axios';
 function AddApplyState(props) {
 	const { open, closeSave, closeCancle, uid } = props;
 
-	const [recordContent, setRecordContent] = useState({
-		agent: '',
-		progress: '',
-		expectNumber: '',
-		currentDate: '',
-		expectDate: '',
-		expectTime: '',
-		recorder: '',
-		guitar: ''
-	})
-
-	const [viewContent, setViewContent] = useState([]);
-
-	const getValue = e => {
-		const { name, value } = e.target;
-		setRecordContent({
-			...recordContent,
-			[name]: value
-		})
-		console.log(recordContent);
-	}
-/*
 	const [agent, setAgent] = useState('');
 	const [progress, setProgress] = useState('');
 	const [expectNumber, setExpectNumber] = useState('');
@@ -59,20 +37,28 @@ function AddApplyState(props) {
 	const handleGuitar = (e) => {
 		setGuitar(e.target.value);
 	};
-*/
+
 	const send = async () => {
+		console.log(agent);
+		console.log(progress);
+		console.log(expectNumber);
+		console.log(currentDate);
+		console.log(expectDate);
+		console.log(expectTime);
+		console.log(recorder);
+		console.log(props.cid);
 		const result = await axios.post(
 			`http://192.168.0.117:3000/home/applysave`,
 			JSON.stringify({
-				aid: recordContent.agent,
-				collect: recordContent.progress,
-				estimate_num: recordContent.expectNumber,
-				recept_date: recordContent.currentDate,
-				visit_date: recordContent.expectDate,
-				visit_time: recordContent.expectTime,
+				aid: agent,
+				collect: progress,
+				estimate_num: expectNumber,
+				recept_date: currentDate,
+				visit_date: expectDate,
+				visit_time: expectTime,
 				uid: localStorage.getItem('userID'),
 				cid: props.cid,
-				etc: recordContent.guitar,
+				etc: guitar,
 			})
 		);
 		closeSave();
@@ -82,12 +68,12 @@ function AddApplyState(props) {
 		<div>
 			<div>
 				<span>현장요원: </span>
-				<input type='text' placeholder='현장요원' onChange={getValue} />
+				<input type='text' placeholder='현장요원' onChange={handleAgent} />
 			</div>
 
 			<div>
 				<span>진행여부: </span>
-				<input type='text' placeholder='진행여부' onChange={getValue} />
+				<input type='text' placeholder='진행여부' onChange={handleProgress} />
 			</div>
 
 			<div>
@@ -95,7 +81,7 @@ function AddApplyState(props) {
 				<input
 					type='text'
 					placeholder='예상 인원'
-					onChange={getValue}
+					onChange={handleExpectNumber}
 				/>
 			</div>
 
@@ -104,7 +90,7 @@ function AddApplyState(props) {
 				<input
 					type='date'
 					placeholder='예약 날짜'
-					onChange={getValue}
+					onChange={handleCurrentDate}
 				/>
 			</div>
 
@@ -113,7 +99,7 @@ function AddApplyState(props) {
 				<input
 					type='date'
 					placeholder='방분 예정 날짜'
-					onChange={getValue}
+					onChange={handleExpectDate}
 				/>
 			</div>
 
@@ -122,7 +108,7 @@ function AddApplyState(props) {
 				<input
 					type='time'
 					placeholder='방문 예정 시간'
-					onChange={getValue}
+					onChange={handleExpectTime}
 				/>
 			</div>
 
@@ -132,35 +118,16 @@ function AddApplyState(props) {
 					type='text'
 					placeholder='기록자 이름'
 					value={localStorage.getItem('userName')}
-					onChange={getValue}
+					onChange={handleRecorder}
 				/>
 			</div>
 
 			<div>
 				<span>특이사항: </span>
-				<input type='text' placeholder='특이사항' onChange={getValue} />
+				<input type='text' placeholder='특이사항' onChange={handleGuitar} />
 			</div>
 
-			<div class='add data'>
-				{viewContent.map(element =>
-				  <div>
-					  <div>담당자 이름:{element.agent}</div>
-					  <div>연락 일자:{element.progress}</div>
-					  <div>인/아웃바운드:{element.expectNumber}</div>
-					  <div>담당자 이메일 주호:{element.currentDate}</div>
-					  <div>담당자 전화번호:{element.expectDate}</div>
-					  <div>시설 참여 여부:{element.expectTime}</div>
-					  <div>기록자 이름:{element.recorder}</div>
-					  <div>특이사항:{element.guitar}</div>
-				  </div>
-				)}
-			</div>
-
-			<button onClick={() => {
-				setViewContent(viewContent.concat({...recordContent}));
-				console.log(recordContent.name);
-				send();
-			}}>저장</button>
+			<button onClick={send}>저장</button>
 			<button onClick={closeCancle}>닫기</button>
 		</div>
 	) : null;
