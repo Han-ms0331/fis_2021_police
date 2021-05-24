@@ -1,6 +1,7 @@
 .body-container {
 	display: flex;
 	flex-direction: column;
+	overflow-y: scroll;
 }
 .agent-search {
 	position: fixed;
