@@ -29,25 +29,9 @@ module.exports = {
         VALUES (${cid}, ${uid}, '${date}', '${participation}', 
         '${in_out}', '${c_manager}', '${m_ph}', '${m_email}', '${etc}')`,
         (error, data) => {
-          let result = [];
           if (error) {
             throw error;
-          } 
-          for(let key in post){
-            switch(key){
-              case 'cid': if(post[key] == '') result.push(1); break;
-              case 'c_manager': if(post[key] == '') result.push(2); break;
-              case 'data': if(post[key] == '') result.push(3); break;
-              case 'participation': if(post[key] == '') result.push(4); break;
-              case 'in_out': if(post[key] == '') result.push(5); break;
-              case 'uid': if(post[key] == '') result.push(6); break;
-              case 'm_ph': if(post[key] == '') result.push(7); break;
-              case 'm_email': if(post[key] == '') result.push(8); break;
-            }
           }
-          if(result.length > 0){
-            reject(result);
-        }
         else resolve(true);
         });
     });
