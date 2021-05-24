@@ -178,8 +178,10 @@ app.post("/home/call_write/:cid", async (req, res) => {
         break;
     }
   }
+  let error_code = {};
   if (result2.length > 0) {
-    res.send(result2);
+    error_code.error = result2;
+    res.send(error_code);
   }
   console.log(post);
   let result = await dbfunc.set_call_status(post);
