@@ -62,27 +62,18 @@ function AddApplyState(props) {
 			})
 		);
 		closeSave();
-		window.location.reload();
 	};
 
 	return open ? (
 		<div>
 			<div>
 				<span>현장요원: </span>
-				<input 
-					type='text' 
-					placeholder='현장요원'
-					onChange={handleAgent} 
-				/>
+				<input type='text' placeholder='현장요원' onChange={handleAgent} />
 			</div>
 
 			<div>
 				<span>진행여부: </span>
-				<input 
-					type='text' 
-					placeholder='진행여부' 
-					onChange={handleProgress} 
-				/>
+				<input type='text' placeholder='진행여부' onChange={handleProgress} />
 			</div>
 
 			<div>
@@ -133,16 +124,11 @@ function AddApplyState(props) {
 
 			<div>
 				<span>특이사항: </span>
-				<input 
-					type='text' 
-					placeholder='특이사항' 
-					onChange={handleGuitar} 
-				/>
+				<input type='text' placeholder='특이사항' onChange={handleGuitar} />
 			</div>
 
 			<button onClick={send}>저장</button>
 			<button onClick={closeCancle}>닫기</button>
-			
 		</div>
 	) : null;
 }
