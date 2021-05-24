@@ -183,10 +183,11 @@ app.post("/home/call_write/:cid", async (req, res) => {
     error_code.error = result2;
     res.send(error_code);
   }
-  console.log(post);
+  else {console.log(post);
   let result = await dbfunc.set_call_status(post);
   console.log(result);
   res.send(result);
+  }
 });
 app.get("/home/get_agent/:a_region/:visit_date", async (req, res) => {
   let a_region = path.parse(req.params.a_region).base;
