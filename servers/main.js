@@ -149,6 +149,38 @@ app.post("/home/call_write/:cid", async (req, res) => {
   const cid = path.parse(req.params.cid).base;
   let post = JSON.parse(Object.keys(req.body)[0]);
   post.cid = cid;
+  let result2 = [];
+  for (let key in post) {
+    switch (key) {
+      case "cid":
+        if (post[key] == "") result2.push(1);
+        break;
+      case "c_manager":
+        if (post[key] == "") result2.push(2);
+        break;
+      case "data":
+        if (post[key] == "") result2.push(3);
+        break;
+      case "participation":
+        if (post[key] == "") result2.push(4);
+        break;
+      case "in_out":
+        if (post[key] == "") result2.push(5);
+        break;
+      case "uid":
+        if (post[key] == "") result2.push(6);
+        break;
+      case "m_ph":
+        if (post[key] == "") result2.push(7);
+        break;
+      case "m_email":
+        if (post[key] == "") result2.push(8);
+        break;
+    }
+  }
+  if (result2.length > 0) {
+    res.send(result2);
+  }
   console.log(post);
   let result = await dbfunc.set_call_status(post);
   console.log(result);
