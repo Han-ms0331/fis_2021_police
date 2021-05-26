@@ -28,7 +28,8 @@ module.exports = {
         INSERT INTO call_status( cid, uid, date, participation, 
         in_out, c_manager, m_ph, m_email, etc, today)
         VALUES (${cid}, ${uid}, '${date}', '${participation}', 
-        '${in_out}', '${c_manager}', '${m_ph}', '${m_email}', '${etc}'), 'date_format(now(),'%Y,-%m-%d')'`,
+        '${in_out}', '${c_manager}', '${m_ph}', '${m_email}', '${etc}', 'date_format(now(),'%Y,-%m-%d')');
+        `,
         (error, data) => {
           if (error) {
             throw error;
