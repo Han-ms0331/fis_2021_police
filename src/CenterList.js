@@ -1,8 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
+import './css/centerlist.css';
+
 
 function CenterList(props) {
 	let result;
+	const [bgState, setBgState] = useState("false");
+
 	const getCenterInfo = async () => {
 		result = await axios.get(
 			`http://192.168.0.117:3000/home/${props.uid}/search/${props.data.center_id}`
@@ -18,6 +22,7 @@ function CenterList(props) {
 		});
 	};
 	console.log(props.data);
+
 	const onClick = (e) => {
 		e.preventDefault();
 		props.setCurrentResult(props.data.center_id);

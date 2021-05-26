@@ -1,13 +1,15 @@
 const db = require("./dbid").db;
 
 module.exports = {
-  sche: async function (date) {
+  sche: async function (search_region) {
     return new Promise((resolve) => {
       db.query(
-        `SELECT aid, visit_time, estimate_num, cid
-                  FROM apply_status
-                  WHERE visit_date = '${date}' AND latest = 1
-                  ORDER BY visit_time;`,
+        `SELECT aid, visit_date, visit_time, estimate_num, cid
+                  FROM apply_status            
+                  WHERE visit_date BETWEEN date_format(now(),'%Y,-%m-01') AND last_day(now()) 
+                        AND latest = 1
+                        AND aid LIKE '%${search_region}%'
+                  ORDER BY visit_date, visit_time;`,
         async function (error, store_schedule) {
           if (error) {
             console.log(error);
@@ -17,6 +19,7 @@ module.exports = {
           for (let i = 0; i < store_schedule.length; i++) {
             temp = await a(store_schedule, i);
           }
+
           resolve(temp);
         }
       );

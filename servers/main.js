@@ -149,10 +149,45 @@ app.post("/home/call_write/:cid", async (req, res) => {
   const cid = path.parse(req.params.cid).base;
   let post = JSON.parse(Object.keys(req.body)[0]);
   post.cid = cid;
-  console.log(post);
-  let result = await dbfunc.set_call_status(post);
-  console.log(result);
-  res.send(result);
+  let result2 = [];
+  for (let key in post) {
+    switch (key) {
+      case "cid":
+        if (post[key] == "") result2.push(1);
+        break;
+      case "c_manager":
+        if (post[key] == "") result2.push(2);
+        break;
+      case "data":
+        if (post[key] == "") result2.push(3);
+        break;
+      case "participation":
+        if (post[key] == "") result2.push(4);
+        break;
+      case "in_out":
+        if (post[key] == "") result2.push(5);
+        break;
+      case "uid":
+        if (post[key] == "") result2.push(6);
+        break;
+      case "m_ph":
+        if (post[key] == "") result2.push(7);
+        break;
+      case "m_email":
+        if (post[key] == "") result2.push(8);
+        break;
+    }
+  }
+  let error_code = {};
+  if (result2.length > 0) {
+    error_code.error = result2;
+    res.send(error_code);
+  } else {
+    console.log(post);
+    let result = await dbfunc.set_call_status(post);
+    console.log(result);
+    res.send(result);
+  }
 });
 app.get("/home/get_agent/:a_region/:visit_date", async (req, res) => {
   let a_region = path.parse(req.params.a_region).base;
@@ -170,33 +205,86 @@ app.get("/home/get_agent/:a_region/:visit_date", async (req, res) => {
     }
   );
 });
-app.post("/home/applysave", (req, res) => {
-  let post = JSON.parse(Object.keys(req.body)[0]);
-  console.log(post);
-  let sql = `INSERT INTO apply_status(cid, uid, recept_date, collect, visit_date, visit_time, estimate_num, aid, latest)
-  VALUES (${post.cid}, ${post.uid}, '${post.recept_date}', '${post.collect}', '${post.visit_date}', '${post.visit_time}', '${post.estimate_num}', '${post.aid}',1);`;
+
+app.get("/home/applymodify/:cid/:visit_date", (req, res) => {
+  let cid = path.parse(req.params.cid).base;
+  let visit_date = path.parse(req.params.visit_date).base;
   db.query(
-    `UPDATE apply_status SET latest=0 WHERE cid=${post.cid};`,
+    `UPDATE apply_status SET latest=0 WHERE cid=${post.cid} and visit_date = ${visit_date}`,
     (err, update_apply) => {
-      //같은 시설 수정전 정보들 latest=0 만들기
       if (err) {
         console.log(err);
-        //  res.send(false);
+        res.send(false);
       }
-      db.query(sql, (err, store_apply) => {
-        if (err) {
-          console.log(err);
-          //   res.send(false);
-        }
-        res.send(true);
-      });
+      res.send(true);
     }
   );
 });
 
-app.get("/schedule/:date", async (req, res) => {
-  const date = path.parse(req.params.date).base;
-  const result = await sche.sche(date);
+app.post("/home/applysave", (req, res) => {
+  let post = JSON.parse(Object.keys(req.body)[0]);
+
+  const { cid } = post;
+  const { uid } = post;
+  const { recept_date } = post;
+  const { collect } = post;
+  const { visit_date } = post;
+  const { visit_time } = post;
+  const { estimate_num } = post;
+  const { aid } = post;
+  let result2 = [];
+  for (let key in post) {
+    switch (key) {
+      case "cid":
+        if (post[key] == "") result2.push(1);
+        break;
+      case "uid":
+        if (post[key] == "") result2.push(2);
+        break;
+      case "recept_date":
+        if (post[key] == "") result2.push(3);
+        break;
+      case "collect":
+        if (post[key] == "") result2.push(4);
+        break;
+      case "visit_date":
+        if (post[key] == "") result2.push(5);
+        break;
+      case "visit_time":
+        if (post[key] == "") result2.push(6);
+        break;
+      case "estimate_num":
+        if (post[key] == "") result2.push(7);
+        break;
+      case "aid":
+        if (post[key] == "") result2.push(8);
+        break;
+    }
+  }
+  let error_code = {};
+  if (result2.length > 0) {
+    error_code.error = result2;
+    res.send(error_code);
+  } else {
+    let sql = `INSERT INTO apply_status(cid, uid, recept_date, collect, visit_date, visit_time, estimate_num, aid, latest)
+        VALUES (${cid}, ${uid}, '${recept_date}', '${collect}', '${visit_date}', '${visit_time}', '${estimate_num}', '${aid}',1);`;
+    db.query(sql, (err, store_apply) => {
+      if (err) {
+        console.log(err);
+      }
+      res.send(true);
+    });
+  }
+});
+
+app.get("/schedule/:search_region", async (req, res) => {
+  // let today = new Date();
+  // let year = today.getFullYear();
+  // let month = today.getMonth() + 1;
+  //const date = path.parse(req.params.date).base;
+  const search_region = path.parse(req.params.search_region).base; //해당 지역 스케줄
+  const result = await sche.sche(search_region);
+
   res.send(result);
 });
 
