@@ -210,6 +210,7 @@ app.post("/home/applysave", (req, res) => {
   console.log(post);
   let sql = `INSERT INTO apply_status(cid, uid, recept_date, collect, visit_date, visit_time, estimate_num, aid, latest)
   VALUES (${post.cid}, ${post.uid}, '${post.recept_date}', '${post.collect}', '${post.visit_date}', '${post.visit_time}', '${post.estimate_num}', '${post.aid}',1);`;
+  //if(추가방문이 아니면){
   db.query(
     `UPDATE apply_status SET latest=0 WHERE cid=${post.cid};`,
     (err, update_apply) => {
@@ -227,6 +228,7 @@ app.post("/home/applysave", (req, res) => {
       });
     }
   );
+  //}
 });
 
 app.get("/schedule/:search_region", async (req, res) => {

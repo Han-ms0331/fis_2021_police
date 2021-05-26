@@ -19,7 +19,7 @@ module.exports = {
           for (let i = 0; i < store_schedule.length; i++) {
             temp = await a(store_schedule, i);
           }
-          console.log(temp);
+
           resolve(temp);
         }
       );
