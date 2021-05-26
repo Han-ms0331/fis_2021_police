@@ -182,11 +182,11 @@ app.post("/home/call_write/:cid", async (req, res) => {
   if (result2.length > 0) {
     error_code.error = result2;
     res.send(error_code);
-  }
-  else {console.log(post);
-  let result = await dbfunc.set_call_status(post);
-  console.log(result);
-  res.send(result);
+  } else {
+    console.log(post);
+    let result = await dbfunc.set_call_status(post);
+    console.log(result);
+    res.send(result);
   }
 });
 app.get("/home/get_agent/:a_region/:visit_date", async (req, res) => {
@@ -205,6 +205,21 @@ app.get("/home/get_agent/:a_region/:visit_date", async (req, res) => {
     }
   );
 });
+
+app.get("/home/applymodify/:cid/:visit_date", (req, res) => {
+  let cid = path.parse(req.params.cid).base;
+  let visit_date = path.parse(req.params.visit_date).base;
+  db.query(
+    `UPDATE apply_status SET latest=0 WHERE cid=${post.cid} and visit_date = ${visit_date}`,
+    (err, update_apply) => {
+      if (err) {
+        console.log(err);
+        //  res.send(false);
+      }
+    }
+  );
+});
+
 app.post("/home/applysave", (req, res) => {
   let post = JSON.parse(Object.keys(req.body)[0]);
   console.log(post);
