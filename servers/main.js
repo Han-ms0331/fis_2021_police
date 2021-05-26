@@ -340,7 +340,17 @@ app.post("/:userid/setuser", (req, res) => {
   res.send(true);
 });
 
-app.post("/:userid/modifyuser");
+app.post("/:userid/:uid/modifyuser", (req, res) => {
+  const uid = path.parse(req.params.uid).base;
+  let post = JSON.parse(Object.keys(req.body)[0]);
+  let u_name = post.u_name;
+  let u_pwd = post.u_pwd;
+  let u_ph = post.u_ph;
+  db.query(
+    `UPDATE user SET u_name ='${u_name}', u_pwd='${u_pwd}', u_ph='${u_ph}' WHERE user_id=${uid}`
+  );
+  res.send(true);
+});
 
 app.get("/:userid/:user_id/deleteuser", (req, res) => {
   let;
@@ -349,13 +359,67 @@ app.get("/:userid/:user_id/deleteuser", (req, res) => {
 // 어린이집 추가 삭제 변경
 app.post("/:userid/setcenter");
 
-app.post("/:userid/modifycenter");
+app.post("/:userid/:cid/modifycenter", (req, res) => {
+  const cid = path.parse(req.params.cid).base;
+  let post = JSON.parse(Object.keys(req.body)[0]);
+  let c_sido = post.c_sido;
+  let c_sigungu = post.c_sigungu;
+  let c_name = post.c_name;
+  let c_type = post.c_type;
+  let c_status = post.c_status;
+  let c_address = post.c_address;
+  let c_zipcode = post.c_zipcode;
+  let c_ph = post.c_ph;
+  let c_fax_num = post.c_fax_num;
+  let c_people = post.c_people;
+  let c_hp_address = post.c_hp_address;
+  let c_latitude = post.c_latitude;
+  let c_longitude = post.c_longitude;
+  db.query(
+    `UPDATE center SET
+    c_sido       ='${c_sido}',
+    c_sigungu	 ='${c_sigungu}',
+    c_name	     ='${c_name}',
+    c_type	     ='${c_type}',
+    c_status	 ='${c_status}',
+    c_address	 ='${c_address}',
+    c_zipcode	 ='${c_zipcode}',
+    c_ph	     ='${c_ph}',
+    c_fax_num	 ='${c_fax_num}',
+    c_people	 ='${c_people}',
+    c_hp_address='${c_hp_address}',
+    c_latitude	 ='${c_latitude}',
+    c_longitude  ='${c_longitude}'
+    WHERE center_id=${cid}`
+  );
+  res.send(true);
+});
 
 app.get("/:userid/deletecenter");
 // 요원 추가 변경
 app.get("/:userid/deleteagent");
 
-app.post("/:userid/modifyagent");
+app.post("/:userid/:aid/modifyagent", (req, res) => {
+  const aid = path.parse(req.params.aid).base;
+  let post = JSON.parse(Object.keys(req.body)[0]);
+  let agent_id = agent_id;
+  let a_name = a_name;
+  let a_ph = a_ph;
+  let a_address = a_address;
+  let a_latitude = a_latitude;
+  let a_longitude = a_longitude;
+  db.query(
+    `UPDATE agent SET 
+    agent_id    ='${agent_id}',
+    a_name      ='${a_name}',
+    a_ph        ='${a_ph}',
+    a_address   ='${a_address}',
+    a_latitude  ='${a_latitude}',
+    a_longitude ='${a_longitude}'   
+     WHERE agent_id=${aid}`
+  );
+  res.send(true);
+});
 
 app.post("/:userid/setagent");
 
