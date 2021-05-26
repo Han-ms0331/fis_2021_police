@@ -235,6 +235,7 @@ app.get("/schedule/:search_region", async (req, res) => {
   // let month = today.getMonth() + 1;
   //const date = path.parse(req.params.date).base;
   const search_region = path.parse(req.params.search_region).base; //해당 지역 스케줄
+  console.log(search_region);
   const result = await sche.sche(search_region);
   console.log(result);
   res.send(result);
