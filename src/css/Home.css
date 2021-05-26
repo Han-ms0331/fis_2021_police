@@ -131,12 +131,7 @@
 .search-main {
 	text-align: center;
 }
-.search-date-result {
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-}
-/* 일정페이지에서 표 정렬할 때 justify-content 지우기 */
+
 .result {
 	width: 200px;
 	margin-right: 50px;
@@ -158,4 +153,20 @@
 }
 .agent-list {
 	float: left;
+}
+.search-schedule-date {
+	overflow-x: scroll;
+	white-space: nowrap;
+}
+
+.agent-schedule-list {
+	list-style: none;
+}
+.agent-schedule-item {
+	float: left;
+	width: 100px;
+}
+
+.date-header {
+	display: flex;
 }

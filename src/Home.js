@@ -109,9 +109,9 @@ function Home(props) {
 						<span>시설을 선택해 주세요</span>
 					</div>
 				</div>
-				<div class='agent-search'>
+				{/* <div class='agent-search'>
 					<SearchAgent />
-				</div>
+				</div> */}
 			</div>
 		) : isLoading_2 ? (
 			//검색어 입력 후 해당 이름의 시설 리스트를 받아온 화면
@@ -163,9 +163,9 @@ function Home(props) {
 						<span>시설을 선택해 주세요</span>
 					</div>
 				</div>
-				<div class='agent-search'>
+				{/* <div class='agent-search'>
 					<SearchAgent />
-				</div>
+				</div> */}
 			</div>
 		) : (
 			//센터 리스트중 한개를 선택하여 데이터를 오른쪽 화면에 띄우는 화면
@@ -269,9 +269,9 @@ function Home(props) {
 						/>
 					</div>
 				</div>
-				<div class='agent-search'>
+				{/* <div class='agent-search'>
 					<SearchAgent />
-				</div>
+				</div> */}
 			</div>
 		)
 	) : (
