@@ -21,7 +21,7 @@ module.exports = {
     const { m_ph } = post;
     const { m_email } = post;
     const { etc } = post;
-    return new Promise((resolve) => {
+    return new Promise((resolve, reject) => {
       db.query(
         `
         INSERT INTO call_status( cid, uid, date, participation, 
@@ -31,9 +31,9 @@ module.exports = {
         (error, data) => {
           if (error) {
             throw error;
-          } else resolve(true);
-        }
-      );
+          }
+        else resolve(true);
+        });
     });
   },
   get_agent_status: async function (a_id, a_visit_date) {

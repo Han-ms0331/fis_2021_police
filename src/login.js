@@ -2,6 +2,7 @@ import React from 'react';
 import './css/login.css';
 import axios from 'axios';
 import { Redirect, withRouter } from 'react-router-dom';
+import imgA from './image/fislogo.png';
 
 function Login(props) {
 	const getLogin = async () => {
@@ -43,6 +44,11 @@ function Login(props) {
 	) : (
 		<div class='inner-container'>
 			<div class='header'>
+				<div class='home-header'>
+					<img src={imgA} class='logo' width='100px' />
+					<h1>FIS ARM Program</h1>
+				</div>
+
 				<h2>Log-In</h2>
 
 				<div class='input-group'>
