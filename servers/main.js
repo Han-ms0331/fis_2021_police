@@ -182,11 +182,11 @@ app.post("/home/call_write/:cid", async (req, res) => {
   if (result2.length > 0) {
     error_code.error = result2;
     res.send(error_code);
-  }
-  else {console.log(post);
-  let result = await dbfunc.set_call_status(post);
-  console.log(result);
-  res.send(result);
+  } else {
+    console.log(post);
+    let result = await dbfunc.set_call_status(post);
+    console.log(result);
+    res.send(result);
   }
 });
 app.get("/home/get_agent/:a_region/:visit_date", async (req, res) => {
@@ -230,12 +230,13 @@ app.post("/home/applysave", (req, res) => {
 });
 
 app.get("/schedule/:date/:search_region", async (req, res) => {
-  let today = new Date();
-  let year = today.getFullYear();
-  let month = today.getMonth() + 1;
+  // let today = new Date();
+  // let year = today.getFullYear();
+  // let month = today.getMonth() + 1;
   const date = path.parse(req.params.date).base;
   const search_region = path.parse(req.params.search_region).base; //해당 지역 스케줄
   const result = await sche.sche(date);
+  console.log(result);
   res.send(result);
 });
 

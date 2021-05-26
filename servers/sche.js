@@ -4,12 +4,11 @@ module.exports = {
   sche: async function (date, year, month, search_region) {
     return new Promise((resolve) => {
       db.query(
-        `SELECT aid, visit_time, estimate_num, cid
+        `SELECT aid, visit_date, visit_time, estimate_num, cid
                   FROM apply_status            
-                  WHERE visit_date >= '${year}-${month}-01' 
-                        AND visit_date <= '${year}-${month}-31'
+                  WHERE visit_date BETWEEN date_format(now(),'%Y,-%m-01') AND last_day(now()) 
                         AND latest = 1
-                  ORDER BY visit_time;`,
+                  ORDER BY visit_date, visit_time;`,
         async function (error, store_schedule) {
           if (error) {
             console.log(error);
