@@ -309,7 +309,7 @@ app.get("/:userid/getbusinessstatus", async (req, res) => {
     let cur_name = user_info[i].u_name;
     let how_many = 0;
     let call_data = await dbfunc.get_data(
-      `SELECT * FROM call_status WHERE today = '${today}' and uid = '${cur_id}';`
+      `SELECT * FROM call_status WHERE today = '${today}' and uid = ${cur_id};`
     );
     let data = {};
     data.call_status = [];
@@ -317,7 +317,7 @@ app.get("/:userid/getbusinessstatus", async (req, res) => {
       let add_data = {};
       add_data.cid = call_data[j].cid;
       let c_name = await dbfunc.get_data(
-        `SELECT * FROM center WHERE today = '${today}' and uid = '${cur_id}';`
+        `SELECT * FROM center WHERE today = '${today}' and uid = ${cur_id};`
       )[0].c_name;
       add_data.participation = call_data[j].participation;
       data.call_status.push(add_data);
@@ -354,7 +354,7 @@ app.post("/:userid/:uid/modifyuser", (req, res) => {
 
 app.get("/:userid/:user_id/deleteuser", (req, res) => {
   let user_id = path.parse(req.params.user_id).base;
-  db.query(`DELETE FROM user WHERE user_id = '${user_id}'`, () => {
+  db.query(`DELETE FROM user WHERE user_id = ${user_id}`, () => {
     res.send(true);
   });
 });
@@ -400,7 +400,7 @@ app.post("/:userid/:cid/modifycenter", (req, res) => {
 
 app.get("/:userid/:cid/deletecenter", (req, res) => {
   let center_id = path.parse(req.params.cid).base;
-  db.query(`DELETE FROM center WHERE center_id = '${center_id}'`, () => {
+  db.query(`DELETE FROM center WHERE center_id = ${center_id}`, () => {
     res.send(true);
   });
 });
@@ -408,7 +408,7 @@ app.get("/:userid/:cid/deletecenter", (req, res) => {
 // 요원 추가 변경
 app.get("/:userid/:agent_id/deleteagent", (req, res) => {
   let center_id = path.parse(req.params.cid).base;
-  db.query(`DELETE FROM agent WHERE agent_id = '${agent_id}'`, () => {
+  db.query(`DELETE FROM agent WHERE agent_id = ${agent_id}`, () => {
     res.send(true);
   });
 });
