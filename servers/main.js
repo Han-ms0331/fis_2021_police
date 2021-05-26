@@ -227,7 +227,6 @@ app.post("/home/applysave", (req, res) => {
   const { cid } = post;
   const { uid } = post;
   const { recept_date } = post;
-  const { collect } = post;
   const { visit_date } = post;
   const { visit_time } = post;
   const { estimate_num } = post;
@@ -244,20 +243,18 @@ app.post("/home/applysave", (req, res) => {
       case "recept_date":
         if (post[key] == "") result2.push(3);
         break;
-      case "collect":
+
+      case "visit_date":
         if (post[key] == "") result2.push(4);
         break;
-      case "visit_date":
+      case "visit_time":
         if (post[key] == "") result2.push(5);
         break;
-      case "visit_time":
+      case "estimate_num":
         if (post[key] == "") result2.push(6);
         break;
-      case "estimate_num":
-        if (post[key] == "") result2.push(7);
-        break;
       case "aid":
-        if (post[key] == "") result2.push(8);
+        if (post[key] == "") result2.push(7);
         break;
     }
   }
@@ -266,8 +263,8 @@ app.post("/home/applysave", (req, res) => {
     error_code.error = result2;
     res.send(error_code);
   } else {
-    let sql = `INSERT INTO apply_status(cid, uid, recept_date, collect, visit_date, visit_time, estimate_num, aid, latest)
-        VALUES (${cid}, ${uid}, '${recept_date}', '${collect}', '${visit_date}', '${visit_time}', '${estimate_num}', '${aid}',1);`;
+    let sql = `INSERT INTO apply_status(cid, uid, recept_date,  visit_date, visit_time, estimate_num, aid, latest)
+        VALUES (${cid}, ${uid}, '${recept_date}',  '${visit_date}', '${visit_time}', '${estimate_num}', '${aid}',1);`;
     db.query(sql, (err, store_apply) => {
       if (err) {
         console.log(err);
