@@ -381,17 +381,17 @@ app.post("/:userid/:cid/modifycenter", (req, res) => {
   db.query(
     `UPDATE center SET
     c_sido       ='${c_sido}',
-    c_sigungu	 ='${c_sigungu}',
-    c_name	     ='${c_name}',
-    c_type	     ='${c_type}',
-    c_status	 ='${c_status}',
-    c_address	 ='${c_address}',
-    c_zipcode	 ='${c_zipcode}',
-    c_ph	     ='${c_ph}',
-    c_fax_num	 ='${c_fax_num}',
-    c_people	 ='${c_people}',
+    c_sigungu    ='${c_sigungu}',
+    c_name        ='${c_name}',
+    c_type        ='${c_type}',
+    c_status    ='${c_status}',
+    c_address    ='${c_address}',
+    c_zipcode    ='${c_zipcode}',
+    c_ph        ='${c_ph}',
+    c_fax_num    ='${c_fax_num}',
+    c_people    ='${c_people}',
     c_hp_address='${c_hp_address}',
-    c_latitude	 ='${c_latitude}',
+    c_latitude    ='${c_latitude}',
     c_longitude  ='${c_longitude}'
     WHERE center_id=${cid}`
   );
@@ -430,7 +430,7 @@ app.post("/:userid/:aid/modifyagent", (req, res) => {
     a_address   ='${a_address}',
     a_latitude  ='${a_latitude}',
     a_longitude ='${a_longitude}'   
-     WHERE agent_id=${aid}`
+     WHERE agent_id='${aid}'`
   );
   res.send(true);
 });
