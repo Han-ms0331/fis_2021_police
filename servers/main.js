@@ -309,7 +309,7 @@ app.get("/:userid/getbusinessstatus", async (req, res) => {
     let cur_name = user_info[i].u_name;
     let how_many = 0;
     let call_data = await dbfunc.get_data(
-      `SELECT * FROM call_status WHERE today = ${today} and uid = ${cur_id};`
+      `SELECT * FROM call_status WHERE today = '${today}' and uid = ${cur_id};`
     );
     let data = {};
     data.call_status = [];
@@ -317,7 +317,7 @@ app.get("/:userid/getbusinessstatus", async (req, res) => {
       let add_data = {};
       add_data.cid = call_data[j].cid;
       let c_name = await dbfunc.get_data(
-        `SELECT * FROM center WHERE today = ${today} and uid = ${cur_id};`
+        `SELECT * FROM center WHERE today = '${today}' and uid = ${cur_id};`
       )[0].c_name;
       add_data.participation = call_data[j].participation;
       data.call_status.push(add_data);
@@ -335,7 +335,7 @@ app.post("/:userid/setuser", (req, res) => {
   let u_pwd = post.u_pwd;
   let u_ph = post.u_ph;
   db.query(
-    `INSERT INTO user(u_name, u_pwd, u_ph) VALUES (${u_name}, ${u_pwd}, ${u_ph})`
+    `INSERT INTO user(u_name, u_pwd, u_ph) VALUES ('${u_name}', '${u_pwd}', '${u_ph}')`
   );
   res.send(true);
 });
@@ -347,17 +347,20 @@ app.post("/:userid/:uid/modifyuser", (req, res) => {
   let u_pwd = post.u_pwd;
   let u_ph = post.u_ph;
   db.query(
-    `UPDATE user SET u_name ='${u_name}', u_pwd='${u_pwd}', u_ph='${u_ph}' WHERE user_id='${uid}'`
+    `UPDATE user SET u_name ='${u_name}', u_pwd='${u_pwd}', u_ph='${u_ph}' WHERE user_id=${uid}`
   );
   res.send(true);
 });
 
 app.get("/:userid/:user_id/deleteuser", (req, res) => {
-  let;
+  let user_id = path.parse(req.params.user_id).base;
+  db.query(`DELETE FROM user WHERE user_id = ${user_id}`, () => {
+    res.send(true);
+  });
 });
 
 // 어린이집 추가 삭제 변경
-app.post("/:userid/setcenter");
+app.post("/:userid/setcenter", (req, res) => {});
 
 app.post("/:userid/:cid/modifycenter", (req, res) => {
   const cid = path.parse(req.params.cid).base;
@@ -378,26 +381,37 @@ app.post("/:userid/:cid/modifycenter", (req, res) => {
   db.query(
     `UPDATE center SET
     c_sido       ='${c_sido}',
-    c_sigungu	 ='${c_sigungu}',
-    c_name	     ='${c_name}',
-    c_type	     ='${c_type}',
-    c_status	 ='${c_status}',
-    c_address	 ='${c_address}',
-    c_zipcode	 ='${c_zipcode}',
-    c_ph	     ='${c_ph}',
-    c_fax_num	 ='${c_fax_num}',
-    c_people	 ='${c_people}',
+    c_sigungu    ='${c_sigungu}',
+    c_name        ='${c_name}',
+    c_type        ='${c_type}',
+    c_status    ='${c_status}',
+    c_address    ='${c_address}',
+    c_zipcode    ='${c_zipcode}',
+    c_ph        ='${c_ph}',
+    c_fax_num    ='${c_fax_num}',
+    c_people    ='${c_people}',
     c_hp_address='${c_hp_address}',
-    c_latitude	 ='${c_latitude}',
+    c_latitude    ='${c_latitude}',
     c_longitude  ='${c_longitude}'
     WHERE center_id=${cid}`
   );
   res.send(true);
 });
 
-app.get("/:userid/deletecenter");
+app.get("/:userid/:cid/deletecenter", (req, res) => {
+  let center_id = path.parse(req.params.cid).base;
+  db.query(`DELETE FROM center WHERE center_id = ${center_id}`, () => {
+    res.send(true);
+  });
+});
+
 // 요원 추가 변경
-app.get("/:userid/deleteagent");
+app.get("/:userid/:agent_id/deleteagent", (req, res) => {
+  let center_id = path.parse(req.params.cid).base;
+  db.query(`DELETE FROM agent WHERE agent_id = ${agent_id}`, () => {
+    res.send(true);
+  });
+});
 
 app.post("/:userid/:aid/modifyagent", (req, res) => {
   const aid = path.parse(req.params.aid).base;
@@ -416,7 +430,7 @@ app.post("/:userid/:aid/modifyagent", (req, res) => {
     a_address   ='${a_address}',
     a_latitude  ='${a_latitude}',
     a_longitude ='${a_longitude}'   
-     WHERE agent_id='${aid}'`
+     WHERE agent_id=${aid}`
   );
   res.send(true);
 });
