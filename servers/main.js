@@ -205,6 +205,21 @@ app.get("/home/get_agent/:a_region/:visit_date", async (req, res) => {
     }
   );
 });
+
+app.get("/home/applymodify/:cid/:visit_date", (req, res) => {
+  let cid = path.parse(req.params.cid).base;
+  let visit_date = path.parse(req.params.visit_date).base;
+  db.query(
+    `UPDATE apply_status SET latest=0 WHERE cid=${post.cid} and visit_date = ${visit_date}`,
+    (err, update_apply) => {
+      if (err) {
+        console.log(err);
+        //  res.send(false);
+      }
+    }
+  );
+});
+
 app.post("/home/applysave", (req, res) => {
   let post = JSON.parse(Object.keys(req.body)[0]);
 
