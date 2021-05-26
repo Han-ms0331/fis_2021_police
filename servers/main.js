@@ -335,42 +335,44 @@ app.post("/:userid/setuser", (req, res) => {
   let u_name = post.u_name;
   let u_pwd = post.u_pwd;
   let u_ph = post.u_ph;
-  db.query(`INSERT INTO user(u_name, u_pwd, u_ph) VALUES ('${u_name}', '${u_pwd}', '${u_ph}')`);
+  db.query(
+    `INSERT INTO user(u_name, u_pwd, u_ph) VALUES ('${u_name}', '${u_pwd}', '${u_ph}')`
+  );
   res.send(true);
 });
 
 app.post("/:userid/modifyuser");
 
-app.get("/:userid/:user_id/deleteuser", (req,res) => {
+app.get("/:userid/:user_id/deleteuser", (req, res) => {
   let user_id = path.parse(req.params.user_id).base;
-  db.query(`DELETE FROM user WHERE user_id = '${user_id}'`,(req, res) => {
+  db.query(`DELETE FROM user WHERE user_id = '${user_id}'`, () => {
     res.send(true);
-  })
+  });
 });
 
 // 어린이집 추가 삭제 변경
-app.post("/:userid/setcenter", (req, res) => {
-  
-});
+app.post("/:userid/setcenter", (req, res) => {});
 
 app.post("/:userid/modifycenter");
 
-app.get("/:userid/:cid/deletecenter", (req,res) => {
+app.get("/:userid/:cid/deletecenter", (req, res) => {
   let center_id = path.parse(req.params.cid).base;
-  db.query(`DELETE FROM center WHERE center_id = '${center_id}'`,(req, res) => {
+  db.query(`DELETE FROM center WHERE center_id = '${center_id}'`, () => {
     res.send(true);
   });
+});
 
 // 요원 추가 변경
-app.get("/:userid/:agent_id/deleteagent", (req,res) => {
+app.get("/:userid/:agent_id/deleteagent", (req, res) => {
   let center_id = path.parse(req.params.cid).base;
-  db.query(`DELETE FROM agent WHERE agent_id = '${agent_id}'`,(req, res) => {
+  db.query(`DELETE FROM agent WHERE agent_id = '${agent_id}'`, () => {
     res.send(true);
   });
+});
 
 app.post("/:userid/modifyagent");
 
-app.post("/:userid/setagent")
+app.post("/:userid/setagent");
 
 app.listen(3000, function () {
   console.log("Example app listening on port 3000!");
