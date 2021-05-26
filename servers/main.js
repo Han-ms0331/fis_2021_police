@@ -225,28 +225,34 @@ app.post("/home/applysave", (req, res) => {
   console.log(post);
   let sql = `INSERT INTO apply_status(cid, uid, recept_date, collect, visit_date, visit_time, estimate_num, aid, latest)
   VALUES (${post.cid}, ${post.uid}, '${post.recept_date}', '${post.collect}', '${post.visit_date}', '${post.visit_time}', '${post.estimate_num}', '${post.aid}',1);`;
-  db.query(
-    `UPDATE apply_status SET latest=0 WHERE cid=${post.cid};`,
-    (err, update_apply) => {
-      //같은 시설 수정전 정보들 latest=0 만들기
-      if (err) {
-        console.log(err);
-        //  res.send(false);
-      }
-      db.query(sql, (err, store_apply) => {
-        if (err) {
-          console.log(err);
-          //   res.send(false);
-        }
-        res.send(true);
-      });
+
+  // db.query(
+  //   `UPDATE apply_status SET latest=0 WHERE cid=${post.cid};`,
+  //   (err, update_apply) => {
+  //     //같은 시설 수정전 정보들 latest=0 만들기
+  //     if (err) {
+  //       console.log(err);
+  //       //  res.send(false);
+  //     }
+  db.query(sql, (err, store_apply) => {
+    if (err) {
+      console.log(err);
+      //   res.send(false);
     }
-  );
+    res.send(true);
+  });
+
+  //} );
 });
 
-app.get("/schedule/:date", async (req, res) => {
-  const date = path.parse(req.params.date).base;
-  const result = await sche.sche(date);
+app.get("/schedule/:search_region", async (req, res) => {
+  // let today = new Date();
+  // let year = today.getFullYear();
+  // let month = today.getMonth() + 1;
+  //const date = path.parse(req.params.date).base;
+  const search_region = path.parse(req.params.search_region).base; //해당 지역 스케줄
+  const result = await sche.sche(search_region);
+
   res.send(result);
 });
 
