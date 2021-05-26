@@ -228,6 +228,14 @@ app.post("/home/applysave", (req, res) => {
         });
       }
     );
+  } else {
+    db.query(sql, (err, store_apply) => {
+      if (err) {
+        console.log(err);
+        //   res.send(false);
+      }
+      res.send(true);
+    });
   }
 });
 
