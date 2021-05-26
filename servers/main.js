@@ -214,8 +214,9 @@ app.get("/home/applymodify/:cid/:visit_date", (req, res) => {
     (err, update_apply) => {
       if (err) {
         console.log(err);
-        //  res.send(false);
+        res.send(false);
       }
+      res.send(true);
     }
   );
 });
