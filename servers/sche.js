@@ -8,6 +8,7 @@ module.exports = {
                   FROM apply_status            
                   WHERE visit_date BETWEEN date_format(now(),'%Y,-%m-01') AND last_day(now()) 
                         AND latest = 1
+                        AND aid LIKE '%${search_region}%'
                   ORDER BY visit_date, visit_time;`,
         async function (error, store_schedule) {
           if (error) {

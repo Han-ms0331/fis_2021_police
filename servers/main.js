@@ -229,7 +229,7 @@ app.post("/home/applysave", (req, res) => {
   );
 });
 
-app.get("/schedule/:date/:search_region", async (req, res) => {
+app.get("/schedule/:search_region", async (req, res) => {
   // let today = new Date();
   // let year = today.getFullYear();
   // let month = today.getMonth() + 1;
