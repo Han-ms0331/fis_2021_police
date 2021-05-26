@@ -285,15 +285,14 @@ app.get("/schedule/:search_region", async (req, res) => {
     sches: {},
     agents: {},
   };
-
   const search_region = path.parse(req.params.search_region).base; //해당 지역 스케줄
   result.sches = await sche.sche(search_region);
   result.agents = await dbfunc.get_data(
     `SELECT agent_id FROM agent WHERE agent_id LIKE '%${search_region}%'`
   );
-
   res.send(result);
 });
+
 // 콜직원 업무 현황
 app.get("/:userid/getbusinessstatus", async (req, res) => {
   //let userid = path.parse(req.params.userid).base;
@@ -335,12 +334,14 @@ app.post("/:userid/setagent", (req, res) => {
   let u_name = post.u_name;
   let u_pwd = post.u_pwd;
   let u_ph = post.u_ph;
-  db.query(`INSERT INTO user(u_name, u_pwd, u_ph) VALUES (${u_name}, ${u_pwd}, ${u_ph})`);
+  db.query(
+    `INSERT INTO user(u_name, u_pwd, u_ph) VALUES (${u_name}, ${u_pwd}, ${u_ph})`
+  );
   res.send(true);
 });
 
-app.get("/:userid/:user_id/deleteagent", (req,res) => {
-  let 
+app.get("/:userid/:user_id/deleteagent", (req, res) => {
+  let;
 });
 // 어린이집 추가 삭제 변경
 app.post("/:userid/setcenter");
@@ -349,7 +350,7 @@ app.get("/:userid/deletecenter");
 // 콜직원 추가 변경
 app.get("/:userid/deleteuser");
 
-app.post("/:userid/setuser")
+app.post("/:userid/setuser");
 
 app.listen(3000, function () {
   console.log("Example app listening on port 3000!");
