@@ -194,8 +194,12 @@ app.post("/home/applysave", (req, res) => {
   );
 });
 
-app.get("/schedule/:date", async (req, res) => {
+app.get("/schedule/:date/:search_region", async (req, res) => {
+  let today = new Date();
+  let year = today.getFullYear();
+  let month = today.getMonth() + 1;
   const date = path.parse(req.params.date).base;
+  const search_region = path.parse(req.params.search_region).base; //해당 지역 스케줄
   const result = await sche.sche(date);
   res.send(result);
 });

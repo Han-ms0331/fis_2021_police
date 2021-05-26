@@ -1,12 +1,14 @@
 const db = require("./dbid").db;
 
 module.exports = {
-  sche: async function (date) {
+  sche: async function (date, year, month, search_region) {
     return new Promise((resolve) => {
       db.query(
         `SELECT aid, visit_time, estimate_num, cid
-                  FROM apply_status
-                  WHERE visit_date = '${date}' AND latest = 1
+                  FROM apply_status            
+                  WHERE visit_date >= '${year}-${month}-01' 
+                        AND visit_date <= '${year}-${month}-31'
+                        AND latest = 1
                   ORDER BY visit_time;`,
         async function (error, store_schedule) {
           if (error) {
