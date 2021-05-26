@@ -152,7 +152,8 @@ app.post("/home/call_write/:cid", async (req, res) => {
   let year = day.getFullYear();
   let month = day.getMonth() + 1;
   let date = day.getDate();
-  let today = `${year}-${month}-${date}`;
+  // let today = `${year}-${month}-${date}`;
+  let today = `date_format(now(),'%Y,-%m-%d')`;
   post.cid = cid;
   post.today = today;
   let result2 = [];
@@ -307,7 +308,7 @@ app.get("/:userid/getbusinessstatus", async (req, res) => {
   let year = day.getFullYear();
   let month = day.getMonth() + 1;
   let date = day.getDate();
-  let today = `${year}-${month}-${date}`;
+  //let today = `${year}-${month}-${date}`; 현승구야 내가 date_format(now(),'%Y,-%m-01') 으로 바꿨다 ~~
   let user_info = await dbfunc.get_data("SELECT * FROM user");
   let business_status = [];
   for (let i in user_info) {
@@ -315,7 +316,7 @@ app.get("/:userid/getbusinessstatus", async (req, res) => {
     let cur_name = user_info[i].u_name;
     let how_many = 0;
     let call_data = await dbfunc.get_data(
-      `SELECT * FROM call_status WHERE today = '${today}' and uid = ${cur_id};`
+      `SELECT * FROM call_status WHERE today = date_format(now(),'%Y,-%m-%d') and uid = ${cur_id};`
     );
     let data = {};
     data.call_status = [];
@@ -323,7 +324,7 @@ app.get("/:userid/getbusinessstatus", async (req, res) => {
       let add_data = {};
       add_data.cid = call_data[j].cid;
       let c_name = await dbfunc.get_data(
-        `SELECT * FROM center WHERE today = '${today}' and uid = ${cur_id};`
+        `SELECT * FROM center WHERE today = date_format(now(),'%Y,-%m-%d') and uid = ${cur_id};`
       )[0].c_name;
       add_data.participation = call_data[j].participation;
       data.call_status.push(add_data);
