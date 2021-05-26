@@ -152,10 +152,10 @@ app.post("/home/call_write/:cid", async (req, res) => {
   let year = day.getFullYear();
   let month = day.getMonth() + 1;
   let date = day.getDate();
-  let today = `${year}-${month}-${date}`;
+  //let today = `${year}-${month}-${date}`;
 
   post.cid = cid;
-  post.today = today;
+  // post.today = today;
   let result2 = [];
   for (let key in post) {
     switch (key) {

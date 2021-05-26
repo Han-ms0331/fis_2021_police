@@ -21,7 +21,7 @@ module.exports = {
     const { m_ph } = post;
     const { m_email } = post;
     const { etc } = post;
-    const { today } = post;
+    //const { today } = post;
     return new Promise((resolve, reject) => {
       db.query(
         `
