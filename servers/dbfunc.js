@@ -21,13 +21,14 @@ module.exports = {
     const { m_ph } = post;
     const { m_email } = post;
     const { etc } = post;
+    const { today } = post;
     return new Promise((resolve, reject) => {
       db.query(
         `
         INSERT INTO call_status( cid, uid, date, participation, 
-        in_out, c_manager, m_ph, m_email, etc )
+        in_out, c_manager, m_ph, m_email, etc, today)
         VALUES (${cid}, ${uid}, '${date}', '${participation}', 
-        '${in_out}', '${c_manager}', '${m_ph}', '${m_email}', '${etc}')`,
+        '${in_out}', '${c_manager}', '${m_ph}', '${m_email}', '${etc}'), '${today}'`,
         (error, data) => {
           if (error) {
             throw error;
