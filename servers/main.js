@@ -275,12 +275,16 @@ app.post("/home/applysave", (req, res) => {
 });
 
 app.get("/schedule/:search_region", async (req, res) => {
-  // let today = new Date();
-  // let year = today.getFullYear();
-  // let month = today.getMonth() + 1;
-  //const date = path.parse(req.params.date).base;
+  let result = {
+    sches: {},
+    agents: {},
+  };
+
   const search_region = path.parse(req.params.search_region).base; //해당 지역 스케줄
-  const result = await sche.sche(search_region);
+  result.sches = await sche.sche(search_region);
+  result.agents = await dbfunc.get_data(
+    `SELECT agent_id FROM agent WHERE agent_id LIKE '%${search_region}%'`
+  );
 
   res.send(result);
 });
