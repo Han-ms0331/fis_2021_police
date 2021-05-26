@@ -145,7 +145,7 @@ function Home(props) {
 									? result_1ary.data.map((result_1ary) => (
 											<li
 												key={result_1ary.center_id}
-												class='list-items search-centerlist'>
+												class='list-items_search-centerlist'>
 												<CenterList
 													data={result_1ary}
 													setCurrentResult={setCurrentResult}
@@ -195,7 +195,7 @@ function Home(props) {
 									</div>
 								</li>
 								{result_1ary.data.map((result_1ary) => (
-									<li class='list-items search-centerlist'>
+									<li class='list-items_search-centerlist'>
 										<CenterList
 											data={result_1ary}
 											setCurrentResult={setCurrentResult}
