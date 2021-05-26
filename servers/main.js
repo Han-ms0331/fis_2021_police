@@ -408,7 +408,7 @@ app.get("/:userid/:cid/deletecenter", (req, res) => {
 // 요원 추가 변경
 app.get("/:userid/:agent_id/deleteagent", (req, res) => {
   let center_id = path.parse(req.params.cid).base;
-  db.query(`DELETE FROM agent WHERE agent_id = ${agent_id}`, () => {
+  db.query(`DELETE FROM agent WHERE agent_id = '${agent_id}'`, () => {
     res.send(true);
   });
 });
@@ -430,7 +430,7 @@ app.post("/:userid/:aid/modifyagent", (req, res) => {
     a_address   ='${a_address}',
     a_latitude  ='${a_latitude}',
     a_longitude ='${a_longitude}'   
-     WHERE agent_id=${aid}`
+     WHERE agent_id='${aid}'`
   );
   res.send(true);
 });
