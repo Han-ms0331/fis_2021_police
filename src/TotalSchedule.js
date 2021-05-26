@@ -2,18 +2,36 @@ import axios from 'axios';
 import React, { useState } from 'react';
 import { Redirect } from 'react-router';
 import SearchAgent from './SearchAgent';
-import SearchDate from './SearchDate';
+import ListDate from './ListDate';
 
 function Schedule(props) {
-	const [date, setDate] = useState('');
+	const [region, setRegion] = useState('');
+	const [month, setMonth] = useState('');
+	const [isSearch, setIsSearch] = useState(false);
+	let result_month;
 	const [result_ary, setResult_ary] = useState([]);
-	const onChange = (e) => {
-		setDate(e.target.value);
+	const date_check = new Date(2021, month, 0);
+	const date = date_check.getDate();
+	const onChangeR = (e) => {
+		setRegion(e.target.value);
+		setIsSearch(false);
 	};
+	const onChangeM = (e) => {
+		setMonth(e.target.value);
+		setIsSearch(false);
+	};
+	const date_30 = [
+		1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21,
+		22, 23, 24, 25, 26, 27, 28, 29, 30,
+	];
+	const date_31 = [
+		1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21,
+		22, 23, 24, 25, 26, 27, 28, 29, 30, 31,
+	];
 
 	const getSchedule = async () => {
 		const result = await axios.get(
-			`http://192.168.0.117:3000/schedule/${date}`
+			`http://192.168.0.117:3000/schedule/${region}`
 		);
 		console.log(result);
 		setResult_ary(result.data);
@@ -21,6 +39,8 @@ function Schedule(props) {
 
 	const onClick = (e) => {
 		e.preventDefault();
+		// result_month = month;
+		setIsSearch(true);
 		getSchedule();
 	};
 	props.setIsLogined(localStorage.getItem('isLogined'));
@@ -28,41 +48,42 @@ function Schedule(props) {
 		<div class='search-main'>
 			<div class='search-main_search_box'>
 				<input
-					type='date'
-					placeholder='날짜 입력'
+					type='text'
+					placeholder='지역 입력'
+					name='region'
+					class='main_serch_date'
+					onChange={onChangeR}
+				/>
+				<input
+					type='number'
+					placeholder='월 입력'
+					min='1'
+					max='12'
 					name='date'
 					class='main_serch_date'
-					onChange={onChange}
+					onChange={onChangeM}
 				/>
 				<button class='search-main_search_btn' onClick={onClick}>
 					검색
 				</button>
 			</div>
 			<div class='search-schedule-result'>
-				<div class='search-schedule-date'></div>
 				<div class='search-schedule-date'>
-					<ul class='list agent-schedule-list'>
-						<li>
-							<div class='search-date-result'>
-								<div class='search-date-aid result'>현장요원</div>
-								<div class='search-date-visit_time result'>방문시간</div>
-								<div class='search-date-estimate_num result'>예상인원</div>
-								<div class='search-date-c_name result'>시설이름</div>
-								<div class='search-date-c_address result'>시설주소</div>
-							</div>
-						</li>
-						{result_ary !== '' ? (
-							result_ary.map((data) => (
-								<li key={data} class='list-items search-schedule-items'>
-									<SearchDate search_result={data} />
-								</li>
-							))
-						) : (
-							<li>
-								<div>해당 날짜에 일정이 없습니다.</div>
-							</li>
-						)}
-					</ul>
+					{isSearch ? (
+						<ul class='agent-schedule-list'>
+							{date === 30
+								? date_30.map((data, index) => (
+										<li key={index} class='agent-schedule-item'>
+											<ListDate list={data} month={month} index={index} />
+										</li>
+								  ))
+								: date_31.map((data, index) => (
+										<li key={index} class='agent-schedule-item'>
+											<ListDate list={data} month={month} index={index} />
+										</li>
+								  ))}
+						</ul>
+					) : null}
 				</div>
 			</div>
 		</div>
