@@ -148,7 +148,13 @@ app.get("/home/:userid/search/:cid", async (req, res) => {
 app.post("/home/call_write/:cid", async (req, res) => {
   const cid = path.parse(req.params.cid).base;
   let post = JSON.parse(Object.keys(req.body)[0]);
+  let day = new Date();
+  let year = day.getFullYear();
+  let month = day.getMonth() + 1;
+  let date = day.getDate();
+  let today = `${year}-${month}-${date}`;
   post.cid = cid;
+  post.today = today;
   let result2 = [];
   for (let key in post) {
     switch (key) {
@@ -288,6 +294,62 @@ app.get("/schedule/:search_region", async (req, res) => {
 
   res.send(result);
 });
+// 콜직원 업무 현황
+app.get("/:userid/getbusinessstatus", async (req, res) => {
+  //let userid = path.parse(req.params.userid).base;
+  if (userid === "Admin") res.send(false);
+  let day = new Date();
+  let year = day.getFullYear();
+  let month = day.getMonth() + 1;
+  let date = day.getDate();
+  let today = `${year}-${month}-${date}`;
+  let user_info = await dbfunc.get_data("SELECT * FROM user");
+  let business_status = [];
+  for (let i in user_info) {
+    let cur_id = user_info[i].user_id;
+    let cur_name = user_info[i].u_name;
+    let how_many = 0;
+    let call_data = await dbfunc.get_data(
+      `SELECT * FROM call_status WHERE today = ${today} and uid = ${cur_id};`
+    );
+    let data = {};
+    data.call_status = [];
+    for (let j in call_data) {
+      let add_data = {};
+      add_data.cid = call_data[j].cid;
+      let c_name = await dbfunc.get_data(
+        `SELECT * FROM center WHERE today = ${today} and uid = ${cur_id};`
+      )[0].c_name;
+      add_data.participation = call_data[j].participation;
+      data.call_status.push(add_data);
+      how_many++;
+    }
+    data.how_many = how_many;
+    business_status.push(data);
+  }
+});
+
+// 요원 추가 변경
+app.post("/:userid/setagent", (req, res) => {
+  let post = JSON.parse(Object.keys(req.body)[0]);
+  let u_name = post.u_name;
+  let u_pwd = post.u_pwd;
+  let u_ph = post.u_ph;
+  db.query(`INSERT INTO user(u_name, u_pwd, u_ph) VALUES (${u_name}, ${u_pwd}, ${u_ph})`);
+  res.send(true);
+});
+
+app.get("/:userid/:user_id/deleteagent", (req,res) => {
+  let 
+});
+// 어린이집 추가 삭제 변경
+app.post("/:userid/setcenter");
+
+app.get("/:userid/deletecenter");
+// 콜직원 추가 변경
+app.get("/:userid/deleteuser");
+
+app.post("/:userid/setuser")
 
 app.listen(3000, function () {
   console.log("Example app listening on port 3000!");
