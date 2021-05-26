@@ -329,8 +329,8 @@ app.get("/:userid/getbusinessstatus", async (req, res) => {
   }
 });
 
-// 요원 추가 변경
-app.post("/:userid/setagent", (req, res) => {
+// 콜직원 추가 변경
+app.post("/:userid/setuser", (req, res) => {
   let post = JSON.parse(Object.keys(req.body)[0]);
   let u_name = post.u_name;
   let u_pwd = post.u_pwd;
@@ -339,17 +339,24 @@ app.post("/:userid/setagent", (req, res) => {
   res.send(true);
 });
 
-app.get("/:userid/:user_id/deleteagent", (req,res) => {
+app.post("/:userid/modifyuser");
+
+app.get("/:userid/:user_id/deleteuser", (req,res) => {
   let 
 });
+
 // 어린이집 추가 삭제 변경
 app.post("/:userid/setcenter");
 
-app.get("/:userid/deletecenter");
-// 콜직원 추가 변경
-app.get("/:userid/deleteuser");
+app.post("/:userid/modifycenter");
 
-app.post("/:userid/setuser")
+app.get("/:userid/deletecenter");
+// 요원 추가 변경
+app.get("/:userid/deleteagent");
+
+app.post("/:userid/modifyagent");
+
+app.post("/:userid/setagent")
 
 app.listen(3000, function () {
   console.log("Example app listening on port 3000!");
