@@ -233,13 +233,11 @@ app.get("/schedule/:search_region", async (req, res) => {
   // let today = new Date();
   // let year = today.getFullYear();
   // let month = today.getMonth() + 1;
-  const date = path.parse(req.params.date).base;
-
-  console.log(req.params);
-  // const search_region = path.parse(req.params.search_region).base; //해당 지역 스케줄
-  // const result = await sche.sche(search_region);
-  // console.log(result);
-  // res.send(result);
+  //const date = path.parse(req.params.date).base;
+  const search_region = path.parse(req.params.search_region).base; //해당 지역 스케줄
+  const result = await sche.sche(search_region);
+  console.log(result);
+  res.send(result);
 });
 
 app.listen(3000, function () {
