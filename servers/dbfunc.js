@@ -28,13 +28,13 @@ module.exports = {
         INSERT INTO call_status( cid, uid, date, participation, 
         in_out, c_manager, m_ph, m_email, etc, today)
         VALUES (${cid}, ${uid}, '${date}', '${participation}', 
-        '${in_out}', '${c_manager}', '${m_ph}', '${m_email}', '${etc}'), '${today}'`,
+        '${in_out}', '${c_manager}', '${m_ph}', '${m_email}', '${etc}'), 'date_format(now(),'%Y,-%m-%d')'`,
         (error, data) => {
           if (error) {
             throw error;
-          }
-        else resolve(true);
-        });
+          } else resolve(true);
+        }
+      );
     });
   },
   get_agent_status: async function (a_id, a_visit_date) {
@@ -50,7 +50,7 @@ module.exports = {
           db.query(
             `SELECT * FROM apply_status WHERE aid = '${a_id}' and latest = 1`,
             (error, datas2) => {
-              for(let i = 0; datas2[i] != null; i++){
+              for (let i = 0; datas2[i] != null; i++) {
                 let result2 = {};
                 if (datas2[i].visit_date == a_visit_date) {
                   result2.visit_date = datas2[i].visit_date;
