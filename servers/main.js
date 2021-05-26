@@ -419,9 +419,11 @@ app.post("/:userid/:cid/modifycenter", (req, res) => {
     c_hp_address='${c_hp_address}',
     c_latitude    ='${c_latitude}',
     c_longitude  ='${c_longitude}'
-    WHERE center_id=${cid}`
+    WHERE center_id=${cid}`,
+    () => {
+      res.send(true);
+    }
   );
-  res.send(true);
 });
 
 app.get("/:userid/:cid/deletecenter", (req, res) => {
@@ -456,9 +458,11 @@ app.post("/:userid/:aid/modifyagent", (req, res) => {
     a_address   ='${a_address}',
     a_latitude  ='${a_latitude}',
     a_longitude ='${a_longitude}'   
-     WHERE agent_id='${aid}'`
+     WHERE agent_id='${aid}'`,
+    () => {
+      res.send(true);
+    }
   );
-  res.send(true);
 });
 
 app.post("/:userid/setagent", () => {
