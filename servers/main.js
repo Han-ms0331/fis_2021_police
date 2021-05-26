@@ -149,10 +149,45 @@ app.post("/home/call_write/:cid", async (req, res) => {
   const cid = path.parse(req.params.cid).base;
   let post = JSON.parse(Object.keys(req.body)[0]);
   post.cid = cid;
-  console.log(post);
-  let result = await dbfunc.set_call_status(post);
-  console.log(result);
-  res.send(result);
+  let result2 = [];
+  for (let key in post) {
+    switch (key) {
+      case "cid":
+        if (post[key] == "") result2.push(1);
+        break;
+      case "c_manager":
+        if (post[key] == "") result2.push(2);
+        break;
+      case "data":
+        if (post[key] == "") result2.push(3);
+        break;
+      case "participation":
+        if (post[key] == "") result2.push(4);
+        break;
+      case "in_out":
+        if (post[key] == "") result2.push(5);
+        break;
+      case "uid":
+        if (post[key] == "") result2.push(6);
+        break;
+      case "m_ph":
+        if (post[key] == "") result2.push(7);
+        break;
+      case "m_email":
+        if (post[key] == "") result2.push(8);
+        break;
+    }
+  }
+  let error_code = {};
+  if (result2.length > 0) {
+    error_code.error = result2;
+    res.send(error_code);
+  } else {
+    console.log(post);
+    let result = await dbfunc.set_call_status(post);
+    console.log(result);
+    res.send(result);
+  }
 });
 app.get("/home/get_agent/:a_region/:visit_date", async (req, res) => {
   let a_region = path.parse(req.params.a_region).base;
@@ -194,9 +229,14 @@ app.post("/home/applysave", (req, res) => {
   );
 });
 
-app.get("/schedule/:date", async (req, res) => {
-  const date = path.parse(req.params.date).base;
-  const result = await sche.sche(date);
+app.get("/schedule/:search_region", async (req, res) => {
+  // let today = new Date();
+  // let year = today.getFullYear();
+  // let month = today.getMonth() + 1;
+  //const date = path.parse(req.params.date).base;
+  const search_region = path.parse(req.params.search_region).base; //해당 지역 스케줄
+  const result = await sche.sche(search_region);
+
   res.send(result);
 });
 
