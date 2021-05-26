@@ -1,7 +1,7 @@
 const db = require("./dbid").db;
 
 module.exports = {
-  sche: async function (date, year, month, search_region) {
+  sche: async function (search_region) {
     return new Promise((resolve) => {
       db.query(
         `SELECT aid, visit_date, visit_time, estimate_num, cid
@@ -19,6 +19,7 @@ module.exports = {
           for (let i = 0; i < store_schedule.length; i++) {
             temp = await a(store_schedule, i);
           }
+          console.log(temp);
           resolve(temp);
         }
       );
