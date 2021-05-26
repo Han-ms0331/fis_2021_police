@@ -233,7 +233,6 @@ app.post("/home/applysave", (req, res) => {
   const { cid } = post;
   const { uid } = post;
   const { recept_date } = post;
-  const { collect } = post;
   const { visit_date } = post;
   const { visit_time } = post;
   const { estimate_num } = post;
@@ -250,20 +249,18 @@ app.post("/home/applysave", (req, res) => {
       case "recept_date":
         if (post[key] == "") result2.push(3);
         break;
-      case "collect":
+
+      case "visit_date":
         if (post[key] == "") result2.push(4);
         break;
-      case "visit_date":
+      case "visit_time":
         if (post[key] == "") result2.push(5);
         break;
-      case "visit_time":
+      case "estimate_num":
         if (post[key] == "") result2.push(6);
         break;
-      case "estimate_num":
-        if (post[key] == "") result2.push(7);
-        break;
       case "aid":
-        if (post[key] == "") result2.push(8);
+        if (post[key] == "") result2.push(7);
         break;
     }
   }
@@ -272,8 +269,8 @@ app.post("/home/applysave", (req, res) => {
     error_code.error = result2;
     res.send(error_code);
   } else {
-    let sql = `INSERT INTO apply_status(cid, uid, recept_date, collect, visit_date, visit_time, estimate_num, aid, latest)
-        VALUES (${cid}, ${uid}, '${recept_date}', '${collect}', '${visit_date}', '${visit_time}', '${estimate_num}', '${aid}',1);`;
+    let sql = `INSERT INTO apply_status(cid, uid, recept_date,  visit_date, visit_time, estimate_num, aid, latest)
+        VALUES (${cid}, ${uid}, '${recept_date}',  '${visit_date}', '${visit_time}', '${estimate_num}', '${aid}',1);`;
     db.query(sql, (err, store_apply) => {
       if (err) {
         console.log(err);
@@ -284,12 +281,16 @@ app.post("/home/applysave", (req, res) => {
 });
 
 app.get("/schedule/:search_region", async (req, res) => {
-  // let today = new Date();
-  // let year = today.getFullYear();
-  // let month = today.getMonth() + 1;
-  //const date = path.parse(req.params.date).base;
+  let result = {
+    sches: {},
+    agents: {},
+  };
+
   const search_region = path.parse(req.params.search_region).base; //해당 지역 스케줄
-  const result = await sche.sche(search_region);
+  result.sches = await sche.sche(search_region);
+  result.agents = await dbfunc.get_data(
+    `SELECT agent_id FROM agent WHERE agent_id LIKE '%${search_region}%'`
+  );
 
   res.send(result);
 });
