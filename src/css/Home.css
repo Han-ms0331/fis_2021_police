@@ -23,7 +23,10 @@
 }
 .main_search {
 	width: 500px;
-	overflow-y:auto; overflow-x:hidden; width:100%; height:150px;
+	overflow-y: auto;
+	overflow-x: hidden;
+	width: 100%;
+	height: 150px;
 }
 .main_search_box {
 	text-align: center;
@@ -47,8 +50,10 @@
 	display: flex;
 	flex-direction: column;
 	align-items: space;
-	overflow-y:auto; overflow-x:hidden; width:100%; height:150px;
-
+	overflow-y: auto;
+	overflow-x: hidden;
+	width: 100%;
+	height: 150px;
 }
 
 .main_info_header {
@@ -108,10 +113,10 @@
 	border: 2px solid rgb(0, 0, 0, 0.3);
 	background-color: #fffafa;
 	padding: 5px;
-	margin: 5px;	
+	margin: 5px;
 }
 
-.list-items_search-centerlist:hover{
+.list-items_search-centerlist:hover {
 	background-color: #8ef1bf;
 }
 
@@ -120,7 +125,7 @@
 	border: 2px solid rgb(0, 0, 0, 0.3);
 	background-color: #fffafa;
 	padding: 5px;
-	margin: 5px;	
+	margin: 5px;
 }
 .call-state_items {
 	margin: 10px 0px;

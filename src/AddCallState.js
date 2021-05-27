@@ -73,6 +73,14 @@ function AddCallState(props) {
 				etc: guitar,
 			})
 		);
+		setName('');
+		setDate('');
+		setBound('');
+		setEmail('');
+		setDigit('');
+		setAttend('');
+		setRecorder('');
+		setGuitar('');
 		closeSave();
 	};
 
