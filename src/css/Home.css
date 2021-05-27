@@ -150,6 +150,7 @@
 
 .search-main {
 	text-align: center;
+	white-space: nowrap;
 }
 
 .result {

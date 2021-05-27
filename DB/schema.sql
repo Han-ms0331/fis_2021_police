@@ -69,6 +69,7 @@ CREATE TABLE call_status(
     m_ph            varchar(100)        NOT NULL                        comment '시설 담당자 전화번호',
     m_email         varchar(100)        NOT NULL                        comment '시설 담당자 이메일 ',
     etc             varchar(300)        NOT NULL                        comment '기타 및 비고',
+    today           varchar(300)        NOT NULL                        comment 'call 한 날짜',
     PRIMARY KEY (no),
     FOREIGN key (cid) REFERENCES center(center_id),
     FOREIGN key (uid) REFERENCES user(user_id)

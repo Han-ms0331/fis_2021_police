@@ -148,7 +148,14 @@ app.get("/home/:userid/search/:cid", async (req, res) => {
 app.post("/home/call_write/:cid", async (req, res) => {
   const cid = path.parse(req.params.cid).base;
   let post = JSON.parse(Object.keys(req.body)[0]);
+  let day = new Date();
+  let year = day.getFullYear();
+  let month = day.getMonth() + 1;
+  let date = day.getDate();
+  //let today = `${year}-${month}-${date}`;
+
   post.cid = cid;
+  // post.today = today;
   let result2 = [];
   for (let key in post) {
     switch (key) {
@@ -227,7 +234,6 @@ app.post("/home/applysave", (req, res) => {
   const { cid } = post;
   const { uid } = post;
   const { recept_date } = post;
-  const { collect } = post;
   const { visit_date } = post;
   const { visit_time } = post;
   const { estimate_num } = post;
@@ -244,20 +250,18 @@ app.post("/home/applysave", (req, res) => {
       case "recept_date":
         if (post[key] == "") result2.push(3);
         break;
-      case "collect":
+
+      case "visit_date":
         if (post[key] == "") result2.push(4);
         break;
-      case "visit_date":
+      case "visit_time":
         if (post[key] == "") result2.push(5);
         break;
-      case "visit_time":
+      case "estimate_num":
         if (post[key] == "") result2.push(6);
         break;
-      case "estimate_num":
-        if (post[key] == "") result2.push(7);
-        break;
       case "aid":
-        if (post[key] == "") result2.push(8);
+        if (post[key] == "") result2.push(7);
         break;
     }
   }
@@ -266,8 +270,8 @@ app.post("/home/applysave", (req, res) => {
     error_code.error = result2;
     res.send(error_code);
   } else {
-    let sql = `INSERT INTO apply_status(cid, uid, recept_date, collect, visit_date, visit_time, estimate_num, aid, latest)
-        VALUES (${cid}, ${uid}, '${recept_date}', '${collect}', '${visit_date}', '${visit_time}', '${estimate_num}', '${aid}',1);`;
+    let sql = `INSERT INTO apply_status(cid, uid, recept_date,  visit_date, visit_time, estimate_num, aid, latest)
+        VALUES (${cid}, ${uid}, '${recept_date}',  '${visit_date}', '${visit_time}', '${estimate_num}', '${aid}',1);`;
     db.query(sql, (err, store_apply) => {
       if (err) {
         console.log(err);
@@ -277,15 +281,213 @@ app.post("/home/applysave", (req, res) => {
   }
 });
 
-app.get("/schedule/:search_region", async (req, res) => {
-  // let today = new Date();
-  // let year = today.getFullYear();
-  // let month = today.getMonth() + 1;
-  //const date = path.parse(req.params.date).base;
+app.get("/schedule/:search_region/:month", async (req, res) => {
+  let result = {
+    sches: {},
+    agents: {},
+  };
   const search_region = path.parse(req.params.search_region).base; //해당 지역 스케줄
-  const result = await sche.sche(search_region);
-
+  const month = path.parse(req.params.month).base;
+  let realmonth;
+  if (month < 10) {
+    realmonth = "0" + `${month}`;
+  }
+  console.log(month);
+  result.sches = await sche.sche(search_region, realmonth);
+  result.agents = await dbfunc.get_data(
+    `SELECT agent_id FROM agent WHERE agent_id LIKE '%${search_region}%'`
+  );
   res.send(result);
+});
+
+// 콜직원 업무 현황
+app.get("/:userid/getbusinessstatus", async (req, res) => {
+  //let userid = path.parse(req.params.userid).base;
+  if (userid === "Admin") res.send(false);
+  let day = new Date();
+  let year = day.getFullYear();
+  let month = day.getMonth() + 1;
+  let date = day.getDate();
+  //let today = `${year}-${month}-${date}`; 현승구야 내가 date_format(now(),'%Y,-%m-01') 으로 바꿨다 ~~
+  let user_info = await dbfunc.get_data("SELECT * FROM user");
+  let business_status = [];
+  for (let i in user_info) {
+    let cur_id = user_info[i].user_id;
+    let cur_name = user_info[i].u_name;
+    let how_many = 0;
+    let call_data = await dbfunc.get_data(
+      `SELECT * FROM call_status WHERE today = date_format(now(),'%Y,-%m-%d') and uid = ${cur_id};`
+    );
+    let data = {};
+    data.call_status = [];
+    for (let j in call_data) {
+      let add_data = {};
+      add_data.cid = call_data[j].cid;
+      let c_name = await dbfunc.get_data(
+        `SELECT * FROM center WHERE today = date_format(now(),'%Y,-%m-%d') and uid = ${cur_id};`
+      )[0].c_name;
+      add_data.participation = call_data[j].participation;
+      data.call_status.push(add_data);
+      how_many++;
+    }
+    data.how_many = how_many;
+    business_status.push(data);
+  }
+});
+
+// 콜직원 추가 변경
+app.post("/:userid/setuser", (req, res) => {
+  let post = JSON.parse(Object.keys(req.body)[0]);
+  let u_name = post.u_name;
+  let u_pwd = post.u_pwd;
+  let u_ph = post.u_ph;
+  db.query(
+    `INSERT INTO user(u_name, u_pwd, u_ph) VALUES ('${u_name}', '${u_pwd}', '${u_ph}')`
+  );
+  res.send(true);
+});
+
+app.post("/:userid/:uid/modifyuser", (req, res) => {
+  const uid = path.parse(req.params.uid).base;
+  let post = JSON.parse(Object.keys(req.body)[0]);
+  let u_name = post.u_name;
+  let u_pwd = post.u_pwd;
+  let u_ph = post.u_ph;
+  db.query(
+    `UPDATE user SET u_name ='${u_name}', u_pwd='${u_pwd}', u_ph='${u_ph}' WHERE user_id=${uid}`,
+    () => {
+      res.send(true);
+    }
+  );
+});
+
+app.get("/:userid/:user_id/deleteuser", (req, res) => {
+  let user_id = path.parse(req.params.user_id).base;
+  db.query(`DELETE FROM user WHERE user_id = ${user_id}`, () => {
+    res.send(true);
+  });
+});
+
+// 어린이집 추가 삭제 변경
+app.post("/:userid/setcenter", (req, res) => {
+  const uid = path.parse(req.params.uid).base;
+  let post = JSON.parse(Object.keys(req.body)[0]);
+  let c_sido = post.c_sido;
+  let c_sigungu = post.c_sigungu;
+  let c_name = post.c_name;
+  let c_type = post.c_type;
+  let c_status = post.c_status;
+  let c_address = post.c_address;
+  let c_zipcode = post.c_zipcode;
+  let c_ph = post.c_ph;
+  let c_fax_num = post.c_fax_num;
+  let c_people = post.c_people;
+  let c_hp_address = post.c_hp_address;
+  let c_latitude = post.c_latitude;
+  let c_longitude = post.c_longitude;
+  db.query(
+    `INSERT INTO center( c_sido, c_sigungu, c_name, c_type, c_status, c_address, c_zipcode, c_ph, c_fax_num, c_people, c_hp_address, c_latitude, c_longitude )
+    VALUES ('${c_sido}', '${c_sigungu}', '${c_name}', '${c_type}', '${c_status}', '${c_address}', '${c_zipcode}', '${c_ph}', '${c_fax_num}', '${c_people}', '${c_hp_address}', '${c_latitude}', '${c_longitude}'); 
+    `,
+    () => {
+      res.send(true);
+    }
+  );
+});
+
+app.post("/:userid/:cid/modifycenter", (req, res) => {
+  const cid = path.parse(req.params.cid).base;
+  let post = JSON.parse(Object.keys(req.body)[0]);
+  let c_sido = post.c_sido;
+  let c_sigungu = post.c_sigungu;
+  let c_name = post.c_name;
+  let c_type = post.c_type;
+  let c_status = post.c_status;
+  let c_address = post.c_address;
+  let c_zipcode = post.c_zipcode;
+  let c_ph = post.c_ph;
+  let c_fax_num = post.c_fax_num;
+  let c_people = post.c_people;
+  let c_hp_address = post.c_hp_address;
+  let c_latitude = post.c_latitude;
+  let c_longitude = post.c_longitude;
+  db.query(
+    `UPDATE center SET
+    c_sido       ='${c_sido}',
+    c_sigungu    ='${c_sigungu}',
+    c_name        ='${c_name}',
+    c_type        ='${c_type}',
+    c_status    ='${c_status}',
+    c_address    ='${c_address}',
+    c_zipcode    ='${c_zipcode}',
+    c_ph        ='${c_ph}',
+    c_fax_num    ='${c_fax_num}',
+    c_people    ='${c_people}',
+    c_hp_address='${c_hp_address}',
+    c_latitude    ='${c_latitude}',
+    c_longitude  ='${c_longitude}'
+    WHERE center_id=${cid}`,
+    () => {
+      res.send(true);
+    }
+  );
+});
+
+app.get("/:userid/:cid/deletecenter", (req, res) => {
+  let center_id = path.parse(req.params.cid).base;
+  db.query(`DELETE FROM center WHERE center_id = ${center_id}`, () => {
+    res.send(true);
+  });
+});
+
+// 요원 추가 변경
+app.get("/:userid/:agent_id/deleteagent", (req, res) => {
+  let center_id = path.parse(req.params.cid).base;
+  db.query(`DELETE FROM agent WHERE agent_id = ${agent_id}`, () => {
+    res.send(true);
+  });
+});
+
+app.post("/:userid/:aid/modifyagent", (req, res) => {
+  const aid = path.parse(req.params.aid).base;
+  let post = JSON.parse(Object.keys(req.body)[0]);
+  let agent_id = agent_id;
+  let a_name = a_name;
+  let a_ph = a_ph;
+  let a_address = a_address;
+  let a_latitude = a_latitude;
+  let a_longitude = a_longitude;
+  db.query(
+    `UPDATE agent SET 
+    agent_id    ='${agent_id}',
+    a_name      ='${a_name}',
+    a_ph        ='${a_ph}',
+    a_address   ='${a_address}',
+    a_latitude  ='${a_latitude}',
+    a_longitude ='${a_longitude}'   
+     WHERE agent_id='${aid}'`,
+    () => {
+      res.send(true);
+    }
+  );
+});
+
+app.post("/:userid/setagent", () => {
+  const aid = path.parse(req.params.aid).base;
+  let post = JSON.parse(Object.keys(req.body)[0]);
+  let agent_id = agent_id;
+  let a_name = a_name;
+  let a_ph = a_ph;
+  let a_address = a_address;
+  let a_latitude = a_latitude;
+  let a_longitude = a_longitude;
+  db.query(
+    `INSERT INTO agent( agent_id, a_name, a_ph, a_address, a_latitude, a_longitude ) 
+    VALUES ('${agent_id}', '${a_name}', '${a_ph}', '${a_address}', '${a_latitude}', '${a_longitude}')`,
+    () => {
+      res.send(true);
+    }
+  );
 });
 
 app.listen(3000, function () {
