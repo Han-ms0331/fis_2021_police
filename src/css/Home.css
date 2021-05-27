@@ -40,11 +40,6 @@
 }
 .center_info {
 	margin: 5px 10px;
-	width: 70px;
-}
-.center_info_num {
-	margin: 5px 10px;
-	width: 60px;
 }
 .main_info {
 	width: 30%;
@@ -55,9 +50,10 @@
 	display: flex;
 	flex-direction: column;
 	align-items: space;
-	overflow-y: scroll;
+	overflow-y: auto;
 	overflow-x: hidden;
 	width: 100%;
+	height: 150px;
 }
 
 .main_info_header {
@@ -70,6 +66,7 @@
 
 .main_info_call-state {
 	overflow-y: scroll;
+	width: 100%;
 	height: 300px;
 	padding: 10px;
 	margin: 10px 0px;
@@ -83,6 +80,7 @@
 
 .main_info_apply-state {
 	overflow-y: scroll;
+	width: 100%;
 	height: 300px;
 	padding: 10px;
 	margin: 10px 0px;
@@ -140,19 +138,13 @@
 	width: 100px;
 }
 
-.agent-container {
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-}
-
 .searchAgent-result-list {
 	float: left;
 }
 
 .search-main {
 	text-align: center;
-	white-space: nowrap;
+	/* white-space: nowrap; */
 }
 
 .result {
@@ -176,20 +168,4 @@
 }
 .agent-list {
 	float: left;
-}
-.search-schedule-date {
-	overflow-x: scroll;
-	white-space: nowrap;
-}
-
-.agent-schedule-list {
-	list-style: none;
-}
-.agent-schedule-item {
-	float: left;
-	width: 100px;
-}
-
-.date-header {
-	display: flex;
 }
