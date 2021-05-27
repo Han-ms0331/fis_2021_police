@@ -1,17 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import axios from 'axios';
 import './css/centerlist.css';
 
-
 function CenterList(props) {
 	let result;
-	const [bgState, setBgState] = useState("false");
 
 	const getCenterInfo = async () => {
 		result = await axios.get(
 			`http://192.168.0.117:3000/home/${props.uid}/search/${props.data.center_id}`
 		);
 		console.log(result);
+
 		props.setCenterInfo({
 			centerName: props.data.c_name,
 			centerAddr: props.data.c_address,
@@ -21,7 +20,6 @@ function CenterList(props) {
 			applyState_list: result.data.applies,
 		});
 	};
-	console.log(props.data);
 
 	const onClick = (e) => {
 		e.preventDefault();
@@ -35,7 +33,8 @@ function CenterList(props) {
 			<div class='center_info'>{props.data.c_name}</div>
 			<div class='center_info'>{props.data.c_address}</div>
 			<div class='center_info'>{props.data.c_ph}</div>
-			<div class='center_info'>{props.data.center_id}</div>
+			<div class='center_info_num'>{props.data.center_id}</div>
+			<div class='center_info_num'>{props.called}</div>
 			<button class='main_search_result_list_btn' onClick={onClick}>
 				선택
 			</button>

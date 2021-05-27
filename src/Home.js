@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import Modal from 'react-modal';
 import axios from 'axios';
 import './css/Home.css';
@@ -28,6 +28,9 @@ function Home(props) {
 	const [addCall, setAddCall] = useState({});
 	const [IsopenAddApply, setIsOpenAddApply] = useState(false);
 	const [IsSave, setIsSave] = useState(false);
+	const [called, setCalled] = useState('없음');
+	const resettingRef = useRef(false);
+
 	//검색어를 통해 데이터를 받아오는 부분
 
 	const getSearchCenterList = async (search) => {
@@ -36,6 +39,12 @@ function Home(props) {
 			`http://192.168.0.117:3000/home/${props.uid}/${search}`
 		);
 		setResult_1ary(result);
+		resettingRef.current = true;
+		// if (result.data.calls.length === 0) {
+		// 	setCalled('없음');
+		// } else {
+		// 	setCalled('있음');
+		// }
 		console.log(result);
 		setIsLoading_1(false);
 	};
@@ -54,9 +63,13 @@ function Home(props) {
 	const openAddCall = (e) => {
 		setIsOpenAddCall(true);
 	};
-	const closeAddCall = (e) => {
-		alert('저장되었습니다');
-		setIsOpenAddCall(false);
+	const closeAddCall = (error) => {
+		if (error) {
+			alert('작성 내용을 확인해 주세요');
+		} else {
+			alert('저장되었습니다');
+			setIsOpenAddCall(false);
+		}
 	};
 	const closeAddCallCancle = (e) => {
 		setIsOpenAddCall(false);
@@ -64,13 +77,23 @@ function Home(props) {
 	const openAddApply = (e) => {
 		setIsOpenAddApply(true);
 	};
-	const closeAddApply = (e) => {
-		alert('저장되었습니다');
-		setIsOpenAddApply(false);
+	const closeAddApply = (error) => {
+		if (error) {
+			alert('작성 내용을 확인해 주세요');
+		} else {
+			alert('저장되었습니다');
+			setIsOpenAddCall(false);
+		}
 	};
 	const closeAddApplyCancle = (e) => {
 		setIsOpenAddApply(false);
 	};
+	useEffect(() => {
+		if (resettingRef.current) {
+			resettingRef.current = false;
+			getSearchCenterList();
+		}
+	}, [called]);
 
 	props.setIsLogined(localStorage.getItem('isLogined'));
 
@@ -99,7 +122,8 @@ function Home(props) {
 										<div class='center_info'>시설 이름</div>
 										<div class='center_info'>주소</div>
 										<div class='center_info'>전화번호</div>
-										<div class='center_info'>시설 id</div>
+										<div class='center_info_num'>시설 id</div>
+										<div class='center_info_num'>연락 기록</div>
 									</div>
 								</li>
 							</ul>
@@ -137,7 +161,8 @@ function Home(props) {
 										<div class='center_info'>시설 이름</div>
 										<div class='center_info'>주소</div>
 										<div class='center_info'>전화번호</div>
-										<div class='center_info'>시설 id</div>
+										<div class='center_info_num'>시설 id</div>
+										<div class='center_info_num'>연락 기록</div>
 									</div>
 								</li>
 
@@ -152,6 +177,7 @@ function Home(props) {
 													setIsLoading_2={setIsLoading_2}
 													uid={props.uid}
 													setCenterInfo={setCenterInfo}
+													called={called}
 												/>
 											</li>
 									  ))
@@ -191,7 +217,8 @@ function Home(props) {
 										<div class='center_info'>시설 이름</div>
 										<div class='center_info'>주소</div>
 										<div class='center_info'>전화번호</div>
-										<div class='center_info'>시설 id</div>
+										<div class='center_info_num'>시설 id</div>
+										<div class='center_info_num'>연락 기록</div>
 									</div>
 								</li>
 								{result_1ary.data.map((result_1ary) => (

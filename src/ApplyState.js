@@ -1,7 +1,6 @@
 import React from 'react';
 
 function ApplyState(props) {
-	console.log(props.applyState_list);
 	return (
 		<div class='main_info_apply-state_list_item'>
 			<div class='information'>현장요원:{props.applyState_list.aid}</div>
@@ -20,6 +19,9 @@ function ApplyState(props) {
 			</div>
 			<div class='information'>기록자 이름:{props.applyState_list.uid}</div>
 			<div class='information'>특이사항:{props.applyState_list.etc}</div>
+			<button name='update' class='information' onClick={onclick}>
+				수정
+			</button>
 		</div>
 	);
 }

@@ -1,7 +1,6 @@
 import React from 'react';
 
 function CallState(props) {
-	console.log(props.callState_list);
 	return (
 		<div class='main_info_call-state_list_item'>
 			<div class='information'>
