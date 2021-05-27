@@ -30,7 +30,8 @@ function Home(props) {
 	const [IsSave, setIsSave] = useState(false);
 	const [called, setCalled] = useState('없음');
 	const resettingRef = useRef(false);
-
+	const [isUpdate, setIsUpdate] = useState(false);
+	const [select, setSelect] = useState('');
 	//검색어를 통해 데이터를 받아오는 부분
 
 	const getSearchCenterList = async (search) => {
@@ -51,6 +52,7 @@ function Home(props) {
 
 	const onClick = (e) => {
 		e.preventDefault();
+		setCurrentResult('');
 		setIsLoading_2(true);
 		console.log(searchCenter);
 		getSearchCenterList(searchCenter);
@@ -82,7 +84,7 @@ function Home(props) {
 			alert('작성 내용을 확인해 주세요');
 		} else {
 			alert('저장되었습니다');
-			setIsOpenAddCall(false);
+			setIsOpenAddApply(false);
 		}
 	};
 	const closeAddApplyCancle = (e) => {
@@ -129,7 +131,7 @@ function Home(props) {
 							</ul>
 						</div>
 					</div>
-					<div class='main_info'>
+					<div class='main_info_1'>
 						<span>시설을 선택해 주세요</span>
 					</div>
 				</div>
@@ -170,7 +172,11 @@ function Home(props) {
 									? result_1ary.data.map((result_1ary) => (
 											<li
 												key={result_1ary.center_id}
-												class='list-items_search-centerlist'>
+												class={
+													currentResult === result_1ary.center_id
+														? 'list-items_search-centerlist_selected'
+														: 'list-items_search-centerlist'
+												}>
 												<CenterList
 													data={result_1ary}
 													setCurrentResult={setCurrentResult}
@@ -178,6 +184,7 @@ function Home(props) {
 													uid={props.uid}
 													setCenterInfo={setCenterInfo}
 													called={called}
+													setSelected={setCurrentResult}
 												/>
 											</li>
 									  ))
@@ -222,13 +229,21 @@ function Home(props) {
 									</div>
 								</li>
 								{result_1ary.data.map((result_1ary) => (
-									<li class='list-items_search-centerlist'>
+									<li
+										key={result_1ary.center_id}
+										class={
+											currentResult === result_1ary.center_id
+												? 'list-items_search-centerlist_selected'
+												: 'list-items_search-centerlist'
+										}>
 										<CenterList
 											data={result_1ary}
 											setCurrentResult={setCurrentResult}
 											setIsLoading_2={setIsLoading_2}
 											uid={props.uid}
 											setCenterInfo={setCenterInfo}
+											called={called}
+											setSelected={setCurrentResult}
 										/>
 									</li>
 								))}
@@ -279,7 +294,7 @@ function Home(props) {
 									<li
 										key={centerInfo.center_id}
 										class='list-items apply-state_items'>
-										<ApplyState applyState_list={data} />
+										<ApplyState applyState_list={data} setIsUpdate />
 									</li>
 								))}
 							</ul>

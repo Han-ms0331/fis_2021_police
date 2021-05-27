@@ -19,9 +19,6 @@ function ApplyState(props) {
 			</div>
 			<div class='information'>기록자 이름:{props.applyState_list.uid}</div>
 			<div class='information'>특이사항:{props.applyState_list.etc}</div>
-			<button name='update' class='information' onClick={onclick}>
-				수정
-			</button>
 		</div>
 	);
 }

@@ -10,7 +10,6 @@ function CenterList(props) {
 			`http://192.168.0.117:3000/home/${props.uid}/search/${props.data.center_id}`
 		);
 		console.log(result);
-
 		props.setCenterInfo({
 			centerName: props.data.c_name,
 			centerAddr: props.data.c_address,
@@ -29,7 +28,7 @@ function CenterList(props) {
 	};
 
 	return (
-		<div class='main_search_result_list_item'>
+		<div class={'main_search_result_list_item'}>
 			<div class='center_info'>{props.data.c_name}</div>
 			<div class='center_info'>{props.data.c_address}</div>
 			<div class='center_info'>{props.data.c_ph}</div>

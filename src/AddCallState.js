@@ -8,18 +8,25 @@ function AddCallState(props) {
 		month: new Date().getMonth() + 1,
 		date: new Date().getDate(),
 	};
+	if (today.month < 10) {
+		today.month = '0' + today.month;
+	}
+	if (today.day < 10) {
+		today.day = '0' + today.day;
+	}
 	const date_format = today.year + '-' + today.month + '-' + today.date;
 	const [date, setDate] = useState(
 		today.year + '-' + today.month + '-' + today.date
 	);
 	const [name, setName] = useState('');
-
 	const [bound, setBound] = useState('');
 	const [email, setEmail] = useState('');
 	const [digit, setDigit] = useState('');
 	const [attend, setAttend] = useState('');
 	const [recorder, setRecorder] = useState('');
 	const [guitar, setGuitar] = useState('');
+	const [done, setDone] = useState(false);
+	const resettingRef = useRef(false);
 
 	const handleName = (e) => {
 		setName(e.target.value);
@@ -47,15 +54,6 @@ function AddCallState(props) {
 	};
 
 	const send = async () => {
-		console.log(name);
-		console.log(date);
-		console.log(bound);
-		console.log(email);
-		console.log(digit);
-		console.log(attend);
-		console.log(recorder);
-		console.log(guitar);
-		console.log(props.centerID);
 		const result = await axios.post(
 			`http://192.168.0.117:3000/home/call_write/${props.centerID}`,
 			JSON.stringify({
@@ -69,6 +67,9 @@ function AddCallState(props) {
 				etc: guitar,
 			})
 		);
+		resettingRef.current = true;
+		clear();
+
 		console.log(result.data.error);
 		let error;
 		if (result.data.error !== undefined) {
@@ -80,7 +81,22 @@ function AddCallState(props) {
 		console.log(error);
 		closeSave(error);
 	};
-
+	const clear = () => {
+		setName('');
+		setBound('');
+		setEmail('');
+		setDigit('');
+		setAttend('');
+		setRecorder('');
+		setGuitar('');
+		setDone(true);
+	};
+	useEffect(() => {
+		if (resettingRef.current) {
+			resettingRef.current = false;
+			clear();
+		}
+	}, [done]);
 	return open ? (
 		<div>
 			<div>
@@ -107,6 +123,7 @@ function AddCallState(props) {
 			<div>
 				<span>인/아웃바운드: </span>
 				<select name='bound' onChange={handleBound}>
+					<option value='인바운드/아웃바운드'>===선택===</option>
 					<option value='인'>인</option>
 					<option value='아웃'>아웃</option>
 				</select>
@@ -135,6 +152,7 @@ function AddCallState(props) {
 			<div>
 				<span>시설 참여 여부: </span>
 				<select name='attend' onChange={handleAttend}>
+					<option value='선택'>===선택===</option>
 					<option value='참여'>참여</option>
 					<option value='거부'>거부</option>
 					<option value='보류'>보류</option>
