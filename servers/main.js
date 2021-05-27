@@ -272,12 +272,23 @@ app.post("/home/applysave", (req, res) => {
   } else {
     let sql = `INSERT INTO apply_status(cid, uid, recept_date,  visit_date, visit_time, estimate_num, aid, latest)
         VALUES (${cid}, ${uid}, '${recept_date}',  '${visit_date}', '${visit_time}', '${estimate_num}', '${aid}',1);`;
-    db.query(sql, (err, store_apply) => {
-      if (err) {
-        console.log(err);
+    db.query(
+      `UPDATE apply_status SET latest=0 WHERE cid=${post.cid};`,
+      (err, update_apply) => {
+        //같은 시설 수정전 정보들 latest=0 만들기
+        if (err) {
+          console.log(err);
+          //  res.send(false);
+        }
+
+        db.query(sql, (err, store_apply) => {
+          if (err) {
+            console.log(err);
+          }
+          res.send(true);
+        });
       }
-      res.send(true);
-    });
+    );
   }
 });
 
