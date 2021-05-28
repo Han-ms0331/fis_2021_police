@@ -1,29 +1,32 @@
 import axios from 'axios';
-import React, { useState } from 'react';
-import Modal from 'react-modal';
-
-const customStyles = {
-	content: {
-		top: '50%',
-		left: '50%',
-		right: 'auto',
-		bottom: 'auto',
-		marginRight: '-50%',
-		transform: 'translate(-50%, -50%)',
-	},
-};
+import React, { useState, useRef, useEffect } from 'react';
 
 function AddCallState(props) {
 	const { open, closeSave, closeCancle, uid } = props;
-
+	const today = {
+		year: new Date().getFullYear(),
+		month: new Date().getMonth() + 1,
+		date: new Date().getDate(),
+	};
+	if (today.month < 10) {
+		today.month = '0' + today.month;
+	}
+	if (today.day < 10) {
+		today.day = '0' + today.day;
+	}
+	const date_format = today.year + '-' + today.month + '-' + today.date;
+	const [date, setDate] = useState(
+		today.year + '-' + today.month + '-' + today.date
+	);
 	const [name, setName] = useState('');
-	const [date, setDate] = useState('');
 	const [bound, setBound] = useState('');
 	const [email, setEmail] = useState('');
 	const [digit, setDigit] = useState('');
 	const [attend, setAttend] = useState('');
 	const [recorder, setRecorder] = useState('');
 	const [guitar, setGuitar] = useState('');
+	const [done, setDone] = useState(false);
+	const resettingRef = useRef(false);
 
 	const handleName = (e) => {
 		setName(e.target.value);
@@ -51,15 +54,6 @@ function AddCallState(props) {
 	};
 
 	const send = async () => {
-		console.log(name);
-		console.log(date);
-		console.log(bound);
-		console.log(email);
-		console.log(digit);
-		console.log(attend);
-		console.log(recorder);
-		console.log(guitar);
-		console.log(props.centerID);
 		const result = await axios.post(
 			`http://192.168.0.117:3000/home/call_write/${props.centerID}`,
 			JSON.stringify({
@@ -73,9 +67,36 @@ function AddCallState(props) {
 				etc: guitar,
 			})
 		);
-		closeSave();
-	};
+		resettingRef.current = true;
+		clear();
 
+		console.log(result.data.error);
+		let error;
+		if (result.data.error !== undefined) {
+			error = true;
+		} else {
+			error = false;
+		}
+
+		console.log(error);
+		closeSave(error);
+	};
+	const clear = () => {
+		setName('');
+		setBound('');
+		setEmail('');
+		setDigit('');
+		setAttend('');
+		setRecorder('');
+		setGuitar('');
+		setDone(true);
+	};
+	useEffect(() => {
+		if (resettingRef.current) {
+			resettingRef.current = false;
+			clear();
+		}
+	}, [done]);
 	return open ? (
 		<div>
 			<div>
@@ -92,20 +113,20 @@ function AddCallState(props) {
 				<span>연락일자: </span>
 				<input
 					name='date'
-					type='date'
+					type='text'
 					placeholder='연락일자'
+					value={today.year + '-' + today.month + '-' + today.date}
 					onChange={handleDate}
 				/>
 			</div>
 
 			<div>
 				<span>인/아웃바운드: </span>
-				<input
-					name='bound'
-					type='text'
-					placeholder='인/아웃바운드'
-					onChange={handleBound}
-				/>
+				<select name='bound' onChange={handleBound}>
+					<option value='인바운드/아웃바운드'>===선택===</option>
+					<option value='인'>인</option>
+					<option value='아웃'>아웃</option>
+				</select>
 			</div>
 
 			<div>
@@ -130,12 +151,12 @@ function AddCallState(props) {
 
 			<div>
 				<span>시설 참여 여부: </span>
-				<input
-					name='attend'
-					type='text'
-					placeholder='시설 참여 여부'
-					onChange={handleAttend}
-				/>
+				<select name='attend' onChange={handleAttend}>
+					<option value='선택'>===선택===</option>
+					<option value='참여'>참여</option>
+					<option value='거부'>거부</option>
+					<option value='보류'>보류</option>
+				</select>
 			</div>
 
 			<div>
@@ -150,13 +171,11 @@ function AddCallState(props) {
 			</div>
 
 			<div>
-				<span>특이사항: </span>
-				<input
-					name='guitar'
-					type='text'
+				<div>특이사항: </div>
+				<textarea
+					name='etc'
 					placeholder='특이사항'
-					onChange={handleGuitar}
-				/>
+					onInput={handleGuitar}></textarea>
 			</div>
 
 			<button onClick={send}>저장</button>

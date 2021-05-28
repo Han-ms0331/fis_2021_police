@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import Modal from 'react-modal';
 import axios from 'axios';
 import './css/Home.css';
@@ -28,23 +28,58 @@ function Home(props) {
 	const [addCall, setAddCall] = useState({});
 	const [IsopenAddApply, setIsOpenAddApply] = useState(false);
 	const [IsSave, setIsSave] = useState(false);
+	const [called, setCalled] = useState('없음');
+	const resettingRef = useRef(false);
+	const [isUpdate, setIsUpdate] = useState(false);
+	const [select, setSelect] = useState('');
 	//검색어를 통해 데이터를 받아오는 부분
 
 	const getSearchCenterList = async (search) => {
 		console.log(props.uid);
+
 		const result = await axios.get(
-			`http://192.168.0.117:3000/home/${props.uid}/${search}`
+			`http://192.168.0.117:3000/home/name/${props.uid}/${search}`
 		);
 		setResult_1ary(result);
+		resettingRef.current = true;
+		// if (result.data.calls.length === 0) {
+		// 	setCalled('없음');
+		// } else {
+		// 	setCalled('있음');
+		// }
+		console.log(result);
+		setIsLoading_1(false);
+	};
+	const getSearchCenterList_a = async (search) => {
+		console.log(props.uid);
+
+		const result = await axios.get(
+			`http://192.168.0.117:3000/home/address/${props.uid}/${search}`
+		);
+		setResult_1ary(result);
+		resettingRef.current = true;
+		// if (result.data.calls.length === 0) {
+		// 	setCalled('없음');
+		// } else {
+		// 	setCalled('있음');
+		// }
 		console.log(result);
 		setIsLoading_1(false);
 	};
 
 	const onClick = (e) => {
 		e.preventDefault();
+		setCurrentResult('');
 		setIsLoading_2(true);
 		console.log(searchCenter);
 		getSearchCenterList(searchCenter);
+	};
+	const onClick_a = (e) => {
+		e.preventDefault();
+		setCurrentResult('');
+		setIsLoading_2(true);
+		console.log(searchCenter);
+		getSearchCenterList_a(searchCenter);
 	};
 	const onChange = (e) => {
 		console.log(e.target.value);
@@ -54,9 +89,13 @@ function Home(props) {
 	const openAddCall = (e) => {
 		setIsOpenAddCall(true);
 	};
-	const closeAddCall = (e) => {
-		alert('저장되었습니다');
-		setIsOpenAddCall(false);
+	const closeAddCall = (error) => {
+		if (error) {
+			alert('작성 내용을 확인해 주세요');
+		} else {
+			alert('저장되었습니다');
+			setIsOpenAddCall(false);
+		}
 	};
 	const closeAddCallCancle = (e) => {
 		setIsOpenAddCall(false);
@@ -64,13 +103,23 @@ function Home(props) {
 	const openAddApply = (e) => {
 		setIsOpenAddApply(true);
 	};
-	const closeAddApply = (e) => {
-		alert('저장되었습니다');
-		setIsOpenAddApply(false);
+	const closeAddApply = (error) => {
+		if (error) {
+			alert('작성 내용을 확인해 주세요');
+		} else {
+			alert('저장되었습니다');
+			setIsOpenAddApply(false);
+		}
 	};
 	const closeAddApplyCancle = (e) => {
 		setIsOpenAddApply(false);
 	};
+	useEffect(() => {
+		if (resettingRef.current) {
+			resettingRef.current = false;
+			getSearchCenterList();
+		}
+	}, [called]);
 
 	props.setIsLogined(localStorage.getItem('isLogined'));
 
@@ -81,6 +130,7 @@ function Home(props) {
 				<div class='main'>
 					<div class='main_serch'>
 						<div class='main_search_box'>
+							<span>이름으로 검색:</span>
 							<input
 								type='text'
 								placeholder='시설 이름 입력'
@@ -91,6 +141,18 @@ function Home(props) {
 							<button class='main_search_btn' onClick={onClick}>
 								검색
 							</button>
+							<span>주소로 검색:</span>
+
+							<input
+								type='text'
+								placeholder='시설 주소 입력'
+								name='address'
+								class='main_serch_input'
+								onChange={onChange}
+							/>
+							<button class='main_search_btn' onClick={onClick_a}>
+								검색
+							</button>
 						</div>
 						<div class='main_search_result'>
 							<ul class='main_search_result_list list'>
@@ -99,13 +161,14 @@ function Home(props) {
 										<div class='center_info'>시설 이름</div>
 										<div class='center_info'>주소</div>
 										<div class='center_info'>전화번호</div>
-										<div class='center_info'>시설 id</div>
+										<div class='center_info_num'>시설 id</div>
+										<div class='center_info_num'>연락 기록</div>
 									</div>
 								</li>
 							</ul>
 						</div>
 					</div>
-					<div class='main_info'>
+					<div class='main_info_1'>
 						<span>시설을 선택해 주세요</span>
 					</div>
 				</div>
@@ -119,6 +182,7 @@ function Home(props) {
 				<div class='main'>
 					<div class='main_serch'>
 						<div class='main_search_box'>
+							<span>이름으로 검색:</span>
 							<input
 								type='text'
 								placeholder='시설 이름 입력'
@@ -129,6 +193,18 @@ function Home(props) {
 							<button class='main_search_btn' onClick={onClick}>
 								검색
 							</button>
+							<span>주소로 검색:</span>
+
+							<input
+								type='text'
+								placeholder='시설 주소 입력'
+								name='address'
+								class='main_serch_input'
+								onChange={onChange}
+							/>
+							<button class='main_search_btn' onClick={onClick_a}>
+								검색
+							</button>
 						</div>
 						<div class='main_search_result'>
 							<ul class='main_search_result_list list'>
@@ -137,7 +213,8 @@ function Home(props) {
 										<div class='center_info'>시설 이름</div>
 										<div class='center_info'>주소</div>
 										<div class='center_info'>전화번호</div>
-										<div class='center_info'>시설 id</div>
+										<div class='center_info_num'>시설 id</div>
+										<div class='center_info_num'>연락 기록</div>
 									</div>
 								</li>
 
@@ -145,13 +222,19 @@ function Home(props) {
 									? result_1ary.data.map((result_1ary) => (
 											<li
 												key={result_1ary.center_id}
-												class='list-items_search-centerlist'>
+												class={
+													currentResult === result_1ary.center_id
+														? 'list-items_search-centerlist_selected'
+														: 'list-items_search-centerlist'
+												}>
 												<CenterList
 													data={result_1ary}
 													setCurrentResult={setCurrentResult}
 													setIsLoading_2={setIsLoading_2}
 													uid={props.uid}
 													setCenterInfo={setCenterInfo}
+													called={called}
+													setSelected={setCurrentResult}
 												/>
 											</li>
 									  ))
@@ -173,6 +256,7 @@ function Home(props) {
 				<div class='main'>
 					<div class='main_serch'>
 						<div class='main_search_box'>
+							<span>이름으로 검색:</span>
 							<input
 								type='text'
 								placeholder='시설 이름 입력'
@@ -183,6 +267,18 @@ function Home(props) {
 							<button class='main_search_btn' onClick={onClick}>
 								검색
 							</button>
+							<span>주소로 검색:</span>
+
+							<input
+								type='text'
+								placeholder='시설 주소 입력'
+								name='address'
+								class='main_serch_input'
+								onChange={onChange}
+							/>
+							<button class='main_search_btn' onClick={onClick_a}>
+								검색
+							</button>
 						</div>
 						<div class='main_search_result'>
 							<ul class='main_search_result_list list'>
@@ -191,17 +287,26 @@ function Home(props) {
 										<div class='center_info'>시설 이름</div>
 										<div class='center_info'>주소</div>
 										<div class='center_info'>전화번호</div>
-										<div class='center_info'>시설 id</div>
+										<div class='center_info_num'>시설 id</div>
+										<div class='center_info_num'>연락 기록</div>
 									</div>
 								</li>
 								{result_1ary.data.map((result_1ary) => (
-									<li class='list-items_search-centerlist'>
+									<li
+										key={result_1ary.center_id}
+										class={
+											currentResult === result_1ary.center_id
+												? 'list-items_search-centerlist_selected'
+												: 'list-items_search-centerlist'
+										}>
 										<CenterList
 											data={result_1ary}
 											setCurrentResult={setCurrentResult}
 											setIsLoading_2={setIsLoading_2}
 											uid={props.uid}
 											setCenterInfo={setCenterInfo}
+											called={called}
+											setSelected={setCurrentResult}
 										/>
 									</li>
 								))}
@@ -252,7 +357,7 @@ function Home(props) {
 									<li
 										key={centerInfo.center_id}
 										class='list-items apply-state_items'>
-										<ApplyState applyState_list={data} />
+										<ApplyState applyState_list={data} setIsUpdate />
 									</li>
 								))}
 							</ul>

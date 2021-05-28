@@ -1,7 +1,6 @@
 import React from 'react';
 
 function ApplyState(props) {
-	console.log(props.applyState_list);
 	return (
 		<div class='main_info_apply-state_list_item'>
 			<div class='information'>현장요원:{props.applyState_list.aid}</div>

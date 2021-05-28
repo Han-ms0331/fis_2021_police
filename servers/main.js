@@ -90,7 +90,7 @@ app.get("/home/:userid", function (req, res) {
     res.send(userid);
   }
 });
-app.get("/home/:userid/:target", (req, res) => {
+app.get("/home/name/:userid/:target", (req, res) => {
   // 어린이집 이름에 대한 정보만 제공
   if (true) {
     let target = path.parse(req.params.target).base;
@@ -118,34 +118,35 @@ app.get("/home/:userid/:target", (req, res) => {
     }
   }
 });
-
-app.get("/home/:callbyregion/:userid/:target", (req, res) => {
+// 주소로 어린이집 검색
+app.get("/home/address/:userid/:target", (req, res) => {
   // 어린이집 이름에 대한 정보만 제공
   if (true) {
     let target = path.parse(req.params.target).base;
     if (target) {
-      let center_info_list = []; // target이 포함된 어린이 집 목록들
       //target이 포함된 어린이집 출력
-      let results = dbfunc.get_data(
-        `SELECT * FROM center WHERE c_address LIKE '%${target}%'`
+      db.query(
+        `SELECT * FROM center WHERE c_address LIKE '%${target}%'`,
+        function (error, results) {
+          //보낼 부분
+          let center_info_list = []; // target이 포함된 어린이 집 목록들
+          results.forEach((element) => {
+            //element는 results의 배열단위
+            let center_info = {};
+            center_info.center_id = element.center_id;
+            center_info.c_sido = element.c_sido;
+            center_info.c_sigungu = element.c_sigungu;
+            center_info.c_name = element.c_name;
+            center_info.c_address = element.c_address;
+            center_info.c_ph = element.c_ph;
+            center_info_list.push(center_info);
+          });
+          res.send(center_info_list);
+        }
       );
-      //보낼 부분
-      results.forEach((element) => {
-        //element는 results의 배열단위
-        let center_info = {};
-        center_info.center_id = element.center_id;
-        center_info.c_sido = element.c_sido;
-        center_info.c_sigungu = element.c_sigungu;
-        center_info.c_name = element.c_name;
-        center_info.c_address = element.c_address;
-        center_info.c_ph = element.c_ph;
-        center_info_list.push(center_info);
-      });
-      res.send(center_info_list);
     }
   }
 });
-
 //어린이집 정보 제공
 // async 와 await 과 promise로 간단히 만들어 보기
 // data db에서 가져오기
@@ -180,9 +181,10 @@ app.post("/home/call_write/:cid", async (req, res) => {
   let year = day.getFullYear();
   let month = day.getMonth() + 1;
   let date = day.getDate();
-  let today = `${year}-${month}-${date}`;
+  //let today = `${year}-${month}-${date}`;
+
   post.cid = cid;
-  post.today = today;
+  // post.today = today;
   let result2 = [];
   for (let key in post) {
     switch (key) {
@@ -299,22 +301,39 @@ app.post("/home/applysave", (req, res) => {
   } else {
     let sql = `INSERT INTO apply_status(cid, uid, recept_date,  visit_date, visit_time, estimate_num, aid, latest)
         VALUES (${cid}, ${uid}, '${recept_date}',  '${visit_date}', '${visit_time}', '${estimate_num}', '${aid}',1);`;
-    db.query(sql, (err, store_apply) => {
-      if (err) {
-        console.log(err);
+    db.query(
+      `UPDATE apply_status SET latest=0 WHERE cid=${post.cid};`,
+      (err, update_apply) => {
+        //같은 시설 수정전 정보들 latest=0 만들기
+        if (err) {
+          console.log(err);
+          //  res.send(false);
+        }
+
+        db.query(sql, (err, store_apply) => {
+          if (err) {
+            console.log(err);
+          }
+          res.send(true);
+        });
       }
-      res.send(true);
-    });
+    );
   }
 });
 
-app.get("/schedule/:search_region", async (req, res) => {
+app.get("/schedule/:search_region/:month", async (req, res) => {
   let result = {
     sches: {},
     agents: {},
   };
   const search_region = path.parse(req.params.search_region).base; //해당 지역 스케줄
-  result.sches = await sche.sche(search_region);
+  const month = path.parse(req.params.month).base;
+  let realmonth;
+  if (month < 10) {
+    realmonth = "0" + `${month}`;
+  }
+  console.log(month);
+  result.sches = await sche.sche(search_region, realmonth);
   result.agents = await dbfunc.get_data(
     `SELECT agent_id FROM agent WHERE agent_id LIKE '%${search_region}%'`
   );
@@ -329,7 +348,7 @@ app.get("/:userid/getbusinessstatus", async (req, res) => {
   let year = day.getFullYear();
   let month = day.getMonth() + 1;
   let date = day.getDate();
-  let today = `${year}-${month}-${date}`;
+  //let today = `${year}-${month}-${date}`; 현승구야 내가 date_format(now(),'%Y,-%m-01') 으로 바꿨다 ~~
   let user_info = await dbfunc.get_data("SELECT * FROM user");
   let business_status = [];
   for (let i in user_info) {
@@ -337,7 +356,7 @@ app.get("/:userid/getbusinessstatus", async (req, res) => {
     let cur_name = user_info[i].u_name;
     let how_many = 0;
     let call_data = await dbfunc.get_data(
-      `SELECT * FROM call_status WHERE today = '${today}' and uid = ${cur_id};`
+      `SELECT * FROM call_status WHERE today = date_format(now(),'%Y,-%m-%d') and uid = ${cur_id};`
     );
     let data = {};
     data.call_status = [];
@@ -345,7 +364,7 @@ app.get("/:userid/getbusinessstatus", async (req, res) => {
       let add_data = {};
       add_data.cid = call_data[j].cid;
       let c_name = await dbfunc.get_data(
-        `SELECT * FROM center WHERE today = '${today}' and uid = ${cur_id};`
+        `SELECT * FROM center WHERE today = date_format(now(),'%Y,-%m-%d') and uid = ${cur_id};`
       )[0].c_name;
       add_data.participation = call_data[j].participation;
       data.call_status.push(add_data);
