@@ -118,6 +118,34 @@ app.get("/home/:userid/:target", (req, res) => {
     }
   }
 });
+
+app.get("/home/:callbyregion/:userid/:target", (req, res) => {
+  // 어린이집 이름에 대한 정보만 제공
+  if (true) {
+    let target = path.parse(req.params.target).base;
+    if (target) {
+      let center_info_list = []; // target이 포함된 어린이 집 목록들
+      //target이 포함된 어린이집 출력
+      let results = dbfunc.get_data(
+        `SELECT * FROM center WHERE c_address LIKE '%${target}%'`
+      );
+      //보낼 부분
+      results.forEach((element) => {
+        //element는 results의 배열단위
+        let center_info = {};
+        center_info.center_id = element.center_id;
+        center_info.c_sido = element.c_sido;
+        center_info.c_sigungu = element.c_sigungu;
+        center_info.c_name = element.c_name;
+        center_info.c_address = element.c_address;
+        center_info.c_ph = element.c_ph;
+        center_info_list.push(center_info);
+      });
+      res.send(center_info_list);
+    }
+  }
+});
+
 //어린이집 정보 제공
 // async 와 await 과 promise로 간단히 만들어 보기
 // data db에서 가져오기
