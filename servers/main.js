@@ -90,7 +90,7 @@ app.get("/home/:userid", function (req, res) {
     res.send(userid);
   }
 });
-app.get("/home/:userid/:target", (req, res) => {
+app.get("/home/name/:userid/:target", (req, res) => {
   // 어린이집 이름에 대한 정보만 제공
   if (true) {
     let target = path.parse(req.params.target).base;
@@ -98,6 +98,35 @@ app.get("/home/:userid/:target", (req, res) => {
       //target이 포함된 어린이집 출력
       db.query(
         `SELECT * FROM center WHERE c_name LIKE '%${target}%'`,
+        function (error, results) {
+          //보낼 부분
+          let center_info_list = []; // target이 포함된 어린이 집 목록들
+          results.forEach((element) => {
+            //element는 results의 배열단위
+            let center_info = {};
+            center_info.center_id = element.center_id;
+            center_info.c_sido = element.c_sido;
+            center_info.c_sigungu = element.c_sigungu;
+            center_info.c_name = element.c_name;
+            center_info.c_address = element.c_address;
+            center_info.c_ph = element.c_ph;
+            center_info_list.push(center_info);
+          });
+          res.send(center_info_list);
+        }
+      );
+    }
+  }
+});
+// 주소로 어린이집 검색
+app.get("/home/address/:userid/:target", (req, res) => {
+  // 어린이집 이름에 대한 정보만 제공
+  if (true) {
+    let target = path.parse(req.params.target).base;
+    if (target) {
+      //target이 포함된 어린이집 출력
+      db.query(
+        `SELECT * FROM center WHERE c_address LIKE '%${target}%'`,
         function (error, results) {
           //보낼 부분
           let center_info_list = []; // target이 포함된 어린이 집 목록들
