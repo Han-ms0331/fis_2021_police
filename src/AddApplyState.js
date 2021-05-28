@@ -1,14 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import axios from 'axios';
 
 function AddApplyState(props) {
 	const { open, closeSave, closeCancle, uid } = props;
-
+	let counter = 0;
 	const today = {
 		year: new Date().getFullYear(),
 		month: new Date().getMonth() + 1,
 		date: new Date().getDate(),
 	};
+	if (today.month < 10) {
+		today.month = '0' + today.month;
+	}
+	if (today.day < 10) {
+		today.day = '0' + today.day;
+	}
 	const date_format = today.year + '-' + today.month + '-' + today.date;
 
 	const [agent, setAgent] = useState('');
@@ -20,6 +26,8 @@ function AddApplyState(props) {
 	const [expectTime, setExpectTime] = useState('');
 	const [recorder, setRecorder] = useState('');
 	const [guitar, setGuitar] = useState('');
+	const [done, setDone] = useState(false);
+	const resettingRef = useRef(false);
 
 	const handleAgent = (e) => {
 		setAgent(e.target.value);
@@ -45,13 +53,6 @@ function AddApplyState(props) {
 	};
 
 	const send = async () => {
-		console.log(agent);
-		console.log(expectNumber);
-		console.log(currentDate);
-		console.log(expectDate);
-		console.log(expectTime);
-		console.log(recorder);
-		console.log(props.cid);
 		const result = await axios.post(
 			`http://192.168.0.117:3000/home/applysave`,
 			JSON.stringify({
@@ -65,6 +66,8 @@ function AddApplyState(props) {
 				etc: guitar,
 			})
 		);
+		resettingRef.current = true;
+		clear();
 		console.log(result);
 		let error;
 		if (result.data.error !== undefined) {
@@ -74,6 +77,21 @@ function AddApplyState(props) {
 		}
 		closeSave(error);
 	};
+
+	const clear = () => {
+		setAgent('');
+		setExpectNumber('');
+		setExpectDate('');
+		setExpectTime('');
+		setGuitar('');
+		setDone(true);
+	};
+	useEffect(() => {
+		if (resettingRef.current) {
+			resettingRef.current = false;
+			clear();
+		}
+	}, [done]);
 
 	return open ? (
 		<div>
