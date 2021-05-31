@@ -61,6 +61,7 @@ function Home(props) {
     // } else {
     // 	setCalled('있음');
     // }
+    //
     console.log(result);
     setIsLoading_1(false);
   };
