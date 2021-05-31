@@ -10,7 +10,8 @@ function ScheduleManager(props) {
 	const [isSearched, setIsSearched] = useState(false);
 	const [month, setMonth] = useState('');
 	const [select, setSelect] = useState(false);
-
+	const [selectDate, setSelectDate] = useState('');
+	console.log(props.selectDate);
 	props.setIsLogined(localStorage.getItem('isLogined'));
 	return props.isLogined ? (
 		select ? (
@@ -33,6 +34,8 @@ function ScheduleManager(props) {
 						resultAgent={resultAgent}
 						month={month}
 						setSelect={setSelect}
+						selectDate={selectDate}
+						setSelectDate={setSelectDate}
 					/>
 				) : null}
 			</div>

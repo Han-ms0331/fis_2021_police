@@ -22,7 +22,7 @@ function AddSchedule(props) {
 		visit_date: localStorage.getItem('selectedDate'),
 		visit_time: '',
 		uid: localStorage.getItem('userID'),
-		etc: '',
+
 		cid: '',
 	};
 
@@ -66,8 +66,6 @@ function AddSchedule(props) {
 			send_data.visit_date = e.target.value;
 		} else if (e.target.name === 'visit_time') {
 			send_data.visit_time = e.target.value;
-		} else if (e.target.name === 'etc') {
-			send_data.etc = e.target.value;
 		} else if (e.target.name === 'cid') {
 			send_data.cid = e.target.value;
 		}
@@ -146,14 +144,6 @@ function AddSchedule(props) {
 						value={localStorage.getItem('userName')}
 						onChange={onChange}
 					/>
-				</div>
-
-				<div>
-					<span>특이사항: </span>
-					<textarea
-						name='etc'
-						placeholder='특이사항'
-						onInput={onChange}></textarea>
 				</div>
 
 				<button name='save' onClick={onClick}>

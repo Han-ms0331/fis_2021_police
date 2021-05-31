@@ -1,7 +1,8 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React from 'react';
 
 function ScheduleManager(props) {
-	const { schedule, view, resultAgent, setSelect, date, month } = props;
+	const { schedule, view, resultAgent, setSelect, date, month, setSelectDate } =
+		props;
 	const onClick = () => {
 		let this_date;
 		let this_month;
@@ -18,6 +19,7 @@ function ScheduleManager(props) {
 			this_date = date;
 		}
 		localStorage.setItem('selectedDate', `2021-${this_month}-${this_date}`);
+		setSelectDate(date);
 		setSelect(true);
 	};
 	return view ? (

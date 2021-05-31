@@ -16,12 +16,21 @@
 	border: black solid 2px;
 	margin: 3px;
 }
+.calendar-datebox:hover {
+	background-color: rgba(211, 226, 255, 0.747);
+}
+.calender-datebox-selected {
+	width: 13%;
+	height: 20%;
+	border: black solid 2px;
+	margin: 3px;
+	background-color: rgba(211, 226, 255, 0.747);
+}
 .datebox-date {
 	font-size: xx-large;
 	margin-left: 5px;
 }
-.datebox-schedule {
-}
+
 .calendar-day {
 	width: 13%;
 	height: 20px;

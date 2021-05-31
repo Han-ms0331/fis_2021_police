@@ -37,7 +37,12 @@ function ScheduleManager(props) {
 						date = null;
 					}
 					return (
-						<div class='calendar-datebox'>
+						<div
+							class={
+								props.currentDate === date
+									? 'calender-datebox-selected'
+									: 'calendar-datebox'
+							}>
 							<div class='datebox-date'>{date}</div>
 							<CalenderDate
 								resultAgent={props.resultAgent}
@@ -46,6 +51,7 @@ function ScheduleManager(props) {
 								view={view}
 								schedule={collect_schedule[date - 1]}
 								setSelect={props.setSelect}
+								setSelectDate={props.setSelectDate}
 							/>
 						</div>
 					);
