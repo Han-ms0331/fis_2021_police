@@ -1,6 +1,6 @@
 .navigation-container {
 	display: flex;
-	justify-content: space-around;
+	justify-content: space-between;
 	align-items: center;
 	margin: 10px 0px;
 	padding: 0px;
@@ -16,6 +16,12 @@
 	margin: 0px 10px;
 	padding: 5px;
 	border-radius: 5px;
+}
+.navigation-item-select {
+	margin: 0px 10px;
+	padding: 5px;
+	border-radius: 5px;
+	background-color: rgb(163, 194, 255);
 }
 .navigation-item:hover {
 	background-color: rgb(163, 194, 255);
