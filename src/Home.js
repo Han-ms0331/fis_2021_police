@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import Modal from 'react-modal';
+
 import axios from 'axios';
 import './css/Home.css';
 import CenterList from './CenterList.js';
@@ -8,7 +8,6 @@ import ApplyState from './ApplyState.js';
 import AddCallState from './AddCallState';
 import AddApplyState from './AddApplyState';
 import { Redirect } from 'react-router';
-import SearchAgent from './SearchAgent';
 
 function Home(props) {
 	const [searchCenter, setSearchCenter] = useState('');
@@ -25,13 +24,12 @@ function Home(props) {
 	});
 	const [currentResult, setCurrentResult] = useState(''); //현재 선택된 시설의 id
 	const [IsopenAddCall, setIsOpenAddCall] = useState(false);
-	const [addCall, setAddCall] = useState({});
+
 	const [IsopenAddApply, setIsOpenAddApply] = useState(false);
 	const [IsSave, setIsSave] = useState(false);
 	const [called, setCalled] = useState('없음');
 	const resettingRef = useRef(false);
-	const [isUpdate, setIsUpdate] = useState(false);
-	const [select, setSelect] = useState('');
+
 	//검색어를 통해 데이터를 받아오는 부분
 
 	const getSearchCenterList = async (search) => {

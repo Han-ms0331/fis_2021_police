@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { useState, useRef, useEffect } from 'react';
 
 function AddCallState(props) {
-	const { open, closeSave, closeCancle, uid } = props;
+	const { open, closeSave, closeCancle } = props;
 	const today = {
 		year: new Date().getFullYear(),
 		month: new Date().getMonth() + 1,
@@ -14,7 +14,6 @@ function AddCallState(props) {
 	if (today.day < 10) {
 		today.day = '0' + today.day;
 	}
-	const date_format = today.year + '-' + today.month + '-' + today.date;
 	const [date, setDate] = useState(
 		today.year + '-' + today.month + '-' + today.date
 	);
@@ -23,7 +22,6 @@ function AddCallState(props) {
 	const [email, setEmail] = useState('');
 	const [digit, setDigit] = useState('');
 	const [attend, setAttend] = useState('');
-	const [recorder, setRecorder] = useState('');
 	const [guitar, setGuitar] = useState('');
 	const [done, setDone] = useState(false);
 	const resettingRef = useRef(false);
@@ -46,9 +44,7 @@ function AddCallState(props) {
 	const handleAttend = (e) => {
 		setAttend(e.target.value);
 	};
-	const handleRecorder = (e) => {
-		setRecorder(e.target.value);
-	};
+	const handleRecorder = (e) => {};
 	const handleGuitar = (e) => {
 		setGuitar(e.target.value);
 	};
@@ -87,7 +83,7 @@ function AddCallState(props) {
 		setEmail('');
 		setDigit('');
 		setAttend('');
-		setRecorder('');
+
 		setGuitar('');
 		setDone(true);
 	};
