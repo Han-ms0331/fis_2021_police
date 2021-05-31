@@ -17,13 +17,13 @@ function ScheduleManager(props) {
 	return (
 		<div class='calendar-body-container'>
 			<div class='calendar-box'>
-				<div class='calendar-day'>일요일</div>
+				<div class='calendar-day sunday'>일요일</div>
 				<div class='calendar-day'>월요일</div>
 				<div class='calendar-day'>화요일</div>
 				<div class='calendar-day'>수요일</div>
 				<div class='calendar-day'>목요일</div>
 				<div class='calendar-day'>금요일</div>
-				<div class='calendar-day'>토요일</div>
+				<div class='calendar-day saturday'>토요일</div>
 				{box.map((data, index) => {
 					if (index === delay) {
 						view = true;

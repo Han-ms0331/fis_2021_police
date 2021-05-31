@@ -3,7 +3,11 @@
 	justify-content: space-around;
 	flex-wrap: wrap;
 	width: 1500px;
-	height: 500px;
+	height: 100%;
+}
+.calendar-body-container {
+	display: flex;
+	justify-content: center;
 }
 
 .calendar-datebox {
@@ -11,6 +15,12 @@
 	height: 20%;
 	border: black solid 2px;
 	margin: 3px;
+}
+.datebox-date {
+	font-size: xx-large;
+	margin-left: 5px;
+}
+.datebox-schedule {
 }
 .calendar-day {
 	width: 13%;
@@ -22,6 +32,8 @@
 
 .agent-schedule {
 	display: flex;
+	justify-content: center;
+	margin: 1px 0px;
 }
 .agent-id {
 	width: 20%;
@@ -40,4 +52,28 @@
 
 .select_container {
 	display: felx;
+}
+
+.calendar-header-container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin: 30px 0px;
+}
+
+.calendar_header_window {
+	margin: 0px 20px;
+}
+
+.calendar_select {
+	margin: 10px;
+	text-align: right;
+}
+
+.sunday {
+	color: red;
+}
+
+.saturday {
+	color: rgb(51, 121, 250);
 }

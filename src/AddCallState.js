@@ -94,7 +94,7 @@ function AddCallState(props) {
 		}
 	}, [done]);
 	return open ? (
-		<div>
+		<div class='add_call_state'>
 			<div>
 				<span>담당자 이름: </span>
 				<input
@@ -173,9 +173,11 @@ function AddCallState(props) {
 					placeholder='특이사항'
 					onInput={handleGuitar}></textarea>
 			</div>
+			<div>
+				<button onClick={send}>저장</button>
 
-			<button onClick={send}>저장</button>
-			<button onClick={closeCancle}>닫기</button>
+				<button onClick={closeCancle}>닫기</button>
+			</div>
 		</div>
 	) : null;
 }

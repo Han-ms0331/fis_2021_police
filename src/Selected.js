@@ -1,6 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
 import UpdateSchedule from './UpdateSchedule';
 import AddSchedule from './AddSchedule';
+import DeleteSchedule from './DeleteSchedule';
+import './css/Selected.css';
 
 function Selected(props) {
 	const { setSelect, setResultSche, setIsSearched } = props;
@@ -44,9 +46,21 @@ function Selected(props) {
 										<div class='select_schedule_info'>
 											{data_2.estimate_num}명
 										</div>
+										<DeleteSchedule
+											data={data_2}
+											agent_id={data.agent_id}
+											setSelect={setSelect}
+											setResultSche={setResultSche}
+											setIsSearched={setIsSearched}
+										/>
+										<UpdateSchedule
+											data={data_2}
+											agent_id={data.agent_id}
+											setSelect={setSelect}
+											setResultSche={setResultSche}
+											setIsSearched={setIsSearched}
+										/>
 									</div>
-
-									<UpdateSchedule data={data_2} />
 								</div>
 							);
 						})}

@@ -10,6 +10,7 @@ function ScheduleManager(props) {
 		let result = await axios.get(
 			`http://192.168.0.117:3000/schedule/${searchRegion}/${searchMonth}`
 		);
+		console.log(result);
 		localStorage.setItem('searchMonth', searchMonth);
 		localStorage.setItem('searchRegion', searchRegion);
 		props.setResultSche(result.data.sches);
@@ -32,9 +33,32 @@ function ScheduleManager(props) {
 
 	return (
 		<div class='calendar-header-container'>
-			<input name='region' type='text' onChange={onChange} />
-			<input name='month' type='number' onChange={onChange} />
-			<input name='search' type='submit' onClick={onClick} value='검색' />
+			<div class='calendar_header_window'>
+				<span>지역 : </span>
+				<input
+					name='region'
+					type='text'
+					placeholder='지역'
+					onChange={onChange}
+				/>
+			</div>
+			<div class='calendar_header_window'>
+				<span>월 : </span>
+				<input
+					name='month'
+					type='number'
+					placeholder='월'
+					onChange={onChange}
+				/>
+			</div>
+
+			<input
+				name='search'
+				class='calendar_header_window'
+				type='submit'
+				onClick={onClick}
+				value='검색'
+			/>
 		</div>
 	);
 }

@@ -1,19 +1,24 @@
 .navigation-container {
-	border: 2px solid rgb(0, 0, 0, 0.3);
 	display: flex;
 	justify-content: space-around;
 	align-items: center;
 	margin: 10px 0px;
 	padding: 0px;
-	height: 30px;
-	width: 300px;
+	height: 40px;
+	width: 500px;
 	border-radius: 5px;
-	background-color: #fffafa;
+	background-color: white;
+	border: 2px solid cornflowerblue;
 	text-decoration: none;
 }
 
 .navigation-item {
 	margin: 0px 10px;
+	padding: 5px;
+	border-radius: 5px;
+}
+.navigation-item:hover {
+	background-color: rgb(163, 194, 255);
 }
 
 .item {

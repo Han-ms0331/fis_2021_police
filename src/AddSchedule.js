@@ -37,7 +37,7 @@ function AddSchedule(props) {
 
 	const send = async () => {
 		const result = await axios.post(
-			`http://192.168.0.117:3000/home/applysave`,
+			`http://192.168.0.117:3000/schedule/applysave`,
 			JSON.stringify(send_data)
 		);
 		console.log(result);
@@ -46,10 +46,9 @@ function AddSchedule(props) {
 	const onClick = (e) => {
 		e.preventDefault();
 		if (e.target.name === 'save') {
-			console.log(send_data);
+			setIsOpen(false);
 			send();
 			reload();
-			setIsOpen(false);
 			setSelect(false);
 			setIsSearched(false);
 			setIsSearched(true);
@@ -166,8 +165,8 @@ function AddSchedule(props) {
 			</div>
 		</div>
 	) : (
-		<button name='add' onClick={onClick}>
-			일정 추가
+		<button name='add' id='add_btn' onClick={onClick}>
+			+
 		</button>
 	);
 }

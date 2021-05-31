@@ -63,9 +63,11 @@ function ScheduleManager(props) {
 					</div>
 				);
 			})}
-			<button class='calendar_select' onClick={onClick}>
-				선택
-			</button>
+			<div class='calendar_select'>
+				<button onClick={onClick} id='calendar_select_btn'>
+					선택
+				</button>
+			</div>
 		</div>
 	) : null;
 }

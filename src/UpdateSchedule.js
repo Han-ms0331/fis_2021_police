@@ -1,7 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
+import axios from 'axios';
 
 function UpdateSchedule(props) {
-	const { data } = props;
+	const { data, setSelect, setResultSche, setIsSearched } = props;
 	const [isOpen, setIsOpen] = useState(false);
 	const today = {
 		year: new Date().getFullYear(),
@@ -14,11 +15,48 @@ function UpdateSchedule(props) {
 	if (today.day < 10) {
 		today.day = '0' + today.day;
 	}
-	let send_data = data;
+	let send_data = {
+		aid: data.aid,
+		estimate_num: data.estimate_num,
+		recept_date: `${today.year}-${today.month}-${today.date}`,
+		visit_date: localStorage.getItem('selectedDate'),
+		visit_time: data.visit_time,
+		uid: localStorage.getItem('userID'),
+		etc: '',
+		cid: data.cid,
+	};
+	const reload = async () => {
+		let result = await axios.get(
+			`http://192.168.0.117:3000/schedule/${localStorage.getItem(
+				'searchRegion'
+			)}/${localStorage.getItem('searchMonth')}`
+		);
+		setResultSche(result.data.sches);
+	};
+
+	const send = async () => {
+		const result_1 = await axios.get(
+			`http://192.168.0.117:3000/schedule/applymodify/${data.no}`
+		);
+		const result_2 = await axios.post(
+			`http://192.168.0.117:3000/schedule/applysave`,
+			JSON.stringify(send_data)
+		);
+		reload();
+		console.log(result_1);
+		console.log(result_2);
+	};
+
 	const onClick = (e) => {
 		e.preventDefault();
 		if (e.target.name === 'save') {
-			setIsOpen(false);
+			if (window.confirm('수정된 내용을 저장하시겠습니까?')) {
+				setIsOpen(false);
+				send();
+				setSelect(false);
+				setIsSearched(false);
+				setIsSearched(true);
+			}
 		} else if (e.target.name === 'cancle') {
 			setIsOpen(false);
 		} else if (e.target.name === 'update') {
@@ -27,7 +65,7 @@ function UpdateSchedule(props) {
 	};
 
 	const onChange = (e) => {
-		if (e.target.name === 'aid') {
+		if (e.target.name === 'agent') {
 			send_data.aid = e.target.value;
 		} else if (e.target.name === 'estimate_num') {
 			send_data.estimate_num = e.target.value;
@@ -39,17 +77,30 @@ function UpdateSchedule(props) {
 			send_data.visit_time = e.target.value;
 		} else if (e.target.name === 'etc') {
 			send_data.etc = e.target.value;
+		} else if (e.target.name === 'cid') {
+			send_data.cid = e.target.value;
 		}
 	};
 	return isOpen ? (
 		<div class='update_container'>
 			<div class='update_input'>
 				<div>
+					<span>시설 id: </span>
+					<input
+						type='text'
+						name='cid'
+						placeholder='시설 id'
+						value={data.cid}
+						readOnly
+					/>
+				</div>
+				<div>
 					<span>현장요원: </span>
 					<input
 						type='text'
 						name='agent'
 						placeholder='현장요원'
+						defaultValue={data.aid}
 						onChange={onChange}
 					/>
 				</div>
@@ -60,6 +111,7 @@ function UpdateSchedule(props) {
 						type='text'
 						name='estimate_num'
 						placeholder='예상 인원'
+						defaultValue={data.estimate_num}
 						onChange={onChange}
 					/>
 				</div>
@@ -81,6 +133,7 @@ function UpdateSchedule(props) {
 						type='date'
 						name='visit_date'
 						placeholder='방문 예정 날짜'
+						defaultValue={data.visit_date}
 						onChange={onChange}
 					/>
 				</div>
@@ -91,6 +144,7 @@ function UpdateSchedule(props) {
 						type='time'
 						name='visit_time'
 						placeholder='방문 예정 시간'
+						defaultValue={data.visit_time}
 						onChange={onChange}
 					/>
 				</div>
@@ -123,9 +177,11 @@ function UpdateSchedule(props) {
 			</div>
 		</div>
 	) : (
-		<button name='update' onClick={onClick}>
-			수정
-		</button>
+		<div class='select_schedule_btn'>
+			<button name='update' onClick={onClick}>
+				수정
+			</button>
+		</div>
 	);
 }
 export default UpdateSchedule;

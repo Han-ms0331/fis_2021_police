@@ -128,29 +128,33 @@ function Home(props) {
 				<div class='main'>
 					<div class='main_serch'>
 						<div class='main_search_box'>
-							<span>이름으로 검색:</span>
-							<input
-								type='text'
-								placeholder='시설 이름 입력'
-								name='center'
-								class='main_serch_input'
-								onChange={onChange}
-							/>
-							<button class='main_search_btn' onClick={onClick}>
-								검색
-							</button>
-							<span>주소로 검색:</span>
+							<div class='main_search_window'>
+								<span>이름으로 검색 : </span>
+								<input
+									type='text'
+									placeholder='시설 이름 입력'
+									name='center'
+									class='main_serch_input'
+									onChange={onChange}
+								/>
+								<button class='main_search_btn' onClick={onClick}>
+									검색
+								</button>
+							</div>
+							<div class='main_search_window'>
+								<span>주소로 검색 : </span>
 
-							<input
-								type='text'
-								placeholder='시설 주소 입력'
-								name='address'
-								class='main_serch_input'
-								onChange={onChange}
-							/>
-							<button class='main_search_btn' onClick={onClick_a}>
-								검색
-							</button>
+								<input
+									type='text'
+									placeholder='시설 주소 입력'
+									name='address'
+									class='main_serch_input'
+									onChange={onChange}
+								/>
+								<button class='main_search_btn' onClick={onClick_a}>
+									검색
+								</button>
+							</div>
 						</div>
 						<div class='main_search_result'>
 							<ul class='main_search_result_list list'>
@@ -180,42 +184,47 @@ function Home(props) {
 				<div class='main'>
 					<div class='main_serch'>
 						<div class='main_search_box'>
-							<span>이름으로 검색:</span>
-							<input
-								type='text'
-								placeholder='시설 이름 입력'
-								name='center'
-								class='main_serch_input'
-								onChange={onChange}
-							/>
-							<button class='main_search_btn' onClick={onClick}>
-								검색
-							</button>
-							<span>주소로 검색:</span>
+							<div class='main_search_window'>
+								<span>이름으로 검색 : </span>
+								<input
+									type='text'
+									placeholder='시설 이름 입력'
+									name='center'
+									class='main_serch_input'
+									onChange={onChange}
+								/>
+								<button class='main_search_btn' onClick={onClick}>
+									검색
+								</button>
+							</div>
+							<div class='main_search_window'>
+								<span>주소로 검색 : </span>
 
-							<input
-								type='text'
-								placeholder='시설 주소 입력'
-								name='address'
-								class='main_serch_input'
-								onChange={onChange}
-							/>
-							<button class='main_search_btn' onClick={onClick_a}>
-								검색
-							</button>
+								<input
+									type='text'
+									placeholder='시설 주소 입력'
+									name='address'
+									class='main_serch_input'
+									onChange={onChange}
+								/>
+								<button class='main_search_btn' onClick={onClick_a}>
+									검색
+								</button>
+							</div>
 						</div>
+						<ul class='main_search_result_list list'>
+							<li>
+								<div class='main_search_result_list_item'>
+									<div class='center_info'>시설 이름</div>
+									<div class='center_info'>주소</div>
+									<div class='center_info'>전화번호</div>
+									<div class='center_info_num'>시설 id</div>
+									<div class='center_info_num'>연락 기록</div>
+								</div>
+							</li>
+						</ul>
 						<div class='main_search_result'>
 							<ul class='main_search_result_list list'>
-								<li>
-									<div class='main_search_result_list_item'>
-										<div class='center_info'>시설 이름</div>
-										<div class='center_info'>주소</div>
-										<div class='center_info'>전화번호</div>
-										<div class='center_info_num'>시설 id</div>
-										<div class='center_info_num'>연락 기록</div>
-									</div>
-								</li>
-
 								{result_1ary.data !== 'undefined'
 									? result_1ary.data.map((result_1ary) => (
 											<li
@@ -254,41 +263,47 @@ function Home(props) {
 				<div class='main'>
 					<div class='main_serch'>
 						<div class='main_search_box'>
-							<span>이름으로 검색:</span>
-							<input
-								type='text'
-								placeholder='시설 이름 입력'
-								name='center'
-								class='main_serch_input'
-								onChange={onChange}
-							/>
-							<button class='main_search_btn' onClick={onClick}>
-								검색
-							</button>
-							<span>주소로 검색:</span>
+							<div class='main_search_window'>
+								<span>이름으로 검색 : </span>
+								<input
+									type='text'
+									placeholder='시설 이름 입력'
+									name='center'
+									class='main_serch_input'
+									onChange={onChange}
+								/>
+								<button class='main_search_btn' onClick={onClick}>
+									검색
+								</button>
+							</div>
+							<div class='main_search_window'>
+								<span>주소로 검색 : </span>
 
-							<input
-								type='text'
-								placeholder='시설 주소 입력'
-								name='address'
-								class='main_serch_input'
-								onChange={onChange}
-							/>
-							<button class='main_search_btn' onClick={onClick_a}>
-								검색
-							</button>
+								<input
+									type='text'
+									placeholder='시설 주소 입력'
+									name='address'
+									class='main_serch_input'
+									onChange={onChange}
+								/>
+								<button class='main_search_btn' onClick={onClick_a}>
+									검색
+								</button>
+							</div>
 						</div>
+						<ul class='main_search_result_list list'>
+							<li>
+								<div class='main_search_result_list_item'>
+									<div class='center_info'>시설 이름</div>
+									<div class='center_info'>주소</div>
+									<div class='center_info'>전화번호</div>
+									<div class='center_info_num'>시설 id</div>
+									<div class='center_info_num'>연락 기록</div>
+								</div>
+							</li>
+						</ul>
 						<div class='main_search_result'>
 							<ul class='main_search_result_list list'>
-								<li>
-									<div class='main_search_result_list_item'>
-										<div class='center_info'>시설 이름</div>
-										<div class='center_info'>주소</div>
-										<div class='center_info'>전화번호</div>
-										<div class='center_info_num'>시설 id</div>
-										<div class='center_info_num'>연락 기록</div>
-									</div>
-								</li>
 								{result_1ary.data.map((result_1ary) => (
 									<li
 										key={result_1ary.center_id}
@@ -312,13 +327,13 @@ function Home(props) {
 						</div>
 					</div>
 					<div class='main_info'>
-						<div class='main_info_header'>
+						<div class='main_info_header main_info_item'>
 							<div>{centerInfo.centerName}</div>
 							<div>{centerInfo.centerAddr}</div>
 							<div>{centerInfo.centerPhoneNumber}</div>
 						</div>
-						<div class='info-header'>콜 이력</div>
-						<div class='main_info_call-state'>
+						<div class='info-header main_info_item'>콜 이력</div>
+						<div class='main_info_call-state main_info_item'>
 							<ul class='main_info_call-state_list list'>
 								{centerInfo.callState_list.map((data) => (
 									<li
@@ -336,7 +351,10 @@ function Home(props) {
 								))}
 							</ul>
 						</div>
-						<button class='main_info_call-state_add' onClick={openAddCall}>
+
+						<button
+							class='main_info_call-state_add main_info_item'
+							onClick={openAddCall}>
 							추가
 						</button>
 						<AddCallState
@@ -348,33 +366,16 @@ function Home(props) {
 							IsSave={IsSave}
 							setIsSave={setIsSave}
 						/>
-						<div class='info-header'>참여여부 기록</div>
-						<div class='main_info_apply-state'>
+						<div class='info-header main_info_item'>시설 스케쥴</div>
+						<div class='main_info_apply-state main_info_item'>
 							<ul class='main_info_apply-state_list list'>
 								{centerInfo.applyState_list.map((data) => (
-									<li
-										key={centerInfo.center_id}
-										class='list-items apply-state_items'>
-										<ApplyState applyState_list={data} setIsUpdate />
-									</li>
+									<ApplyState applyState_list={data} setIsUpdate />
 								))}
 							</ul>
 						</div>
-						<button class='main_info_apply-state_add' onClick={openAddApply}>
-							추가
-						</button>
-						<AddApplyState
-							open={IsopenAddApply}
-							closeSave={closeAddApply}
-							closeCancle={closeAddApplyCancle}
-							uid={props.uid}
-							cid={centerInfo.centerID}
-						/>
 					</div>
 				</div>
-				{/* <div class='agent-search'>
-					<SearchAgent />
-				</div> */}
 			</div>
 		)
 	) : (
