@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import Modal from 'react-modal';
+
 import axios from 'axios';
 import './css/Home.css';
 import CenterList from './CenterList.js';
@@ -8,7 +8,6 @@ import ApplyState from './ApplyState.js';
 import AddCallState from './AddCallState';
 import AddApplyState from './AddApplyState';
 import { Redirect } from 'react-router';
-import SearchAgent from './SearchAgent';
 
 function Home(props) {
 	const [searchCenter, setSearchCenter] = useState('');
@@ -25,19 +24,35 @@ function Home(props) {
 	});
 	const [currentResult, setCurrentResult] = useState(''); //현재 선택된 시설의 id
 	const [IsopenAddCall, setIsOpenAddCall] = useState(false);
-	const [addCall, setAddCall] = useState({});
+
 	const [IsopenAddApply, setIsOpenAddApply] = useState(false);
 	const [IsSave, setIsSave] = useState(false);
 	const [called, setCalled] = useState('없음');
 	const resettingRef = useRef(false);
-	const [isUpdate, setIsUpdate] = useState(false);
-	const [select, setSelect] = useState('');
+
 	//검색어를 통해 데이터를 받아오는 부분
 
 	const getSearchCenterList = async (search) => {
 		console.log(props.uid);
+
 		const result = await axios.get(
-			`http://192.168.0.117:3000/home/${props.uid}/${search}`
+			`http://192.168.0.117:3000/home/name/${props.uid}/${search}`
+		);
+		setResult_1ary(result);
+		resettingRef.current = true;
+		// if (result.data.calls.length === 0) {
+		// 	setCalled('없음');
+		// } else {
+		// 	setCalled('있음');
+		// }
+		console.log(result);
+		setIsLoading_1(false);
+	};
+	const getSearchCenterList_a = async (search) => {
+		console.log(props.uid);
+
+		const result = await axios.get(
+			`http://192.168.0.117:3000/home/address/${props.uid}/${search}`
 		);
 		setResult_1ary(result);
 		resettingRef.current = true;
@@ -56,6 +71,13 @@ function Home(props) {
 		setIsLoading_2(true);
 		console.log(searchCenter);
 		getSearchCenterList(searchCenter);
+	};
+	const onClick_a = (e) => {
+		e.preventDefault();
+		setCurrentResult('');
+		setIsLoading_2(true);
+		console.log(searchCenter);
+		getSearchCenterList_a(searchCenter);
 	};
 	const onChange = (e) => {
 		console.log(e.target.value);
@@ -106,6 +128,7 @@ function Home(props) {
 				<div class='main'>
 					<div class='main_serch'>
 						<div class='main_search_box'>
+							<span>이름으로 검색:</span>
 							<input
 								type='text'
 								placeholder='시설 이름 입력'
@@ -114,6 +137,18 @@ function Home(props) {
 								onChange={onChange}
 							/>
 							<button class='main_search_btn' onClick={onClick}>
+								검색
+							</button>
+							<span>주소로 검색:</span>
+
+							<input
+								type='text'
+								placeholder='시설 주소 입력'
+								name='address'
+								class='main_serch_input'
+								onChange={onChange}
+							/>
+							<button class='main_search_btn' onClick={onClick_a}>
 								검색
 							</button>
 						</div>
@@ -145,6 +180,7 @@ function Home(props) {
 				<div class='main'>
 					<div class='main_serch'>
 						<div class='main_search_box'>
+							<span>이름으로 검색:</span>
 							<input
 								type='text'
 								placeholder='시설 이름 입력'
@@ -153,6 +189,18 @@ function Home(props) {
 								onChange={onChange}
 							/>
 							<button class='main_search_btn' onClick={onClick}>
+								검색
+							</button>
+							<span>주소로 검색:</span>
+
+							<input
+								type='text'
+								placeholder='시설 주소 입력'
+								name='address'
+								class='main_serch_input'
+								onChange={onChange}
+							/>
+							<button class='main_search_btn' onClick={onClick_a}>
 								검색
 							</button>
 						</div>
@@ -206,6 +254,7 @@ function Home(props) {
 				<div class='main'>
 					<div class='main_serch'>
 						<div class='main_search_box'>
+							<span>이름으로 검색:</span>
 							<input
 								type='text'
 								placeholder='시설 이름 입력'
@@ -214,6 +263,18 @@ function Home(props) {
 								onChange={onChange}
 							/>
 							<button class='main_search_btn' onClick={onClick}>
+								검색
+							</button>
+							<span>주소로 검색:</span>
+
+							<input
+								type='text'
+								placeholder='시설 주소 입력'
+								name='address'
+								class='main_serch_input'
+								onChange={onChange}
+							/>
+							<button class='main_search_btn' onClick={onClick_a}>
 								검색
 							</button>
 						</div>
