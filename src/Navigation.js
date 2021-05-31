@@ -1,20 +1,47 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './css/Navigation.css';
-function Navigation() {
+import imgA from './image/fislogo.png';
+
+function Navigation(props) {
+	const { currentPage, setCurrentPage } = props;
+	const onClick = (e) => {
+		e.preventDefault();
+		if (e.target.name === 'center_management') {
+			setCurrentPage('center_management');
+		} else if (e.target.name === 'schedule_management') {
+			setCurrentPage('schedule_management');
+		}
+		console.log(currentPage);
+	};
 	return (
 		<div class='navigation-container'>
-			<div class='navigation-item'>
-				<Link class='item' to='/home'>
+			<img src={imgA} class='logo' width='50px' />
+			<div
+				name='center_management'
+				class={
+					currentPage === 'center_management'
+						? 'navigation-item-select'
+						: 'navigation-item'
+				}
+				onClick={onClick}>
+				<Link name='center_management' class='item' to='/home'>
 					시설 관리
 				</Link>
 			</div>
-			<div class='navigation-item'>
-				<Link class='item' to='/schedule'>
+			<div
+				name='schedule_management'
+				class={
+					currentPage === 'schedule_management'
+						? 'navigation-item-select'
+						: 'navigation-item'
+				}
+				onClick={onClick}>
+				<Link name='schedule_management' class='item' to='/schedule'>
 					일정관리
 				</Link>
 			</div>
-			<div class='navigation-item'>
+			<div name='logout' class='navigation-item'>
 				<Link class='item' to='/logout'>
 					Logout
 				</Link>

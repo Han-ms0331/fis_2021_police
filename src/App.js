@@ -11,6 +11,7 @@ function App() {
 	const [passWord, setPassWord] = useState('');
 	const [isLogined, setIsLogined] = useState(false);
 	const [UID, setUID] = useState('');
+	const [currentPage, setCurrentPage] = useState('');
 
 	const loginState = (condition) => {
 		setIsLogined(condition);
@@ -18,7 +19,9 @@ function App() {
 
 	return (
 		<BrowserRouter>
-			{isLogined ? <Navigation /> : null}
+			{isLogined ? (
+				<Navigation currentPage={currentPage} setCurrentPage={setCurrentPage} />
+			) : null}
 
 			<Route
 				path='/'
