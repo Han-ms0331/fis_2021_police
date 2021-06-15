@@ -242,22 +242,22 @@ app.get("/home/get_agent/:a_region/:visit_date", async (req, res) => {
   );
 });
 
-app.get("/home/applymodify/:cid/:visit_date", (req, res) => {
-  let cid = path.parse(req.params.cid).base;
-  let visit_date = path.parse(req.params.visit_date).base;
-  db.query(
-    `UPDATE apply_status SET latest=0 WHERE cid=${post.cid} and visit_date = ${visit_date}`,
-    (err, update_apply) => {
-      if (err) {
-        console.log(err);
-        res.send(false);
-      }
-      res.send(true);
-    }
-  );
-});
+// app.get("/home/applymodify/:cid/:visit_date", (req, res) => {
+//   let cid = path.parse(req.params.cid).base;
+//   let visit_date = path.parse(req.params.visit_date).base;
+//   db.query(
+//     `UPDATE apply_status SET latest=0 WHERE cid=${post.cid} and visit_date = ${visit_date}`,
+//     (err, update_apply) => {
+//       if (err) {
+//         console.log(err);
+//         res.send(false);
+//       }
+//       res.send(true);
+//     }
+//   );
+// });
 
-app.post("/home/applysave", (req, res) => {
+app.post("/schedule/applysave", (req, res) => {
   let post = JSON.parse(Object.keys(req.body)[0]);
 
   const { cid } = post;
@@ -301,24 +301,39 @@ app.post("/home/applysave", (req, res) => {
   } else {
     let sql = `INSERT INTO apply_status(cid, uid, recept_date,  visit_date, visit_time, estimate_num, aid, latest)
         VALUES (${cid}, ${uid}, '${recept_date}',  '${visit_date}', '${visit_time}', '${estimate_num}', '${aid}',1);`;
-    db.query(
-      `UPDATE apply_status SET latest=0 WHERE cid=${post.cid};`,
-      (err, update_apply) => {
-        //같은 시설 수정전 정보들 latest=0 만들기
-        if (err) {
-          console.log(err);
-          //  res.send(false);
-        }
+    // db.query(
+    //   `UPDATE apply_status SET latest=0 WHERE cid=${post.cid};`,
+    //   (err, update_apply) => {
+    //     //같은 시설 수정전 정보들 latest=0 만들기
+    //     if (err) {
+    //       console.log(err);
+    //       //  res.send(false);
+    //     }
 
-        db.query(sql, (err, store_apply) => {
-          if (err) {
-            console.log(err);
-          }
-          res.send(true);
-        });
+    db.query(sql, (err, store_apply) => {
+      if (err) {
+        console.log(err);
       }
-    );
+      res.send(true);
+    });
+    //    }
+    //  );
   }
+});
+
+//스케줄 페이지에서 수정버튼
+app.get("/schedule/applymodify/:no", (req, res) => {
+  let no = path.parse(req.params.no).base;
+  db.query(
+    `UPDATE apply_status SET latest=0 WHERE no=${no}`,
+    (err, update_apply) => {
+      if (err) {
+        console.log(err);
+        res.send(false);
+      }
+      res.send(true);
+    }
+  );
 });
 
 app.get("/schedule/:search_region/:month", async (req, res) => {
@@ -340,6 +355,8 @@ app.get("/schedule/:search_region/:month", async (req, res) => {
   res.send(result);
 });
 
+//
+//admin page
 // 콜직원 업무 현황
 app.get("/:userid/getbusinessstatus", async (req, res) => {
   //let userid = path.parse(req.params.userid).base;

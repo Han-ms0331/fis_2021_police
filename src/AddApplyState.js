@@ -2,8 +2,8 @@ import React, { useState, useRef, useEffect } from 'react';
 import axios from 'axios';
 
 function AddApplyState(props) {
-	const { open, closeSave, closeCancle, uid } = props;
-	let counter = 0;
+	const { open, closeSave, closeCancle } = props;
+
 	const today = {
 		year: new Date().getFullYear(),
 		month: new Date().getMonth() + 1,
@@ -15,7 +15,6 @@ function AddApplyState(props) {
 	if (today.day < 10) {
 		today.day = '0' + today.day;
 	}
-	const date_format = today.year + '-' + today.month + '-' + today.date;
 
 	const [agent, setAgent] = useState('');
 	const [expectNumber, setExpectNumber] = useState('');
@@ -24,7 +23,6 @@ function AddApplyState(props) {
 	);
 	const [expectDate, setExpectDate] = useState('');
 	const [expectTime, setExpectTime] = useState('');
-	const [recorder, setRecorder] = useState('');
 	const [guitar, setGuitar] = useState('');
 	const [done, setDone] = useState(false);
 	const resettingRef = useRef(false);
@@ -45,9 +43,7 @@ function AddApplyState(props) {
 	const handleExpectTime = (e) => {
 		setExpectTime(e.target.value);
 	};
-	const handleRecorder = (e) => {
-		setRecorder(e.target.value);
-	};
+	const handleRecorder = (e) => {};
 	const handleGuitar = (e) => {
 		setGuitar(e.target.value);
 	};
