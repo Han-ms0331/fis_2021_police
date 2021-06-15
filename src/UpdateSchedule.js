@@ -74,6 +74,8 @@ function UpdateSchedule(props) {
 			send_data.aid = e.target.value;
 		} else if (e.target.name === 'estimate_num') {
 			send_data.estimate_num = e.target.value;
+		} else if (e.target.name === 'visit_date') {
+			send_data.visit_date = e.target.value;
 		} else if (e.target.name === 'visit_time') {
 			send_data.visit_time = e.target.value;
 		} else if (e.target.name === 'cid') {
@@ -100,6 +102,7 @@ function UpdateSchedule(props) {
 						name='agent'
 						placeholder='현장요원'
 						defaultValue={data.aid}
+						onChange={onChange}
 					/>
 				</div>
 
@@ -131,6 +134,7 @@ function UpdateSchedule(props) {
 						name='visit_date'
 						placeholder='방문 예정 날짜'
 						defaultValue={data.visit_date}
+						onChange={onChange}
 					/>
 				</div>
 
@@ -152,6 +156,7 @@ function UpdateSchedule(props) {
 						name='uid'
 						placeholder='기록자 이름'
 						value={localStorage.getItem('userName')}
+						onChange={onChange}
 					/>
 				</div>
 

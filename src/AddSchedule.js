@@ -124,6 +124,7 @@ function AddSchedule(props) {
 						name='visit_date'
 						placeholder='방문 예정 날짜'
 						value={localStorage.getItem('selectedDate')}
+						readOnly
 					/>
 				</div>
 
