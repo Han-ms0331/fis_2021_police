@@ -61,6 +61,7 @@ function Home(props) {
     // } else {
     // 	setCalled('있음');
     // }
+    //
     console.log(result);
     setIsLoading_1(false);
   };
@@ -156,7 +157,7 @@ function Home(props) {
                 </button>
               </div>
             </div>
-            <ul class="main_search_result_list list">
+            <ul class="center_bar list">
               <li>
                 <div class="main_search_result_list_item">
                   <div class="center_info">시설 이름</div>
@@ -211,7 +212,7 @@ function Home(props) {
                 </button>
               </div>
             </div>
-            <ul class="main_search_result_list list">
+            <ul class="center_bar list">
               <li>
                 <div class="main_search_result_list_item">
                   <div class="center_info">시설 이름</div>
@@ -291,7 +292,7 @@ function Home(props) {
                 </button>
               </div>
             </div>
-            <ul class="main_search_result_list list">
+            <ul class="center_bar list">
               <li>
                 <div class="main_search_result_list_item">
                   <div class="center_info">시설 이름</div>
