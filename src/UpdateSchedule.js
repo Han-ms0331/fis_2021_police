@@ -45,17 +45,22 @@ function UpdateSchedule(props) {
 		reload();
 		console.log(result_1);
 		console.log(result_2);
+		if (result_2.data === true) {
+			alert('저장되었습니다.');
+			setSelect(false);
+			setIsSearched(false);
+			setIsSearched(true);
+			setIsOpen(false);
+		} else {
+			alert('작성내용을 확인해주세요.');
+		}
 	};
 
 	const onClick = (e) => {
 		e.preventDefault();
 		if (e.target.name === 'save') {
 			if (window.confirm('수정된 내용을 저장하시겠습니까?')) {
-				setIsOpen(false);
 				send();
-				setSelect(false);
-				setIsSearched(false);
-				setIsSearched(true);
 			}
 		} else if (e.target.name === 'cancle') {
 			setIsOpen(false);
@@ -69,10 +74,6 @@ function UpdateSchedule(props) {
 			send_data.aid = e.target.value;
 		} else if (e.target.name === 'estimate_num') {
 			send_data.estimate_num = e.target.value;
-		} else if (e.target.name === 'recept_date') {
-			send_data.recept_date = e.target.value;
-		} else if (e.target.name === 'visit_date') {
-			send_data.visit_date = e.target.value;
 		} else if (e.target.name === 'visit_time') {
 			send_data.visit_time = e.target.value;
 		} else if (e.target.name === 'cid') {
@@ -99,7 +100,6 @@ function UpdateSchedule(props) {
 						name='agent'
 						placeholder='현장요원'
 						defaultValue={data.aid}
-						onChange={onChange}
 					/>
 				</div>
 
@@ -120,7 +120,6 @@ function UpdateSchedule(props) {
 						type='text'
 						name='recept_date'
 						placeholder='예약 날짜'
-						onChange={onChange}
 						value={today.year + '-' + today.month + '-' + today.date}
 					/>
 				</div>
@@ -132,7 +131,6 @@ function UpdateSchedule(props) {
 						name='visit_date'
 						placeholder='방문 예정 날짜'
 						defaultValue={data.visit_date}
-						onChange={onChange}
 					/>
 				</div>
 
@@ -154,7 +152,6 @@ function UpdateSchedule(props) {
 						name='uid'
 						placeholder='기록자 이름'
 						value={localStorage.getItem('userName')}
-						onChange={onChange}
 					/>
 				</div>
 

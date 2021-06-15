@@ -1,8 +1,7 @@
-import React from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 
 function ScheduleManager(props) {
-	const { schedule, view, resultAgent, setSelect, date, month, setSelectDate } =
-		props;
+	const { schedule, view, resultAgent, setSelect, date, month } = props;
 	const onClick = () => {
 		let this_date;
 		let this_month;
@@ -19,7 +18,6 @@ function ScheduleManager(props) {
 			this_date = date;
 		}
 		localStorage.setItem('selectedDate', `2021-${this_month}-${this_date}`);
-		setSelectDate(date);
 		setSelect(true);
 	};
 	return view ? (
@@ -58,10 +56,12 @@ function ScheduleManager(props) {
 				return (
 					<div class='agent-schedule'>
 						<div class='agent-id'>{data.agent_id}</div>
-						<div class={time9.class}>.</div>
-						<div class={time10.class}>.</div>
-						<div class={time11.class}>.</div>
-						<div class={time12.class}>.</div>
+						<div class='agent-lists'>
+							<div class={time9.class}>ㅤ</div>
+							<div class={time10.class}>ㅤ</div>
+							<div class={time11.class}>ㅤ</div>
+							<div class={time12.class}>ㅤ</div>
+						</div>
 					</div>
 				);
 			})}

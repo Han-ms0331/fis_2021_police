@@ -40,18 +40,23 @@ function AddSchedule(props) {
 			`http://192.168.0.117:3000/schedule/applysave`,
 			JSON.stringify(send_data)
 		);
+		reload();
+		if (result.data === true) {
+			alert('저장되었습니다.');
+			setSelect(false);
+			setIsSearched(false);
+			setIsSearched(true);
+			setIsOpen(false);
+		} else {
+			alert('작성내용을 확인해주세요.');
+		}
 		console.log(result);
 	};
 
 	const onClick = (e) => {
 		e.preventDefault();
 		if (e.target.name === 'save') {
-			setIsOpen(false);
 			send();
-			reload();
-			setSelect(false);
-			setIsSearched(false);
-			setIsSearched(true);
 		} else if (e.target.name === 'cancle') {
 			setIsOpen(false);
 		} else if (e.target.name === 'add') {
@@ -62,8 +67,6 @@ function AddSchedule(props) {
 	const onChange = (e) => {
 		if (e.target.name === 'estimate_num') {
 			send_data.estimate_num = e.target.value;
-		} else if (e.target.name === 'visit_date') {
-			send_data.visit_date = e.target.value;
 		} else if (e.target.name === 'visit_time') {
 			send_data.visit_time = e.target.value;
 		} else if (e.target.name === 'cid') {
@@ -120,7 +123,6 @@ function AddSchedule(props) {
 						type='text'
 						name='visit_date'
 						placeholder='방문 예정 날짜'
-						onChange={onChange}
 						value={localStorage.getItem('selectedDate')}
 					/>
 				</div>

@@ -44,18 +44,26 @@
 	justify-content: center;
 	margin: 1px 0px;
 }
-.agent-id {
-	width: 20%;
+.agent-lists {
+	display: flex;
 	height: 10%;
+	width: 60%;
+}
+.agent-id {
+	width: 40%;
+	height: 10%;
+	text-align: center;
 }
 .sche_list {
-	width: 18%;
+	width: 20%;
 	height: 10%;
+
 	background-color: darkcyan;
 }
 .sche_list_update {
-	width: 18%;
+	width: 20%;
 	height: 10%;
+
 	background-color: red;
 }
 
