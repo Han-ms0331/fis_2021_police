@@ -35,7 +35,7 @@ function Home(props) {
 		console.log(props.uid);
 
 		const result = await axios.get(
-			`http://localhost:3000/home/name/${props.uid}/${search}`
+			`http://192.168.0.117:3000/home/name/${props.uid}/${search}`
 		);
 		setResult_1ary(result);
 		resettingRef.current = true;
@@ -67,7 +67,7 @@ function Home(props) {
 		console.log(props.uid);
 
 		const result = await axios.get(
-			`http://localhost:3000/home/digit/${props.uid}/${search}`
+			`http://192.168.0.117/home/digit/${props.uid}/${search}`
 		);
 		setResult_1ary(result);
 		resettingRef.current = true;
