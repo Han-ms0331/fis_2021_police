@@ -1,8 +1,8 @@
 import React from 'react';
-import './css/login.css';
+import '../css/login.css';
 import axios from 'axios';
 import { Redirect, withRouter } from 'react-router-dom';
-import imgA from './image/fislogo.png';
+import imgA from '../image/fislogo.png';
 
 function Login(props) {
 	const getLogin = async () => {

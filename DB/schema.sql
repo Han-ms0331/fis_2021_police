@@ -80,6 +80,8 @@ VALUES (1, 1, '2021-05-06', '참여', 'in', '담당자이름', '010-1234-5678', 
 
 ALTER TABLE call_status MODIFY date varchar(100);
 
+alter table call_status add estimate_num INT not null comment '예상인원';
+
 
 
 CREATE TABLE apply_status(
@@ -93,7 +95,7 @@ CREATE TABLE apply_status(
     estimate_num    varchar(100)        NOT NULL                        comment '예상인원',                
     aid             varchar(100)        NOT NULL                        comment '현장등록원',  
 //    etc             varchar(300)        NOT NULL                        comment '기타 및 비고',         
-    latest          INT                 NOT NULL                        comment '가장 마지막 저장된 정보 1로 저장'                     
+    latest          INT                 NOT NULL                        comment '가장 마지막 저장된 정보 1로 저장' ,                    
     PRIMARY KEY (no),
     FOREIGN key (cid) REFERENCES center(center_id),
     FOREIGN key (uid) REFERENCES user(user_id),
