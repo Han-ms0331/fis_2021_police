@@ -5,8 +5,8 @@ import '../css/centerlist.css';
 function CenterList(props) {
 	let result;
 	let record = '없음';
-	if (props.call_exist === 1) {
-		record = '있음';
+	if (props.data.call_exists !== 0) {
+		record = props.data.call_exists;
 	}
 	console.log(props.data);
 	const getCenterInfo = async () => {
