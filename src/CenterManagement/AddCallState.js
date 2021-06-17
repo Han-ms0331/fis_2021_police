@@ -131,7 +131,7 @@ function AddCallState(props) {
 				</select>
 			</div>
 
-			<duv>
+			<div>
 				<span>예상인원: </span>
 				<input 
 					name='estimate_num'
@@ -139,7 +139,7 @@ function AddCallState(props) {
 					placeholder='예상인원'
 					onChange={handleNumber}
 				/>
-			</duv>
+			</div>
 
 			<div>
 				<span>담당자 이메일 주소: </span>
