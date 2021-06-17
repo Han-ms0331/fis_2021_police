@@ -19,6 +19,7 @@ function AddCallState(props) {
 	);
 	const [name, setName] = useState('');
 	const [bound, setBound] = useState('');
+	const [expectNumber, setNumber] = useState('');
 	const [email, setEmail] = useState('');
 	const [digit, setDigit] = useState('');
 	const [attend, setAttend] = useState('');
@@ -35,6 +36,10 @@ function AddCallState(props) {
 	const handleBound = (e) => {
 		setBound(e.target.value);
 	};
+	const handleNumber = (e) => {
+		setNumber(e.target.value);
+		console.log(expectNumber);
+	}
 	const handleEmail = (e) => {
 		setEmail(e.target.value);
 	};
@@ -56,6 +61,7 @@ function AddCallState(props) {
 				c_manager: name,
 				date: date,
 				in_out: bound,
+				estimate_num: expectNumber,
 				m_email: email,
 				m_ph: digit,
 				participation: attend,
@@ -124,6 +130,16 @@ function AddCallState(props) {
 					<option value='아웃'>아웃</option>
 				</select>
 			</div>
+
+			<duv>
+				<span>예상인원: </span>
+				<input 
+					name='estimate_num'
+					type='text'
+					placeholder='예상인원'
+					onChange={handleNumber}
+				/>
+			</duv>
 
 			<div>
 				<span>담당자 이메일 주소: </span>
