@@ -5,13 +5,13 @@ import '../css/centerlist.css';
 function CenterList(props) {
 	let result;
 	let record = '없음';
-	if (props.call_exist === 1) {
-		record = '있음';
+	if (props.data.call_exists !== 0) {
+		record = props.data.call_exists;
 	}
 	console.log(props.data);
 	const getCenterInfo = async () => {
 		result = await axios.get(
-			`http://192.168.0.117:3000/home/${props.uid}/search/${props.data.center_id}`
+			`http://localhost:3000/home/${props.uid}/search/${props.data.center_id}`
 		);
 		console.log(result);
 		props.setCenterInfo({

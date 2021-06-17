@@ -103,15 +103,15 @@ app.get("/home/name/:userid/:target", (req, res) => {
           let center_info_list = []; // target이 포함된 어린이 집 목록들
           for (let element of results) {
             //element는 results의 배열단위
-            let call_exits = 0;
+            let call_exists = 0;
             let op = await dbfunc.get_data(
-              `SELECT * FROM call_status WHERE cid = ${element.cid}`
+              `SELECT * FROM call_status WHERE cid = ${element.center_id}`
             );
-            if (op.length != 0) {
-              call_exits = op[0].participation;
+            if (op.length !== 0) {
+              call_exists = op[op.length-1].participation;
             }
             let center_info = {};
-            center_info.call_exits = call_exits;
+            center_info.call_exists = call_exists;
             center_info.center_id = element.center_id;
             center_info.c_sido = element.c_sido;
             center_info.c_sigungu = element.c_sigungu;
@@ -140,15 +140,15 @@ app.get("/home/address/:userid/:target", (req, res) => {
           let center_info_list = []; // target이 포함된 어린이 집 목록들
           for (let element of results) {
             //element는 results의 배열단위
-            let call_exits = 0;
+            let call_exists = 0;
             let op = await dbfunc.get_data(
-              `SELECT * FROM call_status WHERE cid = ${element.cid}`
+              `SELECT * FROM call_status WHERE cid = ${element.center_id}`
             );
-            if (op.length != 0) {
-              call_exits = op[0].participation;
+            if (op.length !== 0) {
+              call_exists = op[op.length-1].participation;
             }
             let center_info = {};
-            center_info.call_exits = call_exits;
+            center_info.call_exists = call_exists;
             center_info.center_id = element.center_id;
             center_info.c_sido = element.c_sido;
             center_info.c_sigungu = element.c_sigungu;
@@ -181,6 +181,7 @@ app.get("/home/:userid/search/:cid", async (req, res) => {
       result.calls = await dbfunc.get_data(
         `SELECT * FROM call_status WHERE cid = ${cid}`
       );
+      result.calls.reverse();
       result.applies = await dbfunc.get_data(
         `SELECT * FROM apply_status WHERE cid = ${cid}`
       );
@@ -237,7 +238,6 @@ app.post("/home/call_write/:cid", async (req, res) => {
   } else {
     console.log(post);
     let result = await dbfunc.set_call_status(post);
-    console.log(result);
     res.send(result);
   }
 });
@@ -559,7 +559,7 @@ app.post("/:userid/:aid/modifyagent", (req, res) => {
   );
 });
 
-app.post("/:userid/setagent", () => {
+app.post("/:userid/setagent", (req, res) => {
   const aid = path.parse(req.params.aid).base;
   let post = JSON.parse(Object.keys(req.body)[0]);
   let agent_id = agent_id;
@@ -575,6 +575,39 @@ app.post("/:userid/setagent", () => {
       res.send(true);
     }
   );
+});
+
+app.get("/home/digit/:uid/:num", (req, res) => {
+  const num = path.parse(req.params.num).base;
+  if (num) {
+    db.query(
+      `SELECT * FROM center WHERE c_ph LIKE '%${num}%'`,
+      async function (error, results) {
+        //보낼 부분
+        let center_info_list = []; // target이 포함된 어린이 집 목록들
+        for (let element of results) {
+          //element는 results의 배열단위
+          let call_exists = 0;
+          let op = await dbfunc.get_data(
+            `SELECT * FROM call_status WHERE cid = ${element.center_id}`
+          );
+          if (op.length !== 0) {
+            call_exists = op[op.length-1].participation;
+          }
+          let center_info = {};
+          center_info.call_exists = call_exists;
+          center_info.center_id = element.center_id;
+          center_info.c_sido = element.c_sido;
+          center_info.c_sigungu = element.c_sigungu;
+          center_info.c_name = element.c_name;
+          center_info.c_address = element.c_address;
+          center_info.c_ph = element.c_ph;
+          center_info_list.push(center_info);
+        }
+        res.send(center_info_list);
+      }
+    );
+  }
 });
 
 app.listen(3000, function () {
