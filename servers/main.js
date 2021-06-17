@@ -104,8 +104,10 @@ app.get("/home/name/:userid/:target", (req, res) => {
           results.forEach(async (element) => {
             //element는 results의 배열단위
             let call_exits = 0;
-            let op = await dbfunc.get_data(`SELECT * FROM center WHERE cid = ${element.cid}`);
-            if(op.length != 0){
+            let op = await dbfunc.get_data(
+              `SELECT * FROM center WHERE cid = ${element.cid}`
+            );
+            if (op.length != 0) {
               call_exits = 1;
             }
             let center_info = {};
@@ -139,8 +141,10 @@ app.get("/home/address/:userid/:target", (req, res) => {
           results.forEach(async (element) => {
             //element는 results의 배열단위
             let call_exits = 0;
-            let op = await dbfunc.get_data(`SELECT * FROM center WHERE cid = ${element.cid}`);
-            if(op.length != 0){
+            let op = await dbfunc.get_data(
+              `SELECT * FROM center WHERE cid = ${element.cid}`
+            );
+            if (op.length != 0) {
               call_exits = 1;
             }
             let center_info = {};
@@ -365,6 +369,19 @@ app.get("/schedule/:search_region/:month", async (req, res) => {
     `SELECT agent_id FROM agent WHERE agent_id LIKE '%${search_region}%'`
   );
   res.send(result);
+});
+
+//전체 스케쥴 띄우기
+app.get("/fullschedule/:month", async (req, res) => {
+  let sches = {};
+  const month = path.parse(req.params.month).base;
+  let realmonth;
+  if (month < 10) {
+    realmonth = "0" + `${month}`;
+  }
+  console.log(month);
+  sches = await sche.scheAll(realmonth);
+  res.send(sches);
 });
 
 //
