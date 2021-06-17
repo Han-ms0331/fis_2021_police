@@ -17,7 +17,7 @@ function ScheduleManager(props) {
 		props.setResultAgent(result.data.agents);
 	};
 	const onClick = (e) => {
-		e.preventDefault();
+//		e.preventDefault();
 		getSchedule();
 		props.setIsSearched(true);
 	};
@@ -30,7 +30,11 @@ function ScheduleManager(props) {
 		}
 		props.setIsSearched(false);
 	};
-
+	const onKeyPress = (e) => {
+		if(e.key=='Enter'){
+			onClick();
+		}
+	}
 	return (
 		<div class='calendar-header-container'>
 			<div class='calendar_header_window'>
@@ -40,6 +44,7 @@ function ScheduleManager(props) {
 					type='text'
 					placeholder='지역'
 					onChange={onChange}
+					onKeyPress={onKeyPress}
 				/>
 			</div>
 			<div class='calendar_header_window'>
@@ -49,6 +54,7 @@ function ScheduleManager(props) {
 					type='number'
 					placeholder='월'
 					onChange={onChange}
+					onKeyPress={onKeyPress}
 				/>
 			</div>
 

@@ -8,6 +8,7 @@ function CallState(props) {
 			</div>
 			<div class='information'>연락 일자:{props.callState_list.date}</div>
 			<div class='information'>인/아웃바운드:{props.callState_list.in_out}</div>
+			<div class='informaion'>예상 인원:{props.callState_list.estimate_num}</div>
 			<div class='information'>
 				담당자 이메일 주소:{props.callState_list.m_email}
 			</div>
