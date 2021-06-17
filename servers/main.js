@@ -98,13 +98,14 @@ app.get("/home/name/:userid/:target", (req, res) => {
       //target이 포함된 어린이집 출력
       db.query(
         `SELECT * FROM center WHERE c_name LIKE '%${target}%'`,
-        function (error, results) {
+        async function (error, results) {
           //보낼 부분
           let center_info_list = []; // target이 포함된 어린이 집 목록들
-          results.forEach((element) => {
+          results.forEach(async (element) => {
             //element는 results의 배열단위
             let call_exits = 0;
-            if(await dbfunc.get_data(`SELECT * FROM center WHERE center_id = ${element.cid}`)){
+            let op = await dbfunc.get_data(`SELECT * FROM center WHERE cid = ${element.cid}`);
+            if(op.length != 0){
               call_exits = 1;
             }
             let center_info = {};
@@ -132,13 +133,14 @@ app.get("/home/address/:userid/:target", (req, res) => {
       //target이 포함된 어린이집 출력
       db.query(
         `SELECT * FROM center WHERE c_address LIKE '%${target}%'`,
-        function (error, results) {
+        async function (error, results) {
           //보낼 부분
           let center_info_list = []; // target이 포함된 어린이 집 목록들
-          results.forEach((element) => {
+          results.forEach(async (element) => {
             //element는 results의 배열단위
             let call_exits = 0;
-            if(await dbfunc.get_data(`SELECT * FROM center WHERE center_id = ${element.cid}`)){
+            let op = await dbfunc.get_data(`SELECT * FROM center WHERE cid = ${element.cid}`);
+            if(op.length != 0){
               call_exits = 1;
             }
             let center_info = {};
