@@ -22,9 +22,12 @@ function AddSchedule(props) {
 		visit_date: localStorage.getItem('selectedDate'),
 		visit_time: '',
 		uid: localStorage.getItem('userID'),
-
+		etc: '',
 		cid: '',
 	};
+	if (localStorage.getItem('sendData') !== null) {
+		send_data = JSON.parse(localStorage.getItem('sendData'));
+	}
 
 	const reload = async () => {
 		let result = await axios.get(
@@ -36,6 +39,7 @@ function AddSchedule(props) {
 	};
 
 	const send = async () => {
+		localStorage.setItem('sendData', JSON.stringify(send_data));
 		const result = await axios.post(
 			`http://192.168.0.117:3000/schedule/applysave`,
 			JSON.stringify(send_data)
@@ -43,18 +47,21 @@ function AddSchedule(props) {
 		reload();
 		if (result.data === true) {
 			alert('저장되었습니다.');
+			localStorage.removeItem('sendData');
 			setSelect(false);
 			setIsSearched(false);
 			setIsSearched(true);
 			setIsOpen(false);
 		} else {
 			alert('작성내용을 확인해주세요.');
+			send_data = JSON.parse(localStorage.getItem('sendData'));
 		}
 		console.log(result);
 	};
 
 	const onClick = (e) => {
 		e.preventDefault();
+		console.log(send_data);
 		if (e.target.name === 'save') {
 			send();
 		} else if (e.target.name === 'cancle') {
@@ -71,6 +78,8 @@ function AddSchedule(props) {
 			send_data.visit_time = e.target.value;
 		} else if (e.target.name === 'cid') {
 			send_data.cid = e.target.value;
+		} else if (e.target.name === 'etc') {
+			send_data.etc = e.target.value;
 		}
 	};
 	return isOpen ? (
@@ -147,6 +156,13 @@ function AddSchedule(props) {
 						value={localStorage.getItem('userName')}
 						onChange={onChange}
 					/>
+				</div>
+				<div>
+					<div>특이사항: </div>
+					<textarea
+						name='etc'
+						placeholder='특이사항'
+						onInput={onChange}></textarea>
 				</div>
 
 				<button name='save' onClick={onClick}>

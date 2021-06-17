@@ -46,6 +46,7 @@ function Selected(props) {
 										<div class='select_schedule_info'>
 											{data_2.estimate_num}명
 										</div>
+										<div class='select_schedule_info'>{data_2.etc}</div>
 										<DeleteSchedule
 											data={data_2}
 											agent_id={data.agent_id}

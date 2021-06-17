@@ -1,6 +1,7 @@
 import React from 'react';
 
 function CallState(props) {
+	console.log(props.callState);
 	return (
 		<div class='main_info_call-state_list_item'>
 			<div class='information'>
@@ -15,7 +16,9 @@ function CallState(props) {
 			<div class='information'>
 				시설 참여 여부:{props.callState_list.participation}
 			</div>
-			<div class='information'>기록자 이름:{props.callState_list.uid}</div>
+			<div class='information'>
+				기록자 이름:{localStorage.getItem('userName')}
+			</div>
 			<div class='information'>특이사항:{props.callState_list.etc}</div>
 		</div>
 	);

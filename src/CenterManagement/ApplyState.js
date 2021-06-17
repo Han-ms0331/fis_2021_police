@@ -22,7 +22,7 @@ function ApplyState(props) {
 				<div class='information'>
 					방문 예정 시간:{applyState_list.visit_time}
 				</div>
-				<div class='information'>기록자 이름:{applyState_list.uid}</div>
+				<div class='information'>기록자 이름:{applyState_list.uname}</div>
 				<div class='information'>특이사항:{applyState_list.etc}</div>
 			</div>
 		</li>

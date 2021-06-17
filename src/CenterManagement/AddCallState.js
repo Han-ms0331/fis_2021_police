@@ -17,6 +17,19 @@ function AddCallState(props) {
 	const [date, setDate] = useState(
 		today.year + '-' + today.month + '-' + today.date
 	);
+	let send_data = {
+		c_manager: '',
+		date: '',
+		in_out: '',
+		m_email: '',
+		m_ph: '',
+		participation: '',
+		uid: localStorage.getItem('userID'),
+		etc: '',
+	};
+	if (localStorage.getItem('sendData') !== null) {
+		send_data = JSON.parse(localStorage.getItem('sendData'));
+	}
 	const [name, setName] = useState('');
 	const [bound, setBound] = useState('');
 	const [email, setEmail] = useState('');
@@ -27,41 +40,32 @@ function AddCallState(props) {
 	const resettingRef = useRef(false);
 
 	const handleName = (e) => {
-		setName(e.target.value);
+		send_data.c_manager = e.target.value;
 	};
 	const handleDate = (e) => {
-		setDate(e.target.value);
+		send_data.date = e.target.value;
 	};
 	const handleBound = (e) => {
-		setBound(e.target.value);
+		send_data.in_out = e.target.value;
 	};
 	const handleEmail = (e) => {
-		setEmail(e.target.value);
+		send_data.m_email = e.target.value;
 	};
 	const handleDigit = (e) => {
-		setDigit(e.target.value);
+		send_data.m_ph = e.target.value;
 	};
 	const handleAttend = (e) => {
-		setAttend(e.target.value);
+		send_data.participation = e.target.value;
 	};
-	const handleRecorder = (e) => {};
 	const handleGuitar = (e) => {
-		setGuitar(e.target.value);
+		send_data.etc = e.target.value;
 	};
 
 	const send = async () => {
+		localStorage.setItem('sendData', JSON.stringify(send_data));
 		const result = await axios.post(
 			`http://192.168.0.117:3000/home/call_write/${props.centerID}`,
-			JSON.stringify({
-				c_manager: name,
-				date: date,
-				in_out: bound,
-				m_email: email,
-				m_ph: digit,
-				participation: attend,
-				uid: localStorage.getItem('userID'),
-				etc: guitar,
-			})
+			JSON.stringify(send_data)
 		);
 		resettingRef.current = true;
 		clear();
@@ -72,9 +76,9 @@ function AddCallState(props) {
 			error = true;
 		} else {
 			error = false;
+			send_data = JSON.parse(localStorage.getItem('sendData'));
 		}
 
-		console.log(error);
 		closeSave(error);
 	};
 	const clear = () => {
@@ -162,7 +166,6 @@ function AddCallState(props) {
 					type='text'
 					placeholder='기록자 이름'
 					value={localStorage.getItem('userName')}
-					onChange={handleRecorder}
 				/>
 			</div>
 
