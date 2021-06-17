@@ -6,6 +6,7 @@ function ReadingSche(props) {
   const [IsSearched, setIsSearched] = useState(false);
 
   const getSchedule = async () => {
+    console.log(searchDate);
     let result = await axios.get(
       `http://localhost:3000/fullschedule/${searchDate}/`
     );
