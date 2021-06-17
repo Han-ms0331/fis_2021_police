@@ -104,9 +104,9 @@ app.get("/home/name/:userid/:target", (req, res) => {
           results.forEach(async (element) => {
             //element는 results의 배열단위
             let call_exits = 0;
-            let op = await dbfunc.get_data(`SELECT * FROM center WHERE cid = ${element.cid}`);
+            let op = await dbfunc.get_data(`SELECT * FROM call_status WHERE cid = ${element.cid}`);
             if(op.length != 0){
-              call_exits = 1;
+              call_exits = op[0].participation;
             }
             let center_info = {};
             center_info.call_exits = call_exits;
@@ -139,9 +139,9 @@ app.get("/home/address/:userid/:target", (req, res) => {
           results.forEach(async (element) => {
             //element는 results의 배열단위
             let call_exits = 0;
-            let op = await dbfunc.get_data(`SELECT * FROM center WHERE cid = ${element.cid}`);
+            let op = await dbfunc.get_data(`SELECT * FROM call_status WHERE cid = ${element.cid}`);
             if(op.length != 0){
-              call_exits = 1;
+              call_exits = op[0].participation;
             }
             let center_info = {};
             center_info.call_exits = call_exits;
