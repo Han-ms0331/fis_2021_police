@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import CalenderDate from './CalenderDate';
-import './css/Calendar.css';
+import '../css/Calendar.css';
 function ScheduleManager(props) {
 	const box = Array(42).fill(null);
 	let collect_schedule = Array.from(Array(31), () => Array(0).fill(null));

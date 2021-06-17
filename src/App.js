@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import Login from './login';
-import Home from './Home';
-import Schedule from './ScheduleManager';
+import Login from './login/login.js';
+import Home from './CenterManagement/Home.js';
+import Schedule from './ScheduleManager/ScheduleManager';
 import Navigation from './Navigation';
-import Logout from './Logout';
+import Logout from './login/Logout';
 import { BrowserRouter, Route } from 'react-router-dom';
 
 function App() {
