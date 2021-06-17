@@ -21,10 +21,7 @@ function ReadingSche(props) {
   for (let i = 1; i < 11; i++) {
     scheDate[i][0] = getToday(new Date(now.setDate(now.getDate() + 1)));
   }
-  let count
-  for (let i in scheDate) {
-    scheDate[i][count] = ;
-  }
+
   console.log(scheDate);
 
   let result = {};
@@ -34,7 +31,16 @@ function ReadingSche(props) {
       `http://localhost:3000/fullschedule/${searchDate}/`
     );
     console.log(result.data);
-    setAry(result.data);
+
+    scheDate.map((data, index) => {
+      for (let i in result.data) {
+        if (result.data[i].visit_date === data[0]) {
+          scheDate[index].push(result.data[i]);
+        }
+      }
+    });
+    setAry(scheDate);
+
     localStorage.setItem("searchDate", searchDate);
   };
   const onClick = (e) => {
@@ -63,19 +69,24 @@ function ReadingSche(props) {
         <input name="search" type="submit" onClick={onClick} value="검색" />
       </div>
       <div>
-        {ary !== ""
-          ? ary &&
-            ary.map((result, index) => (
-              <li key={index}>
-                <div>{result.aid}</div>
-                <div>{result.c_name}</div>
-                <div>{result.c_address}</div>
-                <div>{result.visit_time}</div>
-                <div>{result.estimate_num}명</div>
-                <div>{result.etc}</div>
-              </li>
-            ))
-          : null}
+        {ary.map((data) => {
+          return data.map((data2, index) => {
+            console.log(index);
+
+            return index === 0 ? (
+              <div>{data2}</div>
+            ) : (
+              <div>
+                <div>{data2.aid}</div>
+                <div>{data2.c_name}</div>
+                <div>{data2.c_address}</div>
+                <div>{data2.visit_time}</div>
+                <div>{data2.estimate_num}명</div>
+                <div>{data2.etc}</div>
+              </div>
+            );
+          });
+        })}
       </div>
     </div>
   ) : (
