@@ -374,15 +374,27 @@ app.get("/schedule/:search_region/:month", async (req, res) => {
 
 //
 //전체 스케쥴 띄우기
-app.get("/fullschedule/:month", async (req, res) => {
+app.get("/fullschedule/:searchDate", async (req, res) => {
   let sches = {};
-  const month = path.parse(req.params.month).base;
-  let realmonth;
-  if (month < 10) {
-    realmonth = "0" + `${month}`;
+  const searchDate = path.parse(req.params.searchDate).base;
+  const now = new Date(searchDate);
+  const before3day = new Date(now.setDate(now.getDate() - 3));
+  const now2 = new Date(searchDate);
+  const after7day = new Date(now2.setDate(now2.getDate() + 7));
+
+  function getToday(indate) {
+    let date = new Date(indate);
+    let year = date.getFullYear();
+    let month = ("0" + (1 + date.getMonth())).slice(-2);
+    let day = ("0" + date.getDate()).slice(-2);
+    return year + "-" + month + "-" + day;
   }
-  console.log(month);
-  sches = await sche.scheAll(realmonth);
+
+  const first = getToday(before3day);
+  const last = getToday(after7day);
+
+  sches = await sche.scheAll(first, last);
+
   res.send(sches);
 });
 

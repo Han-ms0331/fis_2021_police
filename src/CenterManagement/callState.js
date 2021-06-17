@@ -1,6 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
+import UpdateCallState from './UpdateCallState.js'
 
 function CallState(props) {
+	const [update, setUpdate] = useState(false);
+
+	const openUpdateCall = (e) => {
+		setUpdate(true);
+	}
+
 	return (
 		<div class='main_info_call-state_list_item'>
 			<div class='information'>
@@ -18,6 +25,11 @@ function CallState(props) {
 			</div>
 			<div class='information'>기록자 이름:{props.callState_list.uid}</div>
 			<div class='information'>특이사항:{props.callState_list.etc}</div>
+			<button onClick={openUpdateCall}>수정</button>
+			<UpdateCallState
+				update={update}
+				data={props.callState_list}
+			/>
 		</div>
 	);
 }

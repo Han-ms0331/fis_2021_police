@@ -26,12 +26,12 @@ module.exports = {
     });
   },
   //총 스케줄 관리
-  scheAll: async function (month) {
+  scheAll: async function (before3day, after7day) {
     return new Promise((resolve) => {
       db.query(
         `SELECT aid, visit_date, visit_time, estimate_num, cid, no, latest, etc
                   FROM apply_status            
-                  WHERE visit_date BETWEEN '2021-${month}-01' AND '2021-${month}-31' 
+                  WHERE visit_date BETWEEN '${before3day}' AND '${after7day}' 
                         AND latest = 1
                   ORDER BY visit_date, aid, visit_time;`,
         async function (error, store_schedule) {
