@@ -4,7 +4,7 @@ module.exports = {
   sche: async function (search_region, month) {
     return new Promise((resolve) => {
       db.query(
-        `SELECT aid, visit_date, visit_time, estimate_num, cid, no, latest
+        `SELECT aid, visit_date, visit_time, estimate_num, cid, no, latest, etc
                   FROM apply_status            
                   WHERE visit_date BETWEEN '2021-${month}-01' AND '2021-${month}-31' 
                         AND latest = 1
@@ -29,7 +29,7 @@ module.exports = {
   scheAll: async function (month) {
     return new Promise((resolve) => {
       db.query(
-        `SELECT aid, visit_date, visit_time, estimate_num, cid, no, latest
+        `SELECT aid, visit_date, visit_time, estimate_num, cid, no, latest, etc
                   FROM apply_status            
                   WHERE visit_date BETWEEN '2021-${month}-01' AND '2021-${month}-31' 
                         AND latest = 1

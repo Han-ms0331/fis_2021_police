@@ -101,11 +101,13 @@ app.get("/home/name/:userid/:target", (req, res) => {
         async function (error, results) {
           //보낼 부분
           let center_info_list = []; // target이 포함된 어린이 집 목록들
-          for(let element of results){
+          for (let element of results) {
             //element는 results의 배열단위
             let call_exits = 0;
-            let op = await dbfunc.get_data(`SELECT * FROM call_status WHERE cid = ${element.cid}`);
-            if(op.length != 0){
+            let op = await dbfunc.get_data(
+              `SELECT * FROM call_status WHERE cid = ${element.cid}`
+            );
+            if (op.length != 0) {
               call_exits = op[0].participation;
             }
             let center_info = {};
@@ -136,11 +138,13 @@ app.get("/home/address/:userid/:target", (req, res) => {
         async function (error, results) {
           //보낼 부분
           let center_info_list = []; // target이 포함된 어린이 집 목록들
-          for(let element of results){
+          for (let element of results) {
             //element는 results의 배열단위
             let call_exits = 0;
-            let op = await dbfunc.get_data(`SELECT * FROM call_status WHERE cid = ${element.cid}`);
-            if(op.length != 0){
+            let op = await dbfunc.get_data(
+              `SELECT * FROM call_status WHERE cid = ${element.cid}`
+            );
+            if (op.length != 0) {
               call_exits = op[0].participation;
             }
             let center_info = {};
@@ -279,6 +283,7 @@ app.post("/schedule/applysave", (req, res) => {
   const { visit_time } = post;
   const { estimate_num } = post;
   const { aid } = post;
+  const { etc } = etc; //없어도 됨
   let result2 = [];
   for (let key in post) {
     switch (key) {
@@ -311,8 +316,8 @@ app.post("/schedule/applysave", (req, res) => {
     error_code.error = result2;
     res.send(error_code);
   } else {
-    let sql = `INSERT INTO apply_status(cid, uid, recept_date,  visit_date, visit_time, estimate_num, aid, latest)
-        VALUES (${cid}, ${uid}, '${recept_date}',  '${visit_date}', '${visit_time}', '${estimate_num}', '${aid}',1);`;
+    let sql = `INSERT INTO apply_status(cid, uid, recept_date,  visit_date, visit_time, estimate_num, aid, latest,etc)
+    VALUES (${cid}, ${uid}, '${recept_date}',  '${visit_date}', '${visit_time}', '${estimate_num}', '${aid}',1,${etc});`;
     // db.query(
     //   `UPDATE apply_status SET latest=0 WHERE cid=${post.cid};`,
     //   (err, update_apply) => {
@@ -368,6 +373,19 @@ app.get("/schedule/:search_region/:month", async (req, res) => {
 });
 
 //
+//전체 스케쥴 띄우기
+app.get("/fullschedule/:month", async (req, res) => {
+  let sches = {};
+  const month = path.parse(req.params.month).base;
+  let realmonth;
+  if (month < 10) {
+    realmonth = "0" + `${month}`;
+  }
+  console.log(month);
+  sches = await sche.scheAll(realmonth);
+  res.send(sches);
+});
+
 //admin page
 // 콜직원 업무 현황
 app.get("/:userid/getbusinessstatus", async (req, res) => {
