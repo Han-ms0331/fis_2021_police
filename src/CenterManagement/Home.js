@@ -63,21 +63,49 @@ function Home(props) {
 		console.log(result);
 		setIsLoading_1(false);
 	};
+	const getSearchCenterList_b = async (search) => {
+		console.log(props.uid);
+
+		const result = await axios.get(
+			`http://192.168.0.117/home/digit/${props.uid}/${search}`
+		);
+		setResult_1ary(result);
+		resettingRef.current = true;
+		// if (result.data.calls.length === 0) {
+		// 	setCalled('없음');
+		// } else {
+		// 	setCalled('있음');
+		// }
+		console.log(result);
+		setIsLoading_1(false);
+	};
 
 	const onClick = (e) => {
-		e.preventDefault();
+//		e.preventDefault();
 		setCurrentResult('');
 		setIsLoading_2(true);
 		console.log(searchCenter);
 		getSearchCenterList(searchCenter);
 	};
 	const onClick_a = (e) => {
-		e.preventDefault();
+//		e.preventDefault();
 		setCurrentResult('');
 		setIsLoading_2(true);
 		console.log(searchCenter);
 		getSearchCenterList_a(searchCenter);
 	};
+	const onClick_b = (e) => {
+//		e.preventDefault();
+		setCurrentResult('');
+		setIsLoading_2(true);
+		console.log(searchCenter);
+		getSearchCenterList_b(searchCenter);
+	}
+	const onKeyPress = (e) => {
+		if(e.key=='Enter'){
+			onClick();
+		}
+	}
 	const onChange = (e) => {
 		console.log(e.target.value);
 		setSearchCenter(`${e.target.value}`);
@@ -135,6 +163,7 @@ function Home(props) {
 									name='center'
 									class='main_serch_input'
 									onChange={onChange}
+									onKeyPress={onKeyPress}
 								/>
 								<button class='main_search_btn' onClick={onClick}>
 									검색
@@ -149,8 +178,23 @@ function Home(props) {
 									name='address'
 									class='main_serch_input'
 									onChange={onChange}
+									onKeyPress={onKeyPress}
 								/>
 								<button class='main_search_btn' onClick={onClick_a}>
+									검색
+								</button>
+							</div>
+							<div class='main_search_window'>
+								<span>전화번호로 검색 : </span>
+								<input
+									type='text'
+									placeholder='시설 전화번호 입력'
+									name='digit'
+									class='main_serch_input'
+									onChange={onChange}
+									onKeyPress={onKeyPress}
+								/>
+								<button class='main_search_btn' onClick={onClick_b}>
 									검색
 								</button>
 							</div>
@@ -206,6 +250,20 @@ function Home(props) {
 									onChange={onChange}
 								/>
 								<button class='main_search_btn' onClick={onClick_a}>
+									검색
+								</button>
+							</div>
+							<div class='main_search_window'>
+								<span>전화번호로 검색 : </span>
+								<input
+									type='text'
+									placeholder='시설 전화번호 입력'
+									name='digit'
+									class='main_serch_input'
+									onChange={onChange}
+									onKeyPress={onKeyPress}
+								/>
+								<button class='main_search_btn' onClick={onClick_b}>
 									검색
 								</button>
 							</div>
@@ -285,6 +343,20 @@ function Home(props) {
 									onChange={onChange}
 								/>
 								<button class='main_search_btn' onClick={onClick_a}>
+									검색
+								</button>
+							</div>
+							<div class='main_search_window'>
+								<span>전화번호로 검색 : </span>
+								<input
+									type='text'
+									placeholder='시설 전화번호 입력'
+									name='digit'
+									class='main_serch_input'
+									onChange={onChange}
+									onKeyPress={onKeyPress}
+								/>
+								<button class='main_search_btn' onClick={onClick_b}>
 									검색
 								</button>
 							</div>

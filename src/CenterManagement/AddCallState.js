@@ -32,6 +32,7 @@ function AddCallState(props) {
 	}
 	const [name, setName] = useState('');
 	const [bound, setBound] = useState('');
+	const [expectNumber, setNumber] = useState('');
 	const [email, setEmail] = useState('');
 	const [digit, setDigit] = useState('');
 	const [attend, setAttend] = useState('');
@@ -47,6 +48,10 @@ function AddCallState(props) {
 	};
 	const handleBound = (e) => {
 		send_data.in_out = e.target.value;
+	};
+	const handleNumber = (e) => {
+		setNumber(e.target.value);
+		console.log(expectNumber);
 	};
 	const handleEmail = (e) => {
 		send_data.m_email = e.target.value;
@@ -127,6 +132,16 @@ function AddCallState(props) {
 					<option value='인'>인</option>
 					<option value='아웃'>아웃</option>
 				</select>
+			</div>
+
+			<div>
+				<span>예상인원: </span>
+				<input
+					name='estimate_num'
+					type='text'
+					placeholder='예상인원'
+					onChange={handleNumber}
+				/>
 			</div>
 
 			<div>

@@ -32,12 +32,16 @@ function Login(props) {
 		console.log(props.userName);
 		console.log(props.passWord);
 		console.log(props.isLogined);
-		e.preventDefault();
+//		e.preventDefault();
 		getLogin();
 		console.log(props.isLogined);
 		props.history.push('/home');
 	};
-
+	const onKeyPress = (e) => {
+		if(e.key=='Enter'){
+			sendLoginState();
+		}
+	}
 	props.setIsLogined(localStorage.getItem('isLogined'));
 	return props.isLogined ? (
 		<Redirect to='/home' />
@@ -72,6 +76,7 @@ function Login(props) {
 						placeholder='Password'
 						value={props.passWord}
 						onChange={({ target: { value } }) => props.setPassWord(value)}
+						onKeyPress={onKeyPress}
 					/>
 				</div>
 
