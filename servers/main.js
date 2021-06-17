@@ -283,6 +283,7 @@ app.post("/schedule/applysave", (req, res) => {
   const { visit_time } = post;
   const { estimate_num } = post;
   const { aid } = post;
+  const { etc } = etc; //없어도 됨
   let result2 = [];
   for (let key in post) {
     switch (key) {
@@ -315,8 +316,8 @@ app.post("/schedule/applysave", (req, res) => {
     error_code.error = result2;
     res.send(error_code);
   } else {
-    let sql = `INSERT INTO apply_status(cid, uid, recept_date,  visit_date, visit_time, estimate_num, aid, latest)
-        VALUES (${cid}, ${uid}, '${recept_date}',  '${visit_date}', '${visit_time}', '${estimate_num}', '${aid}',1);`;
+    let sql = `INSERT INTO apply_status(cid, uid, recept_date,  visit_date, visit_time, estimate_num, aid, latest,etc)
+        VALUES (${cid}, ${uid}, '${recept_date}',  '${visit_date}', '${visit_time}', '${estimate_num}', '${aid}',1,${etc});`;
     // db.query(
     //   `UPDATE apply_status SET latest=0 WHERE cid=${post.cid};`,
     //   (err, update_apply) => {

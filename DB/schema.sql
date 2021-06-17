@@ -70,6 +70,7 @@ CREATE TABLE call_status(
     m_email         varchar(100)        NOT NULL                        comment '시설 담당자 이메일 ',
     etc             varchar(300)        NOT NULL                        comment '기타 및 비고',
     today           varchar(300)        NOT NULL                        comment 'call 한 날짜',
+    estimate_num    INT                     null                        comment '예상인원',
     PRIMARY KEY (no),
     FOREIGN key (cid) REFERENCES center(center_id),
     FOREIGN key (uid) REFERENCES user(user_id)
@@ -94,8 +95,8 @@ CREATE TABLE apply_status(
     visit_time      varchar(100)        NOT NULL                        comment '방문시간',                            
     estimate_num    varchar(100)        NOT NULL                        comment '예상인원',                
     aid             varchar(100)        NOT NULL                        comment '현장등록원',  
-//    etc             varchar(300)        NOT NULL                        comment '기타 및 비고',         
     latest          INT                 NOT NULL                        comment '가장 마지막 저장된 정보 1로 저장' ,                    
+    etc             varchar(300)        NOT NULL                        comment '기타 및 비고',         
     PRIMARY KEY (no),
     FOREIGN key (cid) REFERENCES center(center_id),
     FOREIGN key (uid) REFERENCES user(user_id),
@@ -103,6 +104,7 @@ CREATE TABLE apply_status(
 );
 
 alter table apply_status add latest INT not null comment '가장 마지막 저장된 정보 1로 저장'
+alter table apply_status add etc INT  null comment '기타 및 비고';
 
 ALTER TABLE apply_status MODIFY visit_date varchar(100);
 
