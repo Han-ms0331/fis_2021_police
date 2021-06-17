@@ -101,14 +101,12 @@ app.get("/home/name/:userid/:target", (req, res) => {
         async function (error, results) {
           //보낼 부분
           let center_info_list = []; // target이 포함된 어린이 집 목록들
-          results.forEach(async (element) => {
+          for(let element of results){
             //element는 results의 배열단위
             let call_exits = 0;
-            let op = await dbfunc.get_data(
-              `SELECT * FROM center WHERE cid = ${element.cid}`
-            );
-            if (op.length != 0) {
-              call_exits = 1;
+            let op = await dbfunc.get_data(`SELECT * FROM call_status WHERE cid = ${element.cid}`);
+            if(op.length != 0){
+              call_exits = op[0].participation;
             }
             let center_info = {};
             center_info.call_exits = call_exits;
@@ -119,7 +117,7 @@ app.get("/home/name/:userid/:target", (req, res) => {
             center_info.c_address = element.c_address;
             center_info.c_ph = element.c_ph;
             center_info_list.push(center_info);
-          });
+          }
           res.send(center_info_list);
         }
       );
@@ -138,14 +136,12 @@ app.get("/home/address/:userid/:target", (req, res) => {
         async function (error, results) {
           //보낼 부분
           let center_info_list = []; // target이 포함된 어린이 집 목록들
-          results.forEach(async (element) => {
+          for(let element of results){
             //element는 results의 배열단위
             let call_exits = 0;
-            let op = await dbfunc.get_data(
-              `SELECT * FROM center WHERE cid = ${element.cid}`
-            );
-            if (op.length != 0) {
-              call_exits = 1;
+            let op = await dbfunc.get_data(`SELECT * FROM call_status WHERE cid = ${element.cid}`);
+            if(op.length != 0){
+              call_exits = op[0].participation;
             }
             let center_info = {};
             center_info.call_exits = call_exits;
@@ -156,7 +152,7 @@ app.get("/home/address/:userid/:target", (req, res) => {
             center_info.c_address = element.c_address;
             center_info.c_ph = element.c_ph;
             center_info_list.push(center_info);
-          });
+          }
           res.send(center_info_list);
         }
       );
@@ -369,19 +365,6 @@ app.get("/schedule/:search_region/:month", async (req, res) => {
     `SELECT agent_id FROM agent WHERE agent_id LIKE '%${search_region}%'`
   );
   res.send(result);
-});
-
-//전체 스케쥴 띄우기
-app.get("/fullschedule/:month", async (req, res) => {
-  let sches = {};
-  const month = path.parse(req.params.month).base;
-  let realmonth;
-  if (month < 10) {
-    realmonth = "0" + `${month}`;
-  }
-  console.log(month);
-  sches = await sche.scheAll(realmonth);
-  res.send(sches);
 });
 
 //
