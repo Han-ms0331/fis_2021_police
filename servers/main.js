@@ -98,12 +98,20 @@ app.get("/home/name/:userid/:target", (req, res) => {
       //target이 포함된 어린이집 출력
       db.query(
         `SELECT * FROM center WHERE c_name LIKE '%${target}%'`,
-        function (error, results) {
+        async function (error, results) {
           //보낼 부분
           let center_info_list = []; // target이 포함된 어린이 집 목록들
-          results.forEach((element) => {
+          results.forEach(async (element) => {
             //element는 results의 배열단위
+            let call_exits = 0;
+            let op = await dbfunc.get_data(
+              `SELECT * FROM center WHERE cid = ${element.cid}`
+            );
+            if (op.length != 0) {
+              call_exits = 1;
+            }
             let center_info = {};
+            center_info.call_exits = call_exits;
             center_info.center_id = element.center_id;
             center_info.c_sido = element.c_sido;
             center_info.c_sigungu = element.c_sigungu;
@@ -127,12 +135,20 @@ app.get("/home/address/:userid/:target", (req, res) => {
       //target이 포함된 어린이집 출력
       db.query(
         `SELECT * FROM center WHERE c_address LIKE '%${target}%'`,
-        function (error, results) {
+        async function (error, results) {
           //보낼 부분
           let center_info_list = []; // target이 포함된 어린이 집 목록들
-          results.forEach((element) => {
+          results.forEach(async (element) => {
             //element는 results의 배열단위
+            let call_exits = 0;
+            let op = await dbfunc.get_data(
+              `SELECT * FROM center WHERE cid = ${element.cid}`
+            );
+            if (op.length != 0) {
+              call_exits = 1;
+            }
             let center_info = {};
+            center_info.call_exits = call_exits;
             center_info.center_id = element.center_id;
             center_info.c_sido = element.c_sido;
             center_info.c_sigungu = element.c_sigungu;
@@ -353,6 +369,19 @@ app.get("/schedule/:search_region/:month", async (req, res) => {
     `SELECT agent_id FROM agent WHERE agent_id LIKE '%${search_region}%'`
   );
   res.send(result);
+});
+
+//전체 스케쥴 띄우기
+app.get("/fullschedule/:month", async (req, res) => {
+  let sches = {};
+  const month = path.parse(req.params.month).base;
+  let realmonth;
+  if (month < 10) {
+    realmonth = "0" + `${month}`;
+  }
+  console.log(month);
+  sches = await sche.scheAll(realmonth);
+  res.send(sches);
 });
 
 //
