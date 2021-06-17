@@ -79,9 +79,11 @@ function AddCallState(props) {
 		let error;
 		if (result.data.error !== undefined) {
 			error = true;
+			send_data = JSON.parse(localStorage.getItem('sendData'));
 		} else {
 			error = false;
-			send_data = JSON.parse(localStorage.getItem('sendData'));
+
+			localStorage.removeItem('sendData');
 		}
 
 		closeSave(error);
