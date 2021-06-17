@@ -103,7 +103,12 @@ app.get("/home/name/:userid/:target", (req, res) => {
           let center_info_list = []; // target이 포함된 어린이 집 목록들
           results.forEach((element) => {
             //element는 results의 배열단위
+            let call_exits = 0;
+            if(await dbfunc.get_data(`SELECT * FROM center WHERE center_id = ${element.cid}`)){
+              call_exits = 1;
+            }
             let center_info = {};
+            center_info.call_exits = call_exits;
             center_info.center_id = element.center_id;
             center_info.c_sido = element.c_sido;
             center_info.c_sigungu = element.c_sigungu;
@@ -132,7 +137,12 @@ app.get("/home/address/:userid/:target", (req, res) => {
           let center_info_list = []; // target이 포함된 어린이 집 목록들
           results.forEach((element) => {
             //element는 results의 배열단위
+            let call_exits = 0;
+            if(await dbfunc.get_data(`SELECT * FROM center WHERE center_id = ${element.cid}`)){
+              call_exits = 1;
+            }
             let center_info = {};
+            center_info.call_exits = call_exits;
             center_info.center_id = element.center_id;
             center_info.c_sido = element.c_sido;
             center_info.c_sigungu = element.c_sigungu;
