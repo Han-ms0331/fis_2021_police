@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import CalenderDate from './CalenderDate';
-import './css/Calendar.css';
+import '../css/Calendar.css';
 function ScheduleManager(props) {
 	const box = Array(42).fill(null);
 	let collect_schedule = Array.from(Array(31), () => Array(0).fill(null));
@@ -37,7 +37,12 @@ function ScheduleManager(props) {
 						date = null;
 					}
 					return (
-						<div class='calendar-datebox'>
+						<div
+							class={
+								props.currentDate === date
+									? 'calender-datebox-selected'
+									: 'calendar-datebox'
+							}>
 							<div class='datebox-date'>{date}</div>
 							<CalenderDate
 								resultAgent={props.resultAgent}
@@ -46,6 +51,7 @@ function ScheduleManager(props) {
 								view={view}
 								schedule={collect_schedule[date - 1]}
 								setSelect={props.setSelect}
+								setSelectDate={props.setSelectDate}
 							/>
 						</div>
 					);

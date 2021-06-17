@@ -1,86 +1,96 @@
 .calendar-box {
-  display: flex;
-  justify-content: space-around;
-  flex-wrap: wrap;
-  width: 1500px;
-  height: 100%;
+	display: flex;
+	justify-content: space-around;
+	flex-wrap: wrap;
+	width: 1500px;
+	height: 100%;
 }
 .calendar-body-container {
-  display: flex;
-  justify-content: center;
+	display: flex;
+	justify-content: center;
 }
 
 .calendar-datebox {
-  width: 13%;
-  height: 20%;
-  border: black solid 2px;
-  margin: 3px;
+	width: 13%;
+	height: 20%;
+	border: black solid 2px;
+	margin: 3px;
+}
+.calendar-datebox:hover {
+	background-color: rgba(211, 226, 255, 0.747);
+}
+.calender-datebox-selected {
+	width: 13%;
+	height: 20%;
+	border: black solid 2px;
+	margin: 3px;
+	background-color: rgba(211, 226, 255, 0.747);
 }
 .datebox-date {
-  font-size: xx-large;
-  margin-left: 5px;
+	font-size: xx-large;
+	margin-left: 5px;
 }
 
 .calendar-day {
-  width: 13%;
-  height: 20px;
-  border: black solid 2px;
-  margin: 3px;
-  text-align: center;
+	width: 13%;
+	height: 20px;
+	border: black solid 2px;
+	margin: 3px;
+	text-align: center;
 }
 
 .agent-schedule {
-  display: flex;
-  justify-content: center;
-  margin: 1px 0px;
+	display: flex;
+	justify-content: center;
+	margin: 1px 0px;
 }
 .agent-lists {
-  display: flex;
-  height: 10%;
-  width: 60%;
+	display: flex;
+	height: 10%;
+	width: 60%;
 }
 .agent-id {
-  width: 40%;
-  height: 10%;
-  text-align: center;
+	width: 40%;
+	height: 10%;
+	text-align: center;
 }
 .sche_list {
-  width: 20%;
-  height: 10%;
+	width: 20%;
+	height: 10%;
 
-  background-color: darkcyan;
+	background-color: darkcyan;
 }
 .sche_list_update {
-  width: 20%;
-  height: 10%;
+	width: 20%;
+	height: 10%;
 
-  background-color: red;
+	background-color: red;
 }
 
 .select_container {
-  display: felx;
+	display: felx;
 }
 
 .calendar-header-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 30px 0px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin: 30px 0px;
 }
 
 .calendar_header_window {
-  margin: 0px 20px;
+	margin: 0px 20px;
 }
 
 .calendar_select {
-  margin: 10px;
-  text-align: right;
+	margin: 10px;
+	text-align: right;
 }
 
 .sunday {
-  color: red;
+	color: red;
 }
 
 .saturday {
-  color: rgb(51, 121, 250);
+	color: rgb(51, 121, 250);
 }
