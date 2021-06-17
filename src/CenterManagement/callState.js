@@ -24,9 +24,6 @@ function CallState(props) {
 			<div class='information'>기록자 이름:{props.callState_list.uid}</div>
 			<div class='information'>특이사항:{props.callState_list.etc}</div>
 			<button onClick={openUpdate}>수정</button>
-			<UpdateCallState 
-				update = {isUpdate}
-			/>
 		</div>
 	);
 }
