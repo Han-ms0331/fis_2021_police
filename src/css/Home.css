@@ -198,7 +198,24 @@
 }
 .center_info_num {
   width: 100%;
-
+  text-align: center;
+}
+.center_info_num-participation {
+  border: 1px solid blue;
+  border-width: thick;
+  width: 100%;
+  text-align: center;
+}
+.center_info_num-reject {
+  border: 1px solid red;
+  border-width: thick;
+  width: 100%;
+  text-align: center;
+}
+.center_info_num-thinking {
+  border: 1px solid green;
+  border-width: thick;
+  width: 100%;
   text-align: center;
 }
 

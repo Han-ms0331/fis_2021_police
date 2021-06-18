@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { useState, useRef, useEffect } from 'react';
+import CenterList from './CenterList';
 function AddCallState(props) {
 	const { open, closeSave, closeCancle } = props;
 	const today = {
@@ -16,6 +17,8 @@ function AddCallState(props) {
 	const [date, setDate] = useState(
 		today.year + '-' + today.month + '-' + today.date
 	);
+	const [check, setCheck] = useState(false);
+
 	const [name, setName] = useState('');
 	const [bound, setBound] = useState('');
 	const [expectNumber, setNumber] = useState('');
@@ -51,6 +54,7 @@ function AddCallState(props) {
 	const handleGuitar = (e) => {
 		setGuitar(e.target.value);
 	};
+
 	const send = async () => {
 		const result = await axios.post(
 			`http://192.168.0.117:3000/home/call_write/${props.centerID}`,
@@ -68,15 +72,17 @@ function AddCallState(props) {
 		);
 		resettingRef.current = true;
 		clear();
-		console.log(result.data.error);
+//		console.log(result.data.error);
 		let error;
 		if (result.data.error !== undefined) {
 			error = true;
 		} else {
 			error = false;
 		}
-		console.log(error);
+//		console.log(error);
 		closeSave(error);
+		setCheck(true);
+		console.log(check);
 	};
 	const clear = () => {
 		setName('');
@@ -181,6 +187,10 @@ function AddCallState(props) {
 				<button onClick={send}>저장</button>
 				<button onClick={closeCancle}>닫기</button>
 			</div>
+			<CenterList
+				data={props.data}
+				check={check}
+			/>
 		</div>
 	) : null;
 }
