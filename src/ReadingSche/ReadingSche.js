@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useState, useRef, useEffect } from "react";
+import "../css/readingSche.css";
 
 function ReadingSche(props) {
   const [searchDate, setSearchDate] = useState("");
@@ -56,9 +57,9 @@ function ReadingSche(props) {
 
   return IsSearched ? (
     <div>
-      <div>
+      <div class="RSbar">
         <div>
-          <span>월 : </span>
+          <span>날짜 : </span>
           <input
             name="Date"
             type="date"
@@ -66,36 +67,60 @@ function ReadingSche(props) {
             onChange={onChange}
           />
         </div>
-        <input name="search" type="submit" onClick={onClick} value="검색" />
+        <input
+          class="RSsearchbtn"
+          name="search"
+          type="submit"
+          onClick={onClick}
+          value="검색"
+        />
       </div>
-      <div>
+      <div class="RSbox">
         {ary.map((data) => {
-          return data.map((data2, index) => {
-            console.log(index);
+          if (data.length > 1) {
+            return (
+              <div class="RSbox_date">
+                {data.map((data2, index) => {
+                  console.log(index);
 
-            return index === 0 ? (
-              <div>{data2}</div>
-            ) : (
-              <div>
-                <div>{data2.aid}</div>
-                <div>{data2.c_name}</div>
-                <div>{data2.c_address}</div>
-                <div>{data2.visit_time}</div>
-                <div>{data2.estimate_num}명</div>
-                <div>{data2.etc}</div>
+                  return index === 0 ? (
+                    <div class="RSdate">{data2}</div>
+                  ) : (
+                    <div class="RSdate_sche">
+                      <div class="RSitem">{data2.aid}</div>
+                      <div class="RSitem">{data2.c_address}</div>
+                      <div class="RSitem">{data2.c_name}</div>
+                      <div class="RSitem">{data2.visit_time}</div>
+                      <div class="RSitem">{data2.estimate_num}명</div>
+                      <div class="RSitem">특이사항: {data2.etc}</div>
+                    </div>
+                  );
+                })}
               </div>
             );
-          });
+          } else {
+            return (
+              <div class="RSbox_date">
+                {<div class="RSdate">{data[0]}</div>}
+              </div>
+            );
+          }
         })}
       </div>
     </div>
   ) : (
-    <div>
+    <div class="RSbar">
       <div>
-        <span>월 : </span>
+        <span>날짜 : </span>
         <input name="Date" type="date" placeholder="날짜" onChange={onChange} />
       </div>
-      <input name="search" type="submit" onClick={onClick} value="검색" />
+      <input
+        class="RSsearchbtn"
+        name="search"
+        type="submit"
+        onClick={onClick}
+        value="검색"
+      />
     </div>
   );
 }
