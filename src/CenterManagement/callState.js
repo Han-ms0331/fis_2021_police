@@ -29,7 +29,7 @@ function CallState(props) {
 				시설 참여 여부:{props.callState_list.participation}
 			</div>
 			<div class='information'>
-				기록자 이름:{localStorage.getItem('userName')}
+				기록자 이름:{/*props.callState_list.username*/}
 			</div>
 			<div class='information'>특이사항:{props.callState_list.etc}</div>
 			{/* <button onClick={openUpdateCall}>수정</button>

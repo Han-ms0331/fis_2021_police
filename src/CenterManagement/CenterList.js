@@ -13,7 +13,7 @@ function CenterList(props) {
 		result = await axios.get(
 			`http://192.168.0.117:3000/home/${props.uid}/search/${props.data.center_id}`
 		);
-		console.log(result);
+		console.log(result.data.calls);
 		props.setCenterInfo({
 			centerName: props.data.c_name,
 			centerAddr: props.data.c_address,
