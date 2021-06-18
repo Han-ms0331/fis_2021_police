@@ -1,6 +1,5 @@
 import axios from 'axios';
 import React, { useState, useRef, useEffect } from 'react';
-
 function AddCallState(props) {
 	const { open, closeSave, closeCancle } = props;
 	const today = {
@@ -17,19 +16,6 @@ function AddCallState(props) {
 	const [date, setDate] = useState(
 		today.year + '-' + today.month + '-' + today.date
 	);
-	let send_data = {
-		c_manager: '',
-		date: '',
-		in_out: '',
-		m_email: '',
-		m_ph: '',
-		participation: '',
-		uid: localStorage.getItem('userID'),
-		etc: '',
-	};
-	if (localStorage.getItem('sendData') !== null) {
-		send_data = JSON.parse(localStorage.getItem('sendData'));
-	}
 	const [name, setName] = useState('');
 	const [bound, setBound] = useState('');
 	const [expectNumber, setNumber] = useState('');
@@ -39,53 +25,57 @@ function AddCallState(props) {
 	const [guitar, setGuitar] = useState('');
 	const [done, setDone] = useState(false);
 	const resettingRef = useRef(false);
-
 	const handleName = (e) => {
-		send_data.c_manager = e.target.value;
+		setName(e.target.value);
 	};
 	const handleDate = (e) => {
-		send_data.date = e.target.value;
+		setDate(e.target.value);
 	};
 	const handleBound = (e) => {
-		send_data.in_out = e.target.value;
+		setBound(e.target.value);
 	};
 	const handleNumber = (e) => {
 		setNumber(e.target.value);
 		console.log(expectNumber);
 	};
 	const handleEmail = (e) => {
-		send_data.m_email = e.target.value;
+		setEmail(e.target.value);
 	};
 	const handleDigit = (e) => {
-		send_data.m_ph = e.target.value;
+		setDigit(e.target.value);
 	};
 	const handleAttend = (e) => {
-		send_data.participation = e.target.value;
+		setAttend(e.target.value);
 	};
+	const handleRecorder = (e) => {};
 	const handleGuitar = (e) => {
-		send_data.etc = e.target.value;
+		setGuitar(e.target.value);
 	};
-
 	const send = async () => {
-		localStorage.setItem('sendData', JSON.stringify(send_data));
 		const result = await axios.post(
 			`http://192.168.0.117:3000/home/call_write/${props.centerID}`,
-			JSON.stringify(send_data)
+			JSON.stringify({
+				c_manager: name,
+				date: date,
+				in_out: bound,
+				estimate_num: expectNumber,
+				m_email: email,
+				m_ph: digit,
+				participation: attend,
+				uid: localStorage.getItem('userID'),
+				etc: guitar,
+			})
 		);
 		resettingRef.current = true;
 		clear();
-
 		console.log(result.data.error);
 		let error;
 		if (result.data.error !== undefined) {
 			error = true;
-			send_data = JSON.parse(localStorage.getItem('sendData'));
 		} else {
 			error = false;
-
-			localStorage.removeItem('sendData');
 		}
-
+		console.log(error);
 		closeSave(error);
 	};
 	const clear = () => {
@@ -94,7 +84,6 @@ function AddCallState(props) {
 		setEmail('');
 		setDigit('');
 		setAttend('');
-
 		setGuitar('');
 		setDone(true);
 	};
@@ -115,7 +104,6 @@ function AddCallState(props) {
 					onChange={handleName}
 				/>
 			</div>
-
 			<div>
 				<span>연락일자: </span>
 				<input
@@ -126,7 +114,6 @@ function AddCallState(props) {
 					onChange={handleDate}
 				/>
 			</div>
-
 			<div>
 				<span>인/아웃바운드: </span>
 				<select name='bound' onChange={handleBound}>
@@ -136,7 +123,7 @@ function AddCallState(props) {
 				</select>
 			</div>
 
-			<div>
+			<duv>
 				<span>예상인원: </span>
 				<input
 					name='estimate_num'
@@ -144,7 +131,7 @@ function AddCallState(props) {
 					placeholder='예상인원'
 					onChange={handleNumber}
 				/>
-			</div>
+			</duv>
 
 			<div>
 				<span>담당자 이메일 주소: </span>
@@ -155,7 +142,6 @@ function AddCallState(props) {
 					onChange={handleEmail}
 				/>
 			</div>
-
 			<div>
 				<span>담당자 전화번호: </span>
 				<input
@@ -165,7 +151,6 @@ function AddCallState(props) {
 					onChange={handleDigit}
 				/>
 			</div>
-
 			<div>
 				<span>시설 참여 여부: </span>
 				<select name='attend' onChange={handleAttend}>
@@ -175,7 +160,6 @@ function AddCallState(props) {
 					<option value='보류'>보류</option>
 				</select>
 			</div>
-
 			<div>
 				<span>기록자 이름: </span>
 				<input
@@ -183,9 +167,9 @@ function AddCallState(props) {
 					type='text'
 					placeholder='기록자 이름'
 					value={localStorage.getItem('userName')}
+					onChange={handleRecorder}
 				/>
 			</div>
-
 			<div>
 				<div>특이사항: </div>
 				<textarea
@@ -195,11 +179,9 @@ function AddCallState(props) {
 			</div>
 			<div>
 				<button onClick={send}>저장</button>
-
 				<button onClick={closeCancle}>닫기</button>
 			</div>
 		</div>
 	) : null;
 }
-
 export default AddCallState;
