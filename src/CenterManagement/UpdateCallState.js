@@ -1,9 +1,9 @@
-import { data } from 'browserslist';
+import axios from 'axios';
 import React, { useState } from 'react';
-import AddCallState from './AddCallState';
+import '../css/updateCallState.css';
 
 function UpdateCallState(props) {
-    const { data, update, closeCancel  } = props;
+    const { data, update, closeCancel, setUpdate  } = props;
     const today = {
         year: new Date().getFullYear(),
         month: new Date().getMonth() + 1,
@@ -23,6 +23,7 @@ function UpdateCallState(props) {
         name: data.c_manager,
         date: data.date,
         estimate_num: data.estimate_num,
+        in_out: data.in_out,
         m_email: data.m_email,
         m_ph: data.m_ph,
         participation: data.participation,
@@ -34,6 +35,8 @@ function UpdateCallState(props) {
             send_data.name = e.target.value;
         } else if (e.target.name === 'date') {
             send_data.date = e.target.value;
+        } else if (e.target.name ==='bound') {
+            send_data.in_out = e.target.value;
         } else if (e.target.name === 'estimate_num') {
             send_data.estimate_num = e.target.value;
         } else if (e.target.name === 'm_email') {
@@ -49,9 +52,44 @@ function UpdateCallState(props) {
         }
     }
 
-    const dataChange = (e) => {
-        console.log(data.name);
-    }
+    const send = async () => {
+        console.log(props.centerID);
+         const result = await axios.post(
+            `http://192.168.0.117:3000/home/call_write/${props.centerID}`,
+             JSON.stringify({
+                c_manager: send_data.name,
+	 			date: send_data.date,
+	 			in_out: send_data.in_out,
+	 			estimate_num: send_data.estimate_num,
+	 			m_email: send_data.m_email,
+	 			m_ph: send_data.m_ph,
+	 			participation: send_data.participation,
+	 			uid: send_data.uid,
+	 			etc: send_data.etc,
+            })
+        )
+    };
+
+    const check = (e) => {
+		e.preventDefault();
+		if (e.target.name === 'save') {
+			if (window.confirm('수정된 내용을 저장하시겠습니까?')) {
+                alert('저장되었습니다.');
+                // console.log(send_data.name);
+                // console.log(send_data.date);
+                // console.log(send_data.in_out);
+                // console.log(send_data.estimate_num);
+                // console.log(send_data.m_email);
+                // console.log(send_data.m_ph);
+                // console.log(send_data.participation);
+                // console.log(send_data.uid);
+                // console.log(send_data.etc);
+				send();
+                closeCancel();
+			}
+        }
+	};
+
     return update ? (
         <div class='update_call_state'>
             <div>
@@ -59,6 +97,7 @@ function UpdateCallState(props) {
                 <input
                     name='name'
                     type='type'
+                    defaultValue={data.c_manager}
                     placeholder='담당자 이름'
                     onChange={onChange}
                 />
@@ -69,6 +108,7 @@ function UpdateCallState(props) {
                 <input
                     name='date'
                     type='text'
+                    defaultValue={data.date}
                     placeholder='연락일자'
                     value={today.year + '-' + today.month + '-' + today.date}
                     onChange={onChange}
@@ -77,7 +117,7 @@ function UpdateCallState(props) {
 
             <div>
                 <span>인/아웃 바운드: </span>
-                <select name='bound' onChange={onChange}>
+                <select name='bound' defaultValue={data.in_out} onChange={onChange}>
                     <option value='인바운드/아웃바운드'>===선택===</option>
                     <option value='인'>인</option>
                     <option value='아웃'>아웃</option>
@@ -89,6 +129,7 @@ function UpdateCallState(props) {
                 <input  
                     name='estimate_num'
                     type='text'
+                    defaultValue={data.estimate_num}
                     placeholder='예상인원'
                     onChange={onChange}
                 />
@@ -97,16 +138,28 @@ function UpdateCallState(props) {
             <div>
                 <span>담당자 이메일 주소: </span>
                 <input 
-                    name='email'
+                    name='m_email'
                     type='text'
+                    defaultValue={data.m_email}
                     placeholder='담당자 이메일 주소'
+                    onChange={onChange}
+                />
+            </div>
+            
+            <div>
+                <span>담당자 전화번호: </span>
+                <input
+                    name='m_ph'
+                    type='text'
+                    defaultValue={data.m_ph}
+                    placeholder='담당자 전화번호'
                     onChange={onChange}
                 />
             </div>
 
             <div>
                 <span>시설 참여 여부: </span>
-                <select name='attend' onChange={onChange}>
+                <select name='attend' defaultValue={data.participation} onChange={onChange}>
                     <option value = '선택'>===선택===</option>
                     <option value = '참여'>참여</option>
                     <option value = '거부'>거부</option>
@@ -119,6 +172,7 @@ function UpdateCallState(props) {
                 <input 
                     name='recorder'
                     type='text'
+                    defaultValue={data.uid}
                     placeholder='기록자 이름'
                     onChange={onChange}
                 />
@@ -129,12 +183,13 @@ function UpdateCallState(props) {
                 <textarea
                     name='etc'
                     placeholder='특이사항'
+                    defaultValue={data.etc}
                     onInput={onChange}></textarea>
             </div>
 
             <div>
-                <button onClick={dataChange}>저장</button>
-                <button onClick={closeCancel}>닫기</button>
+                <button name='save' onClick={check}>저장</button>
+                <button name='cancel' onClick={closeCancel}>취소</button>
             </div>
 
 
