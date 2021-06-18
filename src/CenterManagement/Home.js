@@ -57,7 +57,7 @@ function Home(props) {
 		console.log(props.uid);
 
 		const result = await axios.get(
-			`http://192.168.0.117/home/digit/${props.uid}/${search}`
+			`http://192.168.0.117:3000/home/digit/${props.uid}/${search}`
 		);
 		setResult_1ary(result);
 		resettingRef.current = true;
@@ -89,6 +89,16 @@ function Home(props) {
 	const onKeyPress = (e) => {
 		if (e.key == 'Enter') {
 			onClick();
+		}
+	};
+	const onKeyPress_a = (e) => {
+		if (e.key == 'Enter') {
+			onClick_a();
+		}
+	};
+	const onKeyPress_b = (e) => {
+		if (e.key == 'Enter') {
+			onClick_b();
 		}
 	};
 	const onChange = (e) => {
@@ -163,7 +173,7 @@ function Home(props) {
 									name='address'
 									class='main_serch_input'
 									onChange={onChange}
-									onKeyPress={onKeyPress}
+									onKeyPress={onKeyPress_a}
 								/>
 								<button class='main_search_btn' onClick={onClick_a}>
 									검색
@@ -177,7 +187,7 @@ function Home(props) {
 									name='digit'
 									class='main_serch_input'
 									onChange={onChange}
-									onKeyPress={onKeyPress}
+									onKeyPress={onKeyPress_b}
 								/>
 								<button class='main_search_btn' onClick={onClick_b}>
 									검색
@@ -219,6 +229,7 @@ function Home(props) {
 									name='center'
 									class='main_serch_input'
 									onChange={onChange}
+									onKeyPress={onKeyPress}
 								/>
 								<button class='main_search_btn' onClick={onClick}>
 									검색
@@ -233,6 +244,7 @@ function Home(props) {
 									name='address'
 									class='main_serch_input'
 									onChange={onChange}
+									onKeyPress={onKeyPress_a}
 								/>
 								<button class='main_search_btn' onClick={onClick_a}>
 									검색
@@ -246,7 +258,7 @@ function Home(props) {
 									name='digit'
 									class='main_serch_input'
 									onChange={onChange}
-									onKeyPress={onKeyPress}
+									onKeyPress={onKeyPress_b}
 								/>
 								<button class='main_search_btn' onClick={onClick_b}>
 									검색
@@ -312,6 +324,7 @@ function Home(props) {
 									name='center'
 									class='main_serch_input'
 									onChange={onChange}
+									onKeyPress={onKeyPress}
 								/>
 								<button class='main_search_btn' onClick={onClick}>
 									검색
@@ -326,6 +339,7 @@ function Home(props) {
 									name='address'
 									class='main_serch_input'
 									onChange={onChange}
+									onKeyPress={onKeyPress_a}
 								/>
 								<button class='main_search_btn' onClick={onClick_a}>
 									검색
@@ -339,7 +353,7 @@ function Home(props) {
 									name='digit'
 									class='main_serch_input'
 									onChange={onChange}
-									onKeyPress={onKeyPress}
+									onKeyPress={onKeyPress_b}
 								/>
 								<button class='main_search_btn' onClick={onClick_b}>
 									검색
@@ -401,6 +415,7 @@ function Home(props) {
 											setIsLoading_2={setIsLoading_2}
 											uid={props.uid}
 											setCenterInfo={setCenterInfo}
+											centerID={centerInfo.centerID}
 										/>
 									</li>
 								))}
@@ -413,6 +428,7 @@ function Home(props) {
 							추가
 						</button>
 						<AddCallState
+							data={result_1ary}
 							open={IsopenAddCall}
 							closeSave={closeAddCall}
 							closeCancle={closeAddCallCancle}

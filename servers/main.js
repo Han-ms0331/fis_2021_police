@@ -108,7 +108,7 @@ app.get("/home/name/:userid/:target", (req, res) => {
               `SELECT * FROM call_status WHERE cid = ${element.center_id}`
             );
             if (op.length !== 0) {
-              call_exists = op[op.length-1].participation;
+              call_exists = op[op.length - 1].participation;
             }
             let center_info = {};
             center_info.call_exists = call_exists;
@@ -145,7 +145,7 @@ app.get("/home/address/:userid/:target", (req, res) => {
               `SELECT * FROM call_status WHERE cid = ${element.center_id}`
             );
             if (op.length !== 0) {
-              call_exists = op[op.length-1].participation;
+              call_exists = op[op.length - 1].participation;
             }
             let center_info = {};
             center_info.call_exists = call_exists;
@@ -283,7 +283,7 @@ app.post("/schedule/applysave", (req, res) => {
   const { visit_time } = post;
   const { estimate_num } = post;
   const { aid } = post;
-  const { etc } = etc; //없어도 됨
+  const { etc } = post; //없어도 됨
   let result2 = [];
   for (let key in post) {
     switch (key) {
@@ -317,7 +317,7 @@ app.post("/schedule/applysave", (req, res) => {
     res.send(error_code);
   } else {
     let sql = `INSERT INTO apply_status(cid, uid, recept_date,  visit_date, visit_time, estimate_num, aid, latest,etc)
-    VALUES (${cid}, ${uid}, '${recept_date}',  '${visit_date}', '${visit_time}', '${estimate_num}', '${aid}',1,${etc});`;
+    VALUES (${cid}, ${uid}, '${recept_date}',  '${visit_date}', '${visit_time}', '${estimate_num}', '${aid}',1,'${etc}');`;
     // db.query(
     //   `UPDATE apply_status SET latest=0 WHERE cid=${post.cid};`,
     //   (err, update_apply) => {
@@ -589,7 +589,7 @@ app.post("/:userid/setagent", (req, res) => {
   );
 });
 
-app.get("/home/digit/:uid/:num", (req, res) => {
+app.get(`/home/digit/:uid/:num`, (req, res) => {
   const num = path.parse(req.params.num).base;
   if (num) {
     db.query(
@@ -604,7 +604,7 @@ app.get("/home/digit/:uid/:num", (req, res) => {
             `SELECT * FROM call_status WHERE cid = ${element.center_id}`
           );
           if (op.length !== 0) {
-            call_exists = op[op.length-1].participation;
+            call_exists = op[op.length - 1].participation;
           }
           let center_info = {};
           center_info.call_exists = call_exists;

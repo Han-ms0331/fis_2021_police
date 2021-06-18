@@ -104,7 +104,7 @@ CREATE TABLE apply_status(
 );
 
 alter table apply_status add latest INT not null comment '가장 마지막 저장된 정보 1로 저장'
-alter table apply_status add etc INT  null comment '기타 및 비고';
+alter table apply_status add etc varchar(300)  null comment '기타 및 비고';
 
 ALTER TABLE apply_status MODIFY visit_date varchar(100);
 

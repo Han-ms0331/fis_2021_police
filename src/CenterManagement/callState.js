@@ -18,9 +18,7 @@ function CallState(props) {
 			</div>
 			<div class='information'>연락 일자:{props.callState_list.date}</div>
 			<div class='information'>인/아웃바운드:{props.callState_list.in_out}</div>
-			<div class='informaion'>
-				예상 인원:{props.callState_list.estimate_num}
-			</div>
+
 			<div class='information'>
 				담당자 이메일 주소:{props.callState_list.m_email}
 			</div>
@@ -29,15 +27,19 @@ function CallState(props) {
 				시설 참여 여부:{props.callState_list.participation}
 			</div>
 			<div class='information'>
-				기록자 이름:{/*props.callState_list.username*/}
+				기록자 이름:{localStorage.getItem('userName')}
 			</div>
-			<div class='information'>특이사항:{props.callState_list.etc}</div>
-			{/* <button onClick={openUpdateCall}>수정</button>
+			<td class='information_etc'>특이사항:{props.callState_list.etc}</td>
+			<div class='call_modify_btn'>
+				<button onClick={openUpdateCall}>수정</button>
+			</div>
 			<UpdateCallState
 				update={update}
 				data={props.callState_list}
+				centerID={props.centerID}
 				closeCancel={closeUpdateCall}
-			/> */}
+				setUpdate={setUpdate}
+			/>
 		</div>
 	);
 }
