@@ -30,7 +30,9 @@ function CallState(props) {
         기록자 이름:{localStorage.getItem("userName")}
       </div>
       <td class="information_etc">특이사항:{props.callState_list.etc}</td>
-      <button onClick={openUpdateCall}>수정</button>
+      <div class="call_modify_btn">
+        <button onClick={openUpdateCall}>수정</button>
+      </div>
       <UpdateCallState
         update={update}
         data={props.callState_list}
