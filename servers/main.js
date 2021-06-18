@@ -317,7 +317,7 @@ app.post("/schedule/applysave", (req, res) => {
     res.send(error_code);
   } else {
     let sql = `INSERT INTO apply_status(cid, uid, recept_date,  visit_date, visit_time, estimate_num, aid, latest,etc)
-    VALUES (${cid}, ${uid}, '${recept_date}',  '${visit_date}', '${visit_time}', '${estimate_num}', '${aid}',1,${etc});`;
+    VALUES (${cid}, ${uid}, '${recept_date}',  '${visit_date}', '${visit_time}', '${estimate_num}', '${aid}',1,'${etc}');`;
     // db.query(
     //   `UPDATE apply_status SET latest=0 WHERE cid=${post.cid};`,
     //   (err, update_apply) => {
