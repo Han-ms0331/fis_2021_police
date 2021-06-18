@@ -1,0 +1,42 @@
+.RSbar {
+  margin-top: 40px;
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+}
+
+.RSsearchbtn {
+  margin-left: 10px;
+}
+.RSdate {
+  background-color: white;
+  border: 2px solid cornflowerblue;
+  border-radius: 5px;
+  padding: 5px;
+  display: inline-block;
+}
+.RSdate_sche {
+  margin: 20px;
+}
+.RSbox {
+  display: flex;
+  white-space: nowrap;
+  overflow-x: scroll;
+  margin-top: 100px;
+}
+.RSbox_date {
+  background-color: white;
+  border: 2px solid cornflowerblue;
+  border-radius: 5px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+
+  display: inline-block;
+}
+.RSitem {
+  width: ;
+  display: inline;
+  padding: 10px;
+}

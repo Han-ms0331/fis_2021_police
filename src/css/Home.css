@@ -205,7 +205,10 @@
 .information {
   margin: 5px 0px;
 }
-
+.information_etc {
+  margin: 5px 0px;
+  white-space: pre-line;
+}
 .searchAgent-result-list {
   list-style: none;
 }
