@@ -589,7 +589,7 @@ app.post("/:userid/setagent", (req, res) => {
   );
 });
 
-app.get("/home/digit/:uid/:num", (req, res) => {
+app.get(`/home/digit/:uid/:num`, (req, res) => {
   const num = path.parse(req.params.num).base;
   if (num) {
     db.query(
