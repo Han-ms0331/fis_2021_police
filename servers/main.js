@@ -14,6 +14,7 @@ const FileStore = require("session-file-store")(session);
 const cors = require("cors");
 const dbfunc = require("./dbfunc");
 const sche = require("./sche");
+const { element } = require("prop-types");
 db.connect();
 const whitelist = ["*"];
 var corsOptions = {
@@ -181,6 +182,12 @@ app.get("/home/:userid/search/:cid", async (req, res) => {
       result.calls = await dbfunc.get_data(
         `SELECT * FROM call_status WHERE cid = ${cid}`
       );
+      for (let element of result.calls) {
+        let uid = element.uid;
+        element.username = await dbfunc.get_data(
+          `SELECT u_name FROM user WHERE user_id = ${uid}`
+        );
+      }
       result.calls.reverse();
       result.applies = await dbfunc.get_data(
         `SELECT * FROM apply_status WHERE cid = ${cid}`
@@ -191,6 +198,7 @@ app.get("/home/:userid/search/:cid", async (req, res) => {
     }
   }
 });
+
 app.post("/home/call_write/:cid", async (req, res) => {
   const cid = path.parse(req.params.cid).base;
   let post = JSON.parse(Object.keys(req.body)[0]);
