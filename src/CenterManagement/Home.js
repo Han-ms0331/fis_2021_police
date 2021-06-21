@@ -39,11 +39,6 @@ function Home(props) {
 		);
 		setResult_1ary(result);
 		resettingRef.current = true;
-		// if (result.data.calls.length === 0) {
-		// 	setCalled('없음');
-		// } else {
-		// 	setCalled('있음');
-		// }
 		console.log(result);
 		setIsLoading_1(false);
 	};
@@ -55,11 +50,6 @@ function Home(props) {
 		);
 		setResult_1ary(result);
 		resettingRef.current = true;
-		// if (result.data.calls.length === 0) {
-		// 	setCalled('없음');
-		// } else {
-		// 	setCalled('있음');
-		// }
 		console.log(result);
 		setIsLoading_1(false);
 	};
@@ -71,51 +61,46 @@ function Home(props) {
 		);
 		setResult_1ary(result);
 		resettingRef.current = true;
-		// if (result.data.calls.length === 0) {
-		// 	setCalled('없음');
-		// } else {
-		// 	setCalled('있음');
-		// }
 		console.log(result);
 		setIsLoading_1(false);
 	};
 
 	const onClick = (e) => {
-//		e.preventDefault();
+		//		e.preventDefault();
 		setCurrentResult('');
 		setIsLoading_2(true);
 		console.log(searchCenter);
 		getSearchCenterList(searchCenter);
 	};
 	const onClick_a = (e) => {
-//		e.preventDefault();
+		//		e.preventDefault();
 		setCurrentResult('');
 		setIsLoading_2(true);
 		console.log(searchCenter);
 		getSearchCenterList_a(searchCenter);
 	};
 	const onClick_b = (e) => {
-//		e.preventDefault();
+		//		e.preventDefault();
 		setCurrentResult('');
 		setIsLoading_2(true);
 		console.log(searchCenter);
 		getSearchCenterList_b(searchCenter);
-	}
+	};
 	const onKeyPress = (e) => {
-		if(e.key=='Enter'){
+		if (e.key == 'Enter') {
 			onClick();
 		}
-	}
-	const onKeyPress_a =(e) => {
-		if(e.key=='Enter'){
+	};
+	const onKeyPress_a = (e) => {
+		if (e.key == 'Enter') {
 			onClick_a();
 		}
-	}
+	};
 	const onKeyPress_b = (e) => {
-		if(e.key=='Enter'){
+		if (e.key == 'Enter') {
 			onClick_b();
 		}
-	}
+	};
 	const onChange = (e) => {
 		console.log(e.target.value);
 		setSearchCenter(`${e.target.value}`);
