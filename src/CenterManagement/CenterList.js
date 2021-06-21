@@ -11,10 +11,9 @@ function CenterList(props) {
 	if (props.data.call_exists !== 0) {
 		record = props.data.call_exists;
 	}
-//	console.log(check);
+	console.log(check);
 //	console.log(props.data);
 	const getCenterInfo = async () => {
-		console.log(props.data.center_id);
 		result = await axios.get(
 			`http://192.168.0.117:3000/home/${props.uid}/search/${props.data.center_id}`
 		);
@@ -28,7 +27,11 @@ function CenterList(props) {
 			applyState_list: result.data.applies,
 		});
 	};
-
+	const update = (e) => {
+		if(check == true){
+			onClick();
+		}
+	}
 	const onClick = (e) => {
 		console.log(check);
 		e.preventDefault();
@@ -50,35 +53,11 @@ function CenterList(props) {
 											'center_info_num-thinking' : 'center_info_num'}>
 			{record}</div>
 			<div class='center_info_btn'>
-				<button class='main_search_result_list_btn' onClick={toModify}>
-					수정
-				</button>
-				<button class='main_search_result_list_btn' onClick={toDelete}>
-					삭제
-				</button>
-
-			</div>
-		</div>
-	) : (
-		<div class={'main_search_result_list_item'}>
-		 	<div class='center_info'>{props.data.c_name}</div>
-			<div class='center_info_addr'>{props.data.c_address}</div>
-			<div class='center_info'>{props.data.c_ph}</div>
-			<div class='center_info_num'>{props.data.center_id}</div>
-			<div class={record === '참여' ? 
-						'center_info_num-participation' : record === '거부' ? 
-								'center_info_num-reject' : record === '보류' ?
-										'center_info_num-thinking' : 'center_info_num'}>
-			{record}</div>
-			<div class='center_info_btn'>
 				<button class='main_search_result_list_btn' onClick={onClick}>
 					선택
 				</button>
 			</div>
 		</div>
-<<<<<<< HEAD
-	)
-=======
 	);
 	else
 	return (
@@ -99,7 +78,6 @@ function CenterList(props) {
 			</div>
 		</div>
 	);
->>>>>>> f27fb7ab4a5adef682137109f3bcb7e908fe4f60
 }
 
 export default CenterList;
