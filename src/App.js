@@ -5,6 +5,8 @@ import CenterManage from './CenterManagement/CenterManage.js';
 import Schedule from './ScheduleManager/ScheduleManager';
 import Navigation from './Navigation';
 import Logout from './login/Logout';
+import Print from './Print/print.js';
+import AgentManagement from './AgentManagement/AgentManagement';
 import ReadingSche from './ReadingSche/ReadingSche.js';
 import { BrowserRouter, Route } from 'react-router-dom';
 
@@ -64,6 +66,18 @@ function App() {
 				path='/readingschedule'
 				render={() => (
 					<ReadingSche isLogined={isLogined} setIsLogined={setIsLogined} />
+				)}
+			/>
+			<Route
+				path='/print'
+				render={() => (
+					<Print isLogined={isLogined} setIsLogined={setIsLogined} />
+				)}
+			/>
+			<Route
+				path='/agentemanagement'
+				render={() => (
+					<AgentManagement isLogined={isLogined} setIsLogined={setIsLogined} />
 				)}
 			/>
 			<Route

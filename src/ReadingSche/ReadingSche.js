@@ -24,8 +24,6 @@ function ReadingSche(props) {
 		scheDate[i][0] = getToday(new Date(now.setDate(now.getDate() + 1)));
 	}
 
-	console.log(scheDate);
-
 	let result = {};
 	const getSchedule = async () => {
 		console.log(searchDate);

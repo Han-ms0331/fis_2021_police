@@ -83,7 +83,7 @@ function Navigation(props) {
 							: 'navigation-item'
 					}
 					onClick={onClick}>
-					<Link name='agent_delete_put' class='item' to='/agent_manage'>
+					<Link name='agent_delete_put' class='item' to='/agentemanagement'>
 						현장요원 삭제•추가
 					</Link>
 				</div>
@@ -95,7 +95,7 @@ function Navigation(props) {
 							: 'navigation-item'
 					}
 					onClick={onClick}>
-					<Link name='print' class='item' to='/readingSche'>
+					<Link name='print' class='item' to='/print'>
 						조회 및 출력
 					</Link>
 				</div>
