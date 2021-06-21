@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Login from "./login/login.js";
 import Home from "./CenterManagement/Home.js";
+import CenterManage from "./CenterManagement/CenterManage.js"
 import Schedule from "./ScheduleManager/ScheduleManager";
 import Navigation from "./Navigation";
 import Logout from "./login/Logout";
@@ -51,6 +52,12 @@ function App() {
         path="/schedule"
         render={() => (
           <Schedule isLogined={isLogined} setIsLogined={setIsLogined} />
+        )}
+      />
+      <Route
+        path="/center_manage"
+        render={() => (
+          <CenterManage isLogined={isLogined} setIsLogined={setIsLogined} />
         )}
       />
       <Route

@@ -12,6 +12,12 @@ function Navigation(props) {
       setCurrentPage("center_management");
     } else if (e.target.name === "schedule_management") {
       setCurrentPage("schedule_management");
+    } else if (e.target.name === "center_delete_put") {
+      setCurrentPage("center_delete_put") 
+    } else if (e.target.name === "agent_delete_put") {
+      setCurrentPage("agent_delete_put")
+    } else if (e.target.name === "print") {
+      setCurrentPage("print")
     }
     console.log(currentPage);
   };
@@ -45,7 +51,7 @@ function Navigation(props) {
             일정관리
           </Link>
         </div>
-		<div
+		    <div
           name="center_delete_put"
           class={
             currentPage === "center_delete_put"
@@ -54,11 +60,11 @@ function Navigation(props) {
           }
           onClick={onClick}
         >
-          <Link name="center_delete_put" class="item" to="/home">
+          <Link name="center_delete_put" class="item" to="/center_manage">
             시설 삭제•추가
           </Link>
         </div>
-		<div
+		    <div
           name="agent_delete_put"
           class={
             currentPage === "agent_delete_put"
@@ -67,11 +73,11 @@ function Navigation(props) {
           }
           onClick={onClick}
         >
-          <Link name="agent_delete_put" class="item" to="/home">
+          <Link name="agent_delete_put" class="item" to="/agent_manage">
             현장요원 삭제•추가
           </Link>
         </div>
-		<div
+		    <div
           name="print"
           class={
             currentPage === "print"
@@ -80,7 +86,7 @@ function Navigation(props) {
           }
           onClick={onClick}
         >
-          <Link name="print" class="item" to="/home">
+          <Link name="print" class="item" to="/readingSche">
             조회 및 출력
           </Link>
         </div>
