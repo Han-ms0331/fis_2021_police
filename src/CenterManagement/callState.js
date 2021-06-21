@@ -51,9 +51,7 @@ function CallState(props) {
 			<div class='information'>
 				시설 참여 여부:{props.callState_list.participation}
 			</div>
-			<div class='information'>
-				기록자 이름:{props.callState_list.username[0].u_name}
-			</div>
+			<div class='information'>기록자 이름:{props.callState_list.username}</div>
 			<td class='information_etc'>특이사항:{props.callState_list.etc}</td>
 			<div class='call_modify_btn'>
 				<button onClick={openUpdateCall}>수정</button>
