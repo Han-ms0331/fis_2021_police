@@ -184,9 +184,11 @@ app.get("/home/:userid/search/:cid", async (req, res) => {
       );
       for (let element of result.calls) {
         let uid = element.uid;
-        element.username = await dbfunc.get_data(
+        let username = await dbfunc.get_data(
           `SELECT u_name FROM user WHERE user_id = ${uid}`
         );
+        element.username = username[0].u_name;
+        console.log(element);
       }
       result.calls.reverse();
       result.applies = await dbfunc.get_data(
