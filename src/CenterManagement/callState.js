@@ -19,31 +19,6 @@ function CallState(props) {
 			<div class='information'>연락 일자:{props.callState_list.date}</div>
 			<div class='information'>인/아웃바운드:{props.callState_list.in_out}</div>
 
-<<<<<<< HEAD
-      <div class="information">
-        담당자 이메일 주소:{props.callState_list.m_email}
-      </div>
-      <div class="information">담당자 전화번호:{props.callState_list.m_ph}</div>
-      <div class="information">
-        시설 참여 여부:{props.callState_list.participation}
-      </div>
-      <div class="information">
-        기록자 이름:{props.callState_list.username}
-      </div>
-      <td class="information_etc">특이사항:{props.callState_list.etc}</td>
-      <div class="call_modify_btn">
-        <button onClick={openUpdateCall}>수정</button>
-      </div>
-      <UpdateCallState
-        update={update}
-        data={props.callState_list}
-        centerID={props.centerID}
-        closeCancel={closeUpdateCall}
-        setUpdate={setUpdate}
-      />
-    </div>
-  );
-=======
 			<div class='information'>
 				담당자 이메일 주소:{props.callState_list.m_email}
 			</div>
@@ -51,7 +26,9 @@ function CallState(props) {
 			<div class='information'>
 				시설 참여 여부:{props.callState_list.participation}
 			</div>
-			<div class='information'>기록자 이름:{props.callState_list.username}</div>
+			<div class='information'>
+				기록자 이름:{props.callState_list.username}
+			</div>
 			<td class='information_etc'>특이사항:{props.callState_list.etc}</td>
 			<div class='call_modify_btn'>
 				<button onClick={openUpdateCall}>수정</button>
@@ -65,7 +42,6 @@ function CallState(props) {
 			/>
 		</div>
 	);
->>>>>>> 574a5673e6660fd03edb00f990dd6b4c1424b577
 }
 
 export default CallState;

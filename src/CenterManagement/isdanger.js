@@ -47,7 +47,7 @@ let except_list_a = ["공도읍"];
 
 let except_list_w = ["병점", "동탄", "효행로"];
 
-module.exports = {
+export default  {
   check_danger: (address) => {
     for (let element of danger_list) {
       if (address.includes(element)) {

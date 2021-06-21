@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import '../css/centerlist.css';
-const isdanger = require("./isdanger");
+import isdanger from "./isdanger";
 
 function CenterList(props) {
 	const {check} = props;
