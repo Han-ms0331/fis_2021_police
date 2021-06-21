@@ -18,6 +18,7 @@ function CenterManage () {
     const resettingRef = useRef(false);
     const [currentResult, setCurrentResult] = useState('');
     const [isManage, setIsManage] = useState(true);
+    const [isLoading_2, setIsLoading_2] = useState(true);
     const uid = localStorage.getItem('userID');
     console.log(uid);
 

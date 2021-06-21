@@ -34,6 +34,17 @@ function CenterList(props) {
 		getCenterInfo();
 		props.setIsLoading_2(false);
 	};
+
+	const toModify = (e) => {
+		e.preventDefault();
+		props.setCurrentResult(props.data.center_id);
+		props.setIsLoading_2(false);
+	}
+	const toDelete = (e) => {
+		e.preventDefault();
+		props.setCurrentResult(props.data.center_id);
+		props.setIsLoading_2(false);
+	}
 //	console.log(record);
 	return props.isManage ? (
 		<div class={'main_search_result_list_item'}>
@@ -47,10 +58,10 @@ function CenterList(props) {
 											'center_info_num-thinking' : 'center_info_num'}>
 			{record}</div>
 			<div class='center_info_btn'>
-				<button class='main_search_result_list_btn' onClick={onClick}>
+				<button class='main_search_result_list_btn' onClick={toModify}>
 					수정
 				</button>
-				<button class='main_search_result_list_btn' onClick={onClick}>
+				<button class='main_search_result_list_btn' onClick={toDelete}>
 					삭제
 				</button>
 
