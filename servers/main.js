@@ -501,8 +501,8 @@ app.post("/home/modify_call/:no", (req, res) => {
     res.send(error_code);
   } else {
     let sql = `UPDATE call_status 
-    SET uid = '${uid}', date='${date}', participation='${participation}', in_out='${in_out}', c_manager='${c_manager}', m_ph='${m_ph}', m_email='${m_email}', etc='${etc}') 
-    WHERE no=${no};`;
+    SET uid = '${uid}', date='${date}', participation='${participation}', in_out='${in_out}', c_manager='${c_manager}', m_ph='${m_ph}', m_email='${m_email}', etc='${etc}' 
+    WHERE no=${no}`;
 
     db.query(sql, (err, store_apply) => {
       if (err) {
