@@ -597,6 +597,7 @@ app.get("/:userid/:user_id/deleteuser", (req, res) => {
 app.post("/:userid/setcenter", (req, res) => {
   const uid = path.parse(req.params.userid).base;
   let post = JSON.parse(Object.keys(req.body)[0]);
+  console.log(post);
   let c_sido = post.c_sido;
   let c_sigungu = post.c_sigungu;
   let c_name = post.c_name;
@@ -614,6 +615,33 @@ app.post("/:userid/setcenter", (req, res) => {
     `INSERT INTO center( c_sido, c_sigungu, c_name, c_type, c_status, c_address, c_zipcode, c_ph, c_fax_num, c_people, c_hp_address, c_latitude, c_longitude )
     VALUES ('${c_sido}', '${c_sigungu}', '${c_name}', '${c_type}', '${c_status}', '${c_address}', '${c_zipcode}', '${c_ph}', '${c_fax_num}', '${c_people}', '${c_hp_address}', '${c_latitude}', '${c_longitude}'); 
     `,
+    () => {
+      res.send(true);
+    }
+  );
+});
+//center update
+app.post("/:userid/center_update", (req, res) => {
+  const uid = path.parse(req.params.userid).base;
+  let post = JSON.parse(Object.keys(req.body)[0]);
+  console.log(post);
+  let c_id = post.center_id;
+  let c_sido = post.c_sido;
+  let c_sigungu = post.c_sigungu;
+  let c_name = post.c_name;
+  let c_type = post.c_type;
+  let c_status = post.c_status;
+  let c_address = post.c_address;
+  let c_zipcode = post.c_zipcode;
+  let c_ph = post.c_ph;
+  let c_fax_num = post.c_fax_num;
+  let c_people = post.c_people;
+  let c_hp_address = post.c_hp_address;
+  let c_latitude = post.c_latitude;
+  let c_longitude = post.c_longitude;
+  db.query(
+    `UPDATE center SET c_sido = '${c_sido}',c_sigungu = '${c_sigungu}',c_name = '${c_name}',c_type = '${c_type}',c_status = '${c_status}',c_address = '${c_address}',c_zipcode = '${c_zipcode}',
+    c_ph = '${c_ph}',c_fax_num = '${c_fax_num}',c_people = '${c_people}',c_hp_address = '${c_hp_address}',c_latitude = '${c_latitude}',c_longitude = '${c_longitude}' WHERE center_id = ${c_id}`,
     () => {
       res.send(true);
     }
