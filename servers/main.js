@@ -278,6 +278,7 @@ app.post("/home/call_write/:cid", async (req, res) => {
   } else {
     console.log(post);
     let result = await dbfunc.set_call_status(post);
+    
     res.send(result);
   }
 });

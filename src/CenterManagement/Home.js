@@ -129,6 +129,7 @@ function Home(props) {
     } else {
       alert("저장되었습니다");
       setIsOpenAddCall(false);
+	  
     }
   };
   const closeAddCallCancle = (e) => {
