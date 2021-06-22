@@ -1,14 +1,7 @@
-<<<<<<< HEAD
 import React, { useState } from 'react';
 import axios from 'axios';
 import '../css/centerlist.css';
 import CenterUpdate from './CenterUpdate.js'
-=======
-import React, { useState } from "react";
-import axios from "axios";
-import "../css/centerlist.css";
-import CenterUpdate from "./CenterUpdate.js";
->>>>>>> 7a1f921be3086a4d8f11be2f0d816ac4d0334d62
 import isdanger from "./isdanger.js";
 
 function CenterList(props) {
