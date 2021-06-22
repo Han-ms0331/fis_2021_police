@@ -1,62 +1,69 @@
-import React, { useState, useRef, useEffect } from 'react';
-import axios from 'axios';
-import { Redirect } from 'react-router';
+import React, { useState, useRef, useEffect } from "react";
+import axios from "axios";
+import { Redirect } from "react-router";
 
 function Statistic(props) {
-	const [data, setData] = useState([]);
+  const [data, setData] = useState([]);
 
-	let isAdmin = false;
-	let inputDate = '';
-	let date = new Date(inputDate);
-	let sendData = `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`;
-	if (localStorage.getItem('userName') === 'admin') {
-		isAdmin = true;
-	}
+  let isAdmin = false;
+  const [inputDate, setInputDate] = useState("");
 
-	const send = async () => {
-		const result = await axios.get(
-			`http://192.168.0.117:3000/${sendData}/statistic`
-		);
-		console.log(result);
-		setData(result);
-	};
+  if (localStorage.getItem("userName") === "admin") {
+    isAdmin = true;
+  }
 
-	const onChange = (e) => {
-		if (e.target.name === 'date') {
-			inputDate = e.target.valuel;
-		}
-	};
+  const send = async () => {
+    console.log(inputDate);
+    let date = new Date(inputDate);
+    let year = date.getFullYear();
+    let month = ("0" + (1 + date.getMonth())).slice(-2);
+    let day = ("0" + date.getDate()).slice(-2);
+    const sendData = year + "-" + month + "-" + day;
 
-	const onClick = (e) => {
-		if (e.target.name === 'search') {
-			send();
-		}
-	};
+    const result = await axios.get(
+      // `http://192.168.0.117:3000/${sendData}/statistic`
+      `http://localhost:3000/${sendData}/statistic`
+    );
+    console.log(result);
+    setData(result.data);
+  };
 
-	props.setIsLogined(localStorage.getItem('isLogined'));
-	return isAdmin ? (
-		props.isLogined ? (
-			<div class='statistic_main'>
-				<div class='statistic_header'>
-					<div class='statistic_header_searchdate'>
-						<span>날짜별 통화 조회 : </span>
-						<input name='date' type='date' onChange={onChange} />
-					</div>
+  const onChange = (e) => {
+    if (e.target.name === "date") {
+      setInputDate(e.target.value);
+    }
+  };
 
-					<input
-						name='search'
-						class='statistic_header_searchbtn'
-						type='submit'
-						onClick={onClick}
-						value='검색'
-					/>
-				</div>
-			</div>
-		) : (
-			<Redirect to='/' />
-		)
-	) : (
-		<Redirect to='/home' />
-	);
+  const onClick = (e) => {
+    if (e.target.name === "search") {
+      send();
+    }
+  };
+
+  props.setIsLogined(localStorage.getItem("isLogined"));
+  return isAdmin ? (
+    props.isLogined ? (
+      <div class="statistic_main">
+        <div class="statistic_header">
+          <div class="statistic_header_searchdate">
+            <span>날짜별 통화 조회 : </span>
+            <input name="date" type="date" onChange={onChange} />
+          </div>
+
+          <input
+            name="search"
+            class="statistic_header_searchbtn"
+            type="submit"
+            onClick={onClick}
+            value="검색"
+          />
+        </div>
+      </div>
+    ) : (
+      <Redirect to="/" />
+    )
+  ) : (
+    <Redirect to="/home" />
+  );
 }
 export default Statistic;
