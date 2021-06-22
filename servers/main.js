@@ -456,9 +456,10 @@ app.get("/fullschedule/:searchDate", async (req, res) => {
 //   );
 // });
 
-app.post("/home/modify_call", (req, res) => {
+app.post("/home/modify_call/:no", (req, res) => {
   let post = JSON.parse(Object.keys(req.body)[0]);
-
+  let no = path.parse(req.params.no).base;
+  console.log(no, post);
   // const { cid } = post;
   const { uid } = post;
   const { date } = post;
@@ -501,7 +502,7 @@ app.post("/home/modify_call", (req, res) => {
   } else {
     let sql = `UPDATE call_status 
     SET (uid, date, participation, in_out, c_manager, m_ph, m_email, etc) =
-    (${uid}, ${date}, ${participation}, ${in_out}, ${c_manager}, ${m_ph}, ${m_email}, ${etc}) 
+    (${uid}, '${date}', '${participation}', '${in_out}', '${c_manager}', '${m_ph}', '${m_email}', '${etc}') 
     WHERE no=${no};`;
 
     db.query(sql, (err, store_apply) => {
