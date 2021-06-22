@@ -71,13 +71,14 @@ function AddCallState(props) {
 			})
 		);
 		resettingRef.current = true;
-		clear();
+
 		//		console.log(result.data.error);
 		let error;
 		if (result.data.error !== undefined) {
 			error = true;
 		} else {
 			error = false;
+			clear();
 		}
 		//		console.log(error);
 		closeSave(error);
@@ -93,12 +94,12 @@ function AddCallState(props) {
 		setGuitar('');
 		setDone(true);
 	};
-	useEffect(() => {
-		if (resettingRef.current) {
-			resettingRef.current = false;
-			clear();
-		}
-	}, [done]);
+	// useEffect(() => {
+	// 	if (resettingRef.current) {
+	// 		resettingRef.current = false;
+	// 		clear();
+	// 	}
+	// }, [done]);
 	return open ? (
 		<div class='add_call_state'>
 			<div>
