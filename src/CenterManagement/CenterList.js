@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import '../css/centerlist.css';
 import CenterUpdate from './CenterUpdate.js'
-const isdanger = require("./isdanger");
+import isdanger from "./isdanger.js";
 
 function CenterList(props) {
 	const {check} = props;
