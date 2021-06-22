@@ -438,6 +438,82 @@ app.get("/fullschedule/:searchDate", async (req, res) => {
   res.send(sches);
 });
 
+//콜 이력 수정버튼 -> 디비 수정
+// app.get("/home/modify_call/:no", (req, res) => {
+//   let no = path.parse(req.params.no).base;
+//   db.query(
+//     `UPDATE call_status
+//      SET (uid, date, participation, in_out, c_manager, m_ph, m_email, etc) =
+//      (${uid}, ${date}, ${participation}, ${in_out}, ${c_manager}, ${m_ph}, ${m_email}, ${etc})
+//      WHERE no=${no}`,
+//     (err, update_apply) => {
+//       if (err) {
+//         console.log(err);
+//         res.send(false);
+//       }
+//       res.send(true);
+//     }
+//   );
+// });
+app.post("/home/modify_call", (req, res) => {
+  let post = JSON.parse(Object.keys(req.body)[0]);
+
+  // const { cid } = post;
+  const { uid } = post;
+  const { date } = post;
+  const { participation } = post;
+  const { in_out } = post;
+  const { c_manager } = post;
+  const { m_ph } = post;
+  const { m_email } = post;
+  const { etc } = post;
+  let result2 = [];
+  for (let key in post) {
+    switch (key) {
+      case "uid":
+        if (post[key] == "") result2.push(1);
+        break;
+      case "date":
+        if (post[key] == "") result2.push(2);
+        break;
+      case "participation":
+        if (post[key] == "") result2.push(3);
+        break;
+      case "in_out":
+        if (post[key] == "") result2.push(4);
+        break;
+      case "c_manager":
+        if (post[key] == "") result2.push(5);
+        break;
+      case "m_ph":
+        if (post[key] == "") result2.push(6);
+        break;
+      case "m_email":
+        if (post[key] == "") result2.push(7);
+        break;
+    }
+  }
+  let error_code = {};
+  if (result2.length > 0) {
+    error_code.error = result2;
+    res.send(error_code);
+  } else {
+    let sql = `UPDATE call_status 
+    SET (uid, date, participation, in_out, c_manager, m_ph, m_email, etc) =
+    (${uid}, ${date}, ${participation}, ${in_out}, ${c_manager}, ${m_ph}, ${m_email}, ${etc}) 
+    WHERE no=${no};`;
+
+    db.query(sql, (err, store_apply) => {
+      if (err) {
+        console.log(err);
+      }
+      res.send(true);
+    });
+    //    }
+    //  );
+  }
+});
+
 //admin page
 // 콜직원 업무 현황
 // app.get("/:userid/getbusinessstatus", async (req, res) => {
@@ -480,7 +556,7 @@ app.get("/:search_date/statistic", async (req, res) => {
   console.log(search_date);
   let result = [];
   result = await dbfunc.get_data(
-    `SELECT u_name, C.uid, COUNT(uid) FROM call_status C INNER JOIN user U ON C.uid = U.user_id WHERE C.today = '${search_date}' GROUP BY C.uid ORDER BY uid`
+    `SELECT u_name, C.uid, COUNT(uid) AS call_num FROM call_status C INNER JOIN user U ON C.uid = U.user_id WHERE C.today = '${search_date}' GROUP BY C.uid ORDER BY uid`
   );
   console.log(result);
   res.send(result);
