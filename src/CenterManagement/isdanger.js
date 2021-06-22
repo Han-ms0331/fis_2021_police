@@ -6,7 +6,7 @@ let danger_list = [
   "전라북도",
   "제주도",
   "울산광역시 울주군",
-  "인천광역시 웅진군",
+  "인천광역시 옹진군",
   "경기도 가평",
   "경기도 광주",
   "경기도 동두천",
@@ -47,7 +47,7 @@ let except_list_a = ["공도읍"];
 
 let except_list_w = ["병점", "동탄", "효행로"];
 
-module.exports = {
+export default  {
   check_danger: (address) => {
     for (let element of danger_list) {
       if (address.includes(element)) {

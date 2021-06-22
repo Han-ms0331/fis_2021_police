@@ -72,7 +72,7 @@ function Navigation(props) {
 					}
 					onClick={onClick}>
 					<Link name='center_delete_put' class='item' to='/center_manage'>
-						시설 삭제•추가
+						시설 정보 수정
 					</Link>
 				</div>
 				<div
@@ -84,7 +84,7 @@ function Navigation(props) {
 					}
 					onClick={onClick}>
 					<Link name='agent_delete_put' class='item' to='/agentemanagement'>
-						현장요원 삭제•추가
+						직원 정보 수정
 					</Link>
 				</div>
 				<div
@@ -95,8 +95,8 @@ function Navigation(props) {
 							: 'navigation-item'
 					}
 					onClick={onClick}>
-					<Link name='print' class='item' to='/print'>
-						조회 및 출력
+					<Link name='print' class='item' to='/statistic'>
+						통계 및 기록
 					</Link>
 				</div>
 				<div name='logout' class='navigation-item'>
