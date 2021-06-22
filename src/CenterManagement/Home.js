@@ -13,6 +13,7 @@ function Home(props) {
 	const [isLoading_1, setIsLoading_1] = useState(true);
 	const [isLoading_2, setIsLoading_2] = useState(true);
 	const [result_1ary, setResult_1ary] = useState([]);
+	const [check, setCheck] = useState(true);
 	const [centerInfo, setCenterInfo] = useState({
 		centerName: '',
 		centerAddr: '',
@@ -295,6 +296,7 @@ function Home(props) {
 													setCenterInfo={setCenterInfo}
 													called={called}
 													setSelected={setCurrentResult}
+													check={check}
 												/>
 											</li>
 									  ))
@@ -389,6 +391,7 @@ function Home(props) {
 											setCenterInfo={setCenterInfo}
 											called={called}
 											setSelected={setCurrentResult}
+											check={check}
 										/>
 									</li>
 								))}

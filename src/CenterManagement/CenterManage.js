@@ -1,6 +1,8 @@
 import axios from 'axios';
 import React, { useState, useRef } from 'react';
 import CenterList from './CenterList.js'
+import CenterAdd from './CenterAdd.js'
+import CenterUpdate from './CenterUpdate.js'
 
 function CenterManage () {
     const [searchCenter, setSearchCenter] = useState("");
@@ -19,6 +21,7 @@ function CenterManage () {
     const [currentResult, setCurrentResult] = useState('');
     const [isManage, setIsManage] = useState(true);
     const [isLoading_2, setIsLoading_2] = useState(true);
+    const [addCenter, setAddCenter] =useState(true);
     const uid = localStorage.getItem('userID');
     console.log(uid);
 
@@ -49,8 +52,22 @@ function CenterManage () {
             onClick();
         }
     }
+    
+    const AddCenter = (e) => {
+        setAddCenter(false);
+    }
     return check ? (
+        addCenter ? (
     <div class="RSbar">
+        <div>
+            <input
+                class="RSsearchbtn"
+                name="add"
+                type="submit"
+                value="추가"
+                onClick={AddCenter}
+            />
+        </div>
         <div>
           <span>시설 : </span>
           <input name="Center" type="text" placeholder="시설명" onChange={onChange} onKeyPress={onKeyPress} />
@@ -64,6 +81,34 @@ function CenterManage () {
         />
     </div>
     ) : (
+    <div class="RSbar">
+        <div>
+            <input
+                class="RSsearchbtn"
+                name="add"
+                type="submit"
+                value="추가"
+                onClick={AddCenter}
+            />
+        </div>
+        <div>
+          <span>시설 : </span>
+          <input name="Center" type="text" placeholder="시설명" onChange={onChange} onKeyPress={onKeyPress} />
+        </div>
+        <input
+          class="RSsearchbtn"
+          name="search"
+          type="submit"
+          value="검색"
+          onClick={onClick}
+        />
+        <CenterAdd
+            setAddCenter={setAddCenter}
+            uid={uid}
+        />
+    </div>
+    ) ): isLoading_2 ? 
+    (
     <div class="RSbar">
         <div>
           <span>시설 : </span>
@@ -95,13 +140,62 @@ function CenterManage () {
 							called={called}
 							setSelected={setCurrentResult}
                             isManage={isManage}
+                            check={check}
+                            setIsLoading_2={setIsLoading_2}
 						/>
 					</li>
 				))}
 			</ul>
 		</div>
     </div>
-    )
+    ) : (
+        <div class="RSbar">
+        <div>
+          <span>시설 : </span>
+          <input name="Center" type="text" placeholder="시설명" onChange={onChange} onKeyPress={onKeyPress} />
+        </div>
+        <input
+          class="RSsearchbtn"
+          name="search"
+          type="submit"
+          value="검색"
+          onClick={onClick}
+        />
+        <div>
+        <CenterUpdate 
+            searchCenter={searchCenter}
+        />
+        </div>
+		<div class='main_search_result'>
+			<ul class='main_search_result_list list'>
+				{result_1ary.data.map((result_1ary) => (
+					<li
+						key={result_1ary.center_id}
+		    			class={
+							currentResult === result_1ary.center_id
+								? 'list-items_search-centerlist_selected'
+								: 'list-items_search-centerlist'
+						}>
+						<CenterList
+							data={result_1ary}
+							setCurrentResult={setCurrentResult}
+							setCheck={setCheck}
+							uid={uid}
+							setCenterInfo={setCenterInfo}
+							called={called}
+							setSelected={setCurrentResult}
+                            isManage={isManage}
+                            check={check}
+                            setIsLoading_2={setIsLoading_2}
+						/>
+
+					</li>
+				))}
+
+			</ul>
+		</div>
+    </div>
+    );
 }
 
 export default CenterManage;
