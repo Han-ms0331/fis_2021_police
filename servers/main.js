@@ -15,6 +15,8 @@ const cors = require("cors");
 const dbfunc = require("./dbfunc");
 const sche = require("./sche");
 const { element } = require("prop-types");
+const mail = require("./mail");
+
 db.connect();
 const whitelist = ["*"];
 var corsOptions = {
@@ -91,6 +93,24 @@ app.get("/home/:userid", function (req, res) {
     res.send(userid);
   }
 });
+app.get("/home/mail/:receiver/:c_id/:c_address/:c_name/:c_ph/:userName", async (req, res)=> {
+  let is_success;
+  try{
+    let receiver = path.parse(req.params.receiver).base;
+    let c_id = path.parse(req.params.c_id).base;
+    let c_address = path.parse(req.params.c_address).base;
+    let c_name = path.parse(req.params.c_name).base;
+    let c_ph = path.parse(req.params.c_ph).base;
+    let userName = path.parse(req.params.userName).base;
+    is_success = await mail.send(receiver);
+    is_success2 = await mail.wh_sent(receiver,c_id,c_address,c_name,c_ph, userName);
+    console.log(receiver);
+  }
+  catch(e){
+    console.log(e);
+    return is_success = false;
+  }
+})
 app.get("/home/name/:userid/:target", (req, res) => {
   // 어린이집 이름에 대한 정보만 제공
   if (true) {
@@ -479,7 +499,7 @@ app.get("/:userid/:user_id/deleteuser", (req, res) => {
 
 // 어린이집 추가 삭제 변경
 app.post("/:userid/setcenter", (req, res) => {
-  const uid = path.parse(req.params.uid).base;
+  const uid = path.parse(req.params.userid).base;
   let post = JSON.parse(Object.keys(req.body)[0]);
   let c_sido = post.c_sido;
   let c_sigungu = post.c_sigungu;
