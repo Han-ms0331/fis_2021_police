@@ -94,24 +94,33 @@ app.get("/home/:userid", function (req, res) {
     res.send(userid);
   }
 });
-app.get("/home/mail/:receiver/:c_id/:c_address/:c_name/:c_ph/:userName", async (req, res)=> {
-  let is_success;
-  try{
-    let receiver = path.parse(req.params.receiver).base;
-    let c_id = path.parse(req.params.c_id).base;
-    let c_address = path.parse(req.params.c_address).base;
-    let c_name = path.parse(req.params.c_name).base;
-    let c_ph = path.parse(req.params.c_ph).base;
-    let userName = path.parse(req.params.userName).base;
-    is_success = await mail.send(receiver);
-    is_success2 = await mail.wh_sent(receiver,c_id,c_address,c_name,c_ph, userName);
-    console.log(receiver);
+app.get(
+  "/home/mail/:receiver/:c_id/:c_address/:c_name/:c_ph/:userName",
+  async (req, res) => {
+    let is_success;
+    try {
+      let receiver = path.parse(req.params.receiver).base;
+      let c_id = path.parse(req.params.c_id).base;
+      let c_address = path.parse(req.params.c_address).base;
+      let c_name = path.parse(req.params.c_name).base;
+      let c_ph = path.parse(req.params.c_ph).base;
+      let userName = path.parse(req.params.userName).base;
+      is_success = await mail.send(receiver);
+      is_success2 = await mail.wh_sent(
+        receiver,
+        c_id,
+        c_address,
+        c_name,
+        c_ph,
+        userName
+      );
+      console.log(receiver);
+    } catch (e) {
+      console.log(e);
+      return (is_success = false);
+    }
   }
-  catch(e){
-    console.log(e);
-    return is_success = false;
-  }
-})
+);
 app.get("/home/name/:userid/:target", (req, res) => {
   // 어린이집 이름에 대한 정보만 제공
   if (true) {
@@ -427,6 +436,82 @@ app.get("/fullschedule/:searchDate", async (req, res) => {
   sches = await sche.scheAll(first, last);
 
   res.send(sches);
+});
+
+//콜 이력 수정버튼 -> 디비 수정
+// app.get("/home/modify_call/:no", (req, res) => {
+//   let no = path.parse(req.params.no).base;
+//   db.query(
+//     `UPDATE call_status
+//      SET (uid, date, participation, in_out, c_manager, m_ph, m_email, etc) =
+//      (${uid}, ${date}, ${participation}, ${in_out}, ${c_manager}, ${m_ph}, ${m_email}, ${etc})
+//      WHERE no=${no}`,
+//     (err, update_apply) => {
+//       if (err) {
+//         console.log(err);
+//         res.send(false);
+//       }
+//       res.send(true);
+//     }
+//   );
+// });
+app.post("/home/modify_call", (req, res) => {
+  let post = JSON.parse(Object.keys(req.body)[0]);
+
+  // const { cid } = post;
+  const { uid } = post;
+  const { date } = post;
+  const { participation } = post;
+  const { in_out } = post;
+  const { c_manager } = post;
+  const { m_ph } = post;
+  const { m_email } = post;
+  const { etc } = post;
+  let result2 = [];
+  for (let key in post) {
+    switch (key) {
+      case "uid":
+        if (post[key] == "") result2.push(1);
+        break;
+      case "date":
+        if (post[key] == "") result2.push(2);
+        break;
+      case "participation":
+        if (post[key] == "") result2.push(3);
+        break;
+      case "in_out":
+        if (post[key] == "") result2.push(4);
+        break;
+      case "c_manager":
+        if (post[key] == "") result2.push(5);
+        break;
+      case "m_ph":
+        if (post[key] == "") result2.push(6);
+        break;
+      case "m_email":
+        if (post[key] == "") result2.push(7);
+        break;
+    }
+  }
+  let error_code = {};
+  if (result2.length > 0) {
+    error_code.error = result2;
+    res.send(error_code);
+  } else {
+    let sql = `UPDATE call_status 
+    SET (uid, date, participation, in_out, c_manager, m_ph, m_email, etc) =
+    (${uid}, ${date}, ${participation}, ${in_out}, ${c_manager}, ${m_ph}, ${m_email}, ${etc}) 
+    WHERE no=${no};`;
+
+    db.query(sql, (err, store_apply) => {
+      if (err) {
+        console.log(err);
+      }
+      res.send(true);
+    });
+    //    }
+    //  );
+  }
 });
 
 //admin page
