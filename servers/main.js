@@ -17,6 +17,7 @@ const sche = require("./sche");
 const { element } = require("prop-types");
 const mail = require("./mail");
 
+const { count } = require("console");
 db.connect();
 const whitelist = ["*"];
 var corsOptions = {
@@ -430,38 +431,50 @@ app.get("/fullschedule/:searchDate", async (req, res) => {
 
 //admin page
 // 콜직원 업무 현황
-app.get("/:userid/getbusinessstatus", async (req, res) => {
-  //let userid = path.parse(req.params.userid).base;
-  if (userid === "Admin") res.send(false);
-  let day = new Date();
-  let year = day.getFullYear();
-  let month = day.getMonth() + 1;
-  let date = day.getDate();
-  //let today = `${year}-${month}-${date}`; 현승구야 내가 date_format(now(),'%Y,-%m-01') 으로 바꿨다 ~~
-  let user_info = await dbfunc.get_data("SELECT * FROM user");
-  let business_status = [];
-  for (let i in user_info) {
-    let cur_id = user_info[i].user_id;
-    let cur_name = user_info[i].u_name;
-    let how_many = 0;
-    let call_data = await dbfunc.get_data(
-      `SELECT * FROM call_status WHERE today = date_format(now(),'%Y,-%m-%d') and uid = ${cur_id};`
-    );
-    let data = {};
-    data.call_status = [];
-    for (let j in call_data) {
-      let add_data = {};
-      add_data.cid = call_data[j].cid;
-      let c_name = await dbfunc.get_data(
-        `SELECT * FROM center WHERE today = date_format(now(),'%Y,-%m-%d') and uid = ${cur_id};`
-      )[0].c_name;
-      add_data.participation = call_data[j].participation;
-      data.call_status.push(add_data);
-      how_many++;
-    }
-    data.how_many = how_many;
-    business_status.push(data);
-  }
+// app.get("/:userid/getbusinessstatus", async (req, res) => {
+//   //let userid = path.parse(req.params.userid).base;
+//   if (userid === "Admin") res.send(false);
+//   let day = new Date();
+//   let year = day.getFullYear();
+//   let month = day.getMonth() + 1;
+//   let date = day.getDate();
+//   //let today = `${year}-${month}-${date}`; 현승구야 내가 date_format(now(),'%Y,-%m-01') 으로 바꿨다 ~~
+//   let user_info = await dbfunc.get_data("SELECT * FROM user");
+//   let business_status = [];
+//   for (let i in user_info) {
+//     let cur_id = user_info[i].user_id;
+//     let cur_name = user_info[i].u_name;
+//     let how_many = 0;
+//     let call_data = await dbfunc.get_data(
+//       `SELECT * FROM call_status WHERE today = date_format(now(),'%Y,-%m-%d') and uid = ${cur_id};`
+//     );
+//     let data = {};
+//     data.call_status = [];
+//     for (let j in call_data) {
+//       let add_data = {};
+//       add_data.cid = call_data[j].cid;
+//       let c_name = await dbfunc.get_data(
+//         `SELECT * FROM center WHERE today = date_format(now(),'%Y,-%m-%d') and uid = ${cur_id};`
+//       )[0].c_name;
+//       add_data.participation = call_data[j].participation;
+//       data.call_status.push(add_data);
+//       how_many++;
+//     }
+//     data.how_many = how_many;
+//     business_status.push(data);
+//   }
+// });
+
+// 콜직원 업무 현황
+app.get("/:search_date/statistic", async (req, res) => {
+  const search_date = path.parse(req.params.search_date).base;
+  console.log(search_date);
+  let result = [];
+  result = await dbfunc.get_data(
+    `SELECT u_name, C.uid, COUNT(uid) FROM call_status C INNER JOIN user U ON C.uid = U.user_id WHERE C.today = '${search_date}' GROUP BY C.uid ORDER BY uid`
+  );
+  console.log(result);
+  res.send(result);
 });
 
 // 콜직원 추가 변경

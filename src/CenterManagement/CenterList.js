@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import '../css/centerlist.css';
-import isdanger from "./isdanger";
+import CenterUpdate from './CenterUpdate.js'
+const isdanger = require("./isdanger");
 
 function CenterList(props) {
 	const {check} = props;
+	const [test, setTest] = useState(true)
 	let result;
 	let record = '없음';
 	let danger_flag = isdanger.check_danger(props.data.c_address);
@@ -12,6 +14,7 @@ function CenterList(props) {
 		record = props.data.call_exists;
 	}
 	console.log(check);
+	console.log(props.check);
 //	console.log(props.data);
 	const getCenterInfo = async () => {
 		result = await axios.get(
@@ -38,6 +41,7 @@ function CenterList(props) {
 		props.setCurrentResult(props.data.center_id);
 		getCenterInfo();
 		props.setIsLoading_2(false);
+		setTest(true);
 	};
 	console.log(record);
 	if(danger_flag === 0)

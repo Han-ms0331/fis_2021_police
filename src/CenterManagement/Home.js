@@ -321,9 +321,6 @@ function Home(props) {
             <span>시설을 선택해 주세요</span>
           </div>
         </div>
-        {/* <div class='agent-search'>
-					<SearchAgent />
-				</div> */}
       </div>
     ) : (
       //센터 리스트중 한개를 선택하여 데이터를 오른쪽 화면에 띄우는 화면

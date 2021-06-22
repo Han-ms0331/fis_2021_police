@@ -5,7 +5,7 @@ import CenterManage from './CenterManagement/CenterManage.js';
 import Schedule from './ScheduleManager/ScheduleManager';
 import Navigation from './Navigation';
 import Logout from './login/Logout';
-import Print from './Print/print.js';
+import Statistic from './Statistic/Statistic.js';
 import AgentManagement from './AgentManagement/AgentManagement';
 import ReadingSche from './ReadingSche/ReadingSche.js';
 import { BrowserRouter, Route } from 'react-router-dom';
@@ -69,9 +69,9 @@ function App() {
 				)}
 			/>
 			<Route
-				path='/print'
+				path='/statistic'
 				render={() => (
-					<Print isLogined={isLogined} setIsLogined={setIsLogined} />
+					<Statistic isLogined={isLogined} setIsLogined={setIsLogined} />
 				)}
 			/>
 			<Route
