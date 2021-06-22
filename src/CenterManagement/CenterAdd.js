@@ -51,7 +51,7 @@ function CenterAdd (props) {
 
     const send = async() => {
         const result = await axios.post(
-            'http://localhost:3000/userid/setcenter',
+            'http://192.168.0.117:3000/userid/setcenter',
             JSON.stringify({
                 c_sido: c_sido,
                 c_sigungu: c_sigungu,

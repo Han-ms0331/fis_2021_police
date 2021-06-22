@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import '../css/centerlist.css';
-import CenterUpdate from './CenterUpdate.js'
-const isdanger = require("./isdanger");
+import CenterUpdate from './CenterUpdate.js';
+import isdanger from"./isdanger";
 
 function CenterList(props) {
 	const {check} = props;
-	const [test, setTest] = useState(true)
+	const [test, setTest] = useState(true);
 	let result;
 	let record = '없음';
 	let danger_flag = isdanger.check_danger(props.data.c_address);
@@ -36,6 +36,8 @@ function CenterList(props) {
 		}
 	}
 	const onClick = (e) => {
+		const data = JSON.stringify(props.data)
+		localStorage.setItem("data", data)
 		console.log(check);
 		e.preventDefault();
 		props.setCurrentResult(props.data.center_id);
@@ -61,6 +63,7 @@ function CenterList(props) {
 					선택
 				</button>
 			</div>
+
 		</div>
 	);
 	else
@@ -80,6 +83,7 @@ function CenterList(props) {
 					선택
 				</button>
 			</div>
+
 		</div>
 	);
 }

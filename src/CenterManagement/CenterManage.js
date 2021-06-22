@@ -3,6 +3,7 @@ import React, { useState, useRef } from 'react';
 import CenterList from './CenterList.js'
 import CenterAdd from './CenterAdd.js'
 import CenterUpdate from './CenterUpdate.js'
+import { checkPropTypes } from 'prop-types';
 
 function CenterManage () {
     const [searchCenter, setSearchCenter] = useState("");
@@ -164,6 +165,7 @@ function CenterManage () {
         <div>
         <CenterUpdate 
             searchCenter={searchCenter}
+            
         />
         </div>
 		<div class='main_search_result'>
