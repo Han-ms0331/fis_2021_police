@@ -1,6 +1,8 @@
 import React, { useState, useRef, useEffect } from "react";
 import axios from "axios";
 import { Redirect } from "react-router";
+import Line from "./Line";
+import "../css/Statistic.css";
 
 function Statistic(props) {
   const [data, setData] = useState([]);
@@ -57,6 +59,9 @@ function Statistic(props) {
             onClick={onClick}
             value="검색"
           />
+        </div>
+        <div class="static_body">
+          <Line array={data} />
         </div>
       </div>
     ) : (

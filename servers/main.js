@@ -451,7 +451,7 @@ app.get("/:search_date/statistic", async (req, res) => {
   console.log(search_date);
   let result = [];
   result = await dbfunc.get_data(
-    `SELECT u_name, C.uid, COUNT(uid) FROM call_status C INNER JOIN user U ON C.uid = U.user_id WHERE C.today = '${search_date}' GROUP BY C.uid ORDER BY uid`
+    `SELECT u_name, C.uid, COUNT(uid) AS call_num FROM call_status C INNER JOIN user U ON C.uid = U.user_id WHERE C.today = '${search_date}' GROUP BY C.uid ORDER BY uid`
   );
   console.log(result);
   res.send(result);
