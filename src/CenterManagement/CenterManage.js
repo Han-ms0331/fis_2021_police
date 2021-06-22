@@ -165,7 +165,7 @@ function CenterManage () {
         <div>
         <CenterUpdate 
             searchCenter={searchCenter}
-            
+            setIsLoading_2={setIsLoading_2}
         />
         </div>
 		<div class='main_search_result'>

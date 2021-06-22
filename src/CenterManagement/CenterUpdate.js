@@ -4,24 +4,25 @@ import { __SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED } from 'react-dom';
 
 
 function CenterUpdate(props) {
-    const { check, test, searchCenter, data } = props;
-    const key = 3;
+    const { check, test, setIsLoading_2 } = props;
+
     console.log(localStorage.getItem("data"));
     const states = JSON.parse(localStorage.getItem("data"));
-    const [center_id, setCenterId] = useState('');
-    const [c_sido, setSido] = useState('');
-    const [c_sigungu, setSigungu] = useState('');
-    const [c_name, setName] = useState('');
-    const [c_type, setType] = useState('');
-    const [c_status, setStatus] = useState('');
-    const [c_address, setAddress] = useState('');
-    const [c_zipcode, setZipcode] = useState('');
-    const [c_ph, setPhone] =useState('');
-    const [c_fax_num, setFax] = useState('');
-    const [c_people, setPeople] = useState('');
-    const [c_hp_address, setHome] = useState('');
-    const [c_latitude, setLatitude] = useState('');
-    const [c_longtitude, setLongtitude] = useState('');
+
+    const [center_id, setCenterId] = useState(states.center_id);
+    const [c_sido, setSido] = useState(states.c_sido);
+    const [c_sigungu, setSigungu] = useState(states.c_sigungu);
+    const [c_name, setName] = useState(states.c_name);
+    const [c_type, setType] = useState(states.c_type);
+    const [c_status, setStatus] = useState(states.c_status);
+    const [c_address, setAddress] = useState(states.c_address);
+    const [c_zipcode, setZipcode] = useState(states.c_zipcode);
+    const [c_ph, setPhone] =useState(states.c_ph);
+    const [c_fax_num, setFax] = useState(states.c_fax_num);
+    const [c_people, setPeople] = useState(states.c_people);
+    const [c_hp_address, setHome] = useState(states.c_hp_address);
+    const [c_latitude, setLatitude] = useState(states.c_latitude);
+    const [c_longtitude, setLongtitude] = useState(states.c_longtitude);
     
 	const onChange = (e) => {
         if (e.target.name === 'center_id') {
@@ -77,14 +78,21 @@ function CenterUpdate(props) {
         );
     }
     const onClick = (e) => {
-        console.log(props.data.center_id);
-        console.log(center_id);
-        console.log(c_name);
-        console.log(c_sido);
+        e.preventDefault();
+		if (e.target.name === 'update') {
+			if (window.confirm('수정된 내용을 저장하시겠습니까?')) {
+				alert('저장되었습니다.');
+                //send();
+                console.log(center_id);
+                console.log(c_name);
+                console.log(c_ph);
+            }
+        }
+        props.setIsLoading_2(true);
     }
 
     const cancel = (e) => {
-        
+        props.setIsLoading_2(true);
     }
     return check ? (
         null
