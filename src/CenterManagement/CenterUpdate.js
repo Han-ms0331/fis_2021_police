@@ -82,10 +82,10 @@ function CenterUpdate(props) {
 		if (e.target.name === 'update') {
 			if (window.confirm('수정된 내용을 저장하시겠습니까?')) {
 				alert('저장되었습니다.');
-                //send();
+                send();
                 console.log(center_id);
                 console.log(c_name);
-                console.log(c_ph);
+                console.log(c_ph)
             }
         }
         props.setIsLoading_2(true);

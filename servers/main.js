@@ -560,7 +560,10 @@ app.get("/:search_date/statistic", async (req, res) => {
   console.log(result);
   res.send(result);
 });
-
+app.get("/getusers", async (req, res) => {
+  result = await dbfunc.get_data(`SELECT * FROM user`);
+  res.send(result);
+})
 // 콜직원 추가 변경
 app.post("/:userid/setuser", (req, res) => {
   let post = JSON.parse(Object.keys(req.body)[0]);
