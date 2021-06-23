@@ -6,10 +6,10 @@ function CallAgentList (props) {
     let record = '없음';
     const onClick = (e) => {
         props.setUpdateCall(true);
-        const data = JSON.stringify(props.data);
-        localStorage.setItem("data", data);
+        props.setCallAgentInfo(props.data);
     }
-    return props.callagentList ? (
+    console.log(props.data);
+    return (
         <div>
             <div>
                 {props.data.u_name}
@@ -26,7 +26,7 @@ function CallAgentList (props) {
                 </button>
             </div>
         </div>
-    ) : null;
+    ) ;
 
 
 }
