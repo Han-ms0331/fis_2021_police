@@ -4,18 +4,14 @@ import axios from 'axios';
 function CallAgentList (props) {
     let result;
     let record = '없음';
-<<<<<<< HEAD
-
-
-=======
     const onClick = (e) => {
         props.setUpdateCall(true);
     }
->>>>>>> 95891661798510e9c45e37b8308f722bb1cdf382
-    return props.callagentList ? (
+    console.log(props.data);
+    return (
         <div>
             <div>
-                {props.data.u_name}
+                props.data.u_name
             </div>
             <div>
                 {props.data.u_pwd}
@@ -29,7 +25,7 @@ function CallAgentList (props) {
                 </button>
             </div>
         </div>
-    ) : null;
+    ) ;
 
 
 }

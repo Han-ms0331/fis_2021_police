@@ -67,6 +67,7 @@ function AgentManagement(props) {
             'http://localhost:3000/getusers'
         );
 		setResult_call(result);
+		console.log(result_call);
     };
 
 	const realSearch = (e) => {
