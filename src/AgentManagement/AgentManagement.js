@@ -209,15 +209,6 @@ function AgentManagement(props) {
 					/>
 					</li>
 				))}
-				{/* <li>
-					<CallAgentList
-						callagentList={callagentList}
-						setCallAgentList={setCallAgentList}
-						setUpdateCall={setUpdateCall}
-						searchAgent={searchAgent}
-						data={result_call}
-					/>
-				</li> */}
 			</ul>
 			<AgentUpdate
 				updateAgent={updateAgent}
@@ -228,6 +219,7 @@ function AgentManagement(props) {
 				updateCall={updateCall}
 				searchAgent={searchAgent}
 				setUpdateCall={setUpdateCall}
+				data={result_call}
 			/>
 		</div>
 		) : (

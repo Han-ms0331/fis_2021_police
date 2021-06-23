@@ -6,6 +6,8 @@ function CallAgentUpdate (props) {
     const [u_pwd, setPwd] = useState('');
     const [u_ph, setPhone] = useState('');
 
+    const states = JSON.parse(localStorage.getItem("data"));
+
     const onChange = (e) => {
         if (e.target.name === 'u_name') {
             setName(e.target.value);
@@ -54,7 +56,7 @@ function CallAgentUpdate (props) {
                     name='u_name'
                     type='text'
                     placeholder='직원명'
-                    defaultValue={props.searchAgent}
+                    defaultValue={states.u_name}
                     onChange={onChange}
                 />
             </div>
@@ -64,7 +66,7 @@ function CallAgentUpdate (props) {
                     name='u_pwd'
                     type='text'
                     placeholder='비밀번호'
-                    //defaultValue={states.c_sido}
+                    defaultValue={states.u_pwd}
                     onChange={onChange}
                 />
             </div>
@@ -74,7 +76,7 @@ function CallAgentUpdate (props) {
                     name='u_ph'
                     type='text'
                     placeholder='전화번호'
-                    //defaultValue={states.c_sigungu}
+                    defaultValue={states.u_ph}
                     onChange={onChange}
                 />
             </div>
