@@ -4,6 +4,7 @@ import CenterList from './CenterList.js'
 import CenterAdd from './CenterAdd.js'
 import CenterUpdate from './CenterUpdate.js'
 import { checkPropTypes } from 'prop-types';
+import '../css/CenterManage.css'
 
 function CenterManage () {
     const [searchCenter, setSearchCenter] = useState("");
