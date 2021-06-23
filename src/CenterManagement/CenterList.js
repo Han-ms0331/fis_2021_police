@@ -38,6 +38,7 @@ function CenterList(props) {
 	const onClick = (e) => {
 		const data = JSON.stringify(props.data)
 		localStorage.setItem("data", data)
+		console.log(props.data);
 		console.log(check);
 		e.preventDefault();
 		props.setCurrentResult(props.data.center_id);

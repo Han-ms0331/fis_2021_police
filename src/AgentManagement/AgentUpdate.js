@@ -1,10 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-function AgentUpdate (props) {
-
-    const {} = props;
-    
+function AgentUpdate (props) {    
     const [agent_id, setAgentID] = useState('');
     const [a_name, setName] = useState('');
     const [a_ph, setPhone] = useState('');
@@ -68,7 +65,7 @@ function AgentUpdate (props) {
                     name='agent_id'
                     type='text'
                     placeholder='agent_id'
-                    defaultValue={props.searchAgent}
+                    value={props.agentInfo.agent_id}
                     onChange={onChange}
                 />
             </div>
@@ -78,7 +75,7 @@ function AgentUpdate (props) {
                     name='a_name'
                     type='text'
                     placeholder='이름'
-                    //defaultValue={states.c_sido}
+                    value={props.agentInfo.a_name}
                     onChange={onChange}
                 />
             </div>
@@ -88,7 +85,7 @@ function AgentUpdate (props) {
                     name='a_ph'
                     type='text'
                     placeholder='전화번호'
-                    //defaultValue={states.c_sigungu}
+                    value={props.agentInfo.a_ph}
                     onChange={onChange}
                 />
             </div>
@@ -98,17 +95,17 @@ function AgentUpdate (props) {
                     name='a_address'
                     type='text'
                     placeholder='집주소'
-                    //defaultValue={states.c_name}
+                    value={props.agentInfo.a_address}
                     onChange={onChange}
                 />
             </div>
             <div>
                 <span>현장요원 위도: </span>
                 <input
-                    name='a_langtitude'
+                    name='a_latitude'
                     type='text'
                     placeholder='위도'
-                    //defaultValue={states.c_type}
+                    value={props.agentInfo.a_latitude}
                     onChange={onChange}
                 />
             </div>
@@ -118,7 +115,7 @@ function AgentUpdate (props) {
                     name='a_longtitude'
                     type='text'
                     placeholder='경도'
-                    //defaultValue={states.c_status}
+                    value={props.agentInfo.a_longtitude}
                     onChange={onChange}
                 />
             </div>

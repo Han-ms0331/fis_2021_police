@@ -140,6 +140,7 @@ function CenterManage () {
 							setCenterInfo={setCenterInfo}
 							called={called}
 							setSelected={setCurrentResult}
+                            centerInfo={centerInfo}
                             isManage={isManage}
                             check={check}
                             setIsLoading_2={setIsLoading_2}
@@ -166,7 +167,11 @@ function CenterManage () {
         <CenterUpdate 
             searchCenter={searchCenter}
             setIsLoading_2={setIsLoading_2}
+<<<<<<< HEAD
             setResult_1ary={setResult_1ary}
+=======
+            
+>>>>>>> cd09ab4a63e5612075bbbd87bfd4c9560174c9d4
         />
         </div>
 		<div class='main_search_result'>
@@ -189,6 +194,7 @@ function CenterManage () {
 							setSelected={setCurrentResult}
                             isManage={isManage}
                             check={check}
+                            centerInfo={centerInfo}
                             setIsLoading_2={setIsLoading_2}
 						/>
 

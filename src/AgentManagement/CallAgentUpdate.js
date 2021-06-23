@@ -14,7 +14,7 @@ function CallAgentUpdate (props) {
 		} else if (e.target.name === 'u_ph') {
 			setPhone(e.target.value);
 		}
-    }
+    };
 
     const send = async() => {
         const result = await axios.post(

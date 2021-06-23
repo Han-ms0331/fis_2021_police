@@ -98,7 +98,7 @@ function AgentAdd (props) {
             <div>
                 <span>현장요원 위도: </span>
                 <input
-                    name='a_langtitude'
+                    name='a_latitude'
                     type='text'
                     placeholder='위도'
                     onChange={onChange}
