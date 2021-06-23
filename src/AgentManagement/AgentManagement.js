@@ -62,7 +62,7 @@ function AgentManagement(props) {
     }
 	const getAgent = async() => {
         const result = await axios.get(
-            'http://192.168.0.117:3000/getusers'
+            'http://localhost:3000/getusers'
         );
         console.log(result);
     };
