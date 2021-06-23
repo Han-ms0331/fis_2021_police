@@ -91,7 +91,7 @@ function CenterUpdate(props) {
         }
         props.setIsLoading_2(true);
     }
-
+    console.log(props.centerInfo);
     const cancel = (e) => {
         props.setIsLoading_2(true);
     }
@@ -107,7 +107,7 @@ function CenterUpdate(props) {
                     name='center_id'
                     type='text'
                     placeholder='center_id'
-                    defaultValue={states.center_id}
+                    value={props.centerInfo.center_id}
                     onChange={onChange}
                 />
             </div>
@@ -117,7 +117,7 @@ function CenterUpdate(props) {
                     name='c_sido'
                     type='text'
                     placeholder='시도'
-                    defaultValue={states.c_sido}
+                    value={props.centerInfo.c_sido}
                     onChange={onChange}
                 />
             </div>
@@ -127,7 +127,7 @@ function CenterUpdate(props) {
                     name='c_sigungu'
                     type='text'
                     placeholder='시군구'
-                    defaultValue={states.c_sigungu}
+                    value={states.c_sigungu}
                     onChange={onChange}
                 />
             </div>
@@ -137,7 +137,7 @@ function CenterUpdate(props) {
                     name='c_name'
                     type='text'
                     placeholder='시설명'
-                    defaultValue={states.c_name}
+                    value={props.centerInfo.c_name}
                     onChange={onChange}
                 />
             </div>
@@ -147,7 +147,7 @@ function CenterUpdate(props) {
                     name='c_type'
                     type='text'
                     placeholder='유형'
-                    defaultValue={states.c_type}
+                    value={props.centerInfo.c_type}
                     onChange={onChange}
                 />
             </div>
@@ -157,7 +157,7 @@ function CenterUpdate(props) {
                     name='c_status'
                     type='text'
                     placeholder='운영현황'
-                    defaultValue={states.c_status}
+                    value={props.centerInfo.c_status}
                     onChange={onChange}
                 />
             </div>
@@ -167,7 +167,7 @@ function CenterUpdate(props) {
                     name='c_address'
                     type='text'
                     placeholder='주소'
-                    defaultValue={states.c_address}
+                    value={props.centerInfo.c_address}
                     onChange={onChange}
                 />
             </div>
@@ -177,7 +177,7 @@ function CenterUpdate(props) {
                     name='c_zipcode'
                     type='text'
                     placeholder='우편번호'
-                    defaultValue={states.c_zipcode}
+                    value={props.centerInfo.c_zipcode}
                     onChange={onChange}
                 />
             </div>
@@ -187,7 +187,7 @@ function CenterUpdate(props) {
                     name='c_ph'
                     type='text'
                     placeholder='전화번호'
-                    defaultValue={states.c_ph}
+                    value={props.centerInfo.c_ph}
                     onChange={onChange}
                 />
             </div>
@@ -197,7 +197,7 @@ function CenterUpdate(props) {
                     name='c_fax_num'
                     type='text'
                     placeholder='팩스번호'
-                    defaultValue={states.c_fax_num}
+                    value={props.centerInfo.c_fax_num}
                     onChange={onChange}
                 />
             </div>
@@ -207,7 +207,7 @@ function CenterUpdate(props) {
                     name='c_people'
                     type='text'
                     placeholder='현재인원'
-                    defaultValue={states.c_people}
+                    value={props.centerInfo.c_people}
                     onChange={onChange}
                 />
             </div>
@@ -217,7 +217,7 @@ function CenterUpdate(props) {
                     name='c_hp_address'
                     type='text'
                     placeholder='홈페이지주소'
-                    defaultValue={states.c_hp_address}
+                    value={props.centerInfo.c_hp_address}
                     onChange={onChange}
                 />
             </div>
@@ -227,7 +227,7 @@ function CenterUpdate(props) {
                     name='c_latitude'
                     type='text'
                     placeholder='위도'
-                    defaultValue={states.c_latitude}
+                    value={props.centerInfo.c_latitude}
                     onChange={onChange}
                 />
             </div>
@@ -237,7 +237,7 @@ function CenterUpdate(props) {
                     name='c_longtitude'
                     type='text'
                     placeholder='경도'
-                    defaultValue={states.c_longtitude}
+                    value={props.centerInfo.c_longtitude}
                     onChange={onChange}
                 />
             </div>
