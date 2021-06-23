@@ -6,8 +6,6 @@ function CallAgentUpdate (props) {
     const [u_pwd, setPwd] = useState('');
     const [u_ph, setPhone] = useState('');
 
-    const states = JSON.parse(localStorage.getItem("data"));
-
     const onChange = (e) => {
         if (e.target.name === 'u_name') {
             setName(e.target.value);
@@ -16,7 +14,7 @@ function CallAgentUpdate (props) {
 		} else if (e.target.name === 'u_ph') {
 			setPhone(e.target.value);
 		}
-    }
+    };
 
     const send = async() => {
         const result = await axios.post(

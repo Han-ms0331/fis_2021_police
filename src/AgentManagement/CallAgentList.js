@@ -2,8 +2,6 @@ import React, { useState } from 'react';
 import axios from 'axios';
 
 function CallAgentList (props) {
-    let result;
-    let record = '없음';
     const onClick = (e) => {
         props.setUpdateCall(true);
         props.setCallAgentInfo(props.data);
