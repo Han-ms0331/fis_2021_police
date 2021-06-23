@@ -19,7 +19,7 @@ function CallAgentAdd (props) {
 
     const send = async() => {
         const result = await axios.post(
-            'http://192.168.0.117:3000/userid/setuser', 
+            'http://localhost:3000/userid/setuser', 
             JSON.stringify({
                 u_name: u_name,
                 u_pwd: u_pwd,
