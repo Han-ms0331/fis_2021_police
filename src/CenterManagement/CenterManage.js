@@ -167,11 +167,7 @@ function CenterManage () {
         <CenterUpdate 
             searchCenter={searchCenter}
             setIsLoading_2={setIsLoading_2}
-<<<<<<< HEAD
             setResult_1ary={setResult_1ary}
-=======
-            
->>>>>>> cd09ab4a63e5612075bbbd87bfd4c9560174c9d4
         />
         </div>
 		<div class='main_search_result'>
