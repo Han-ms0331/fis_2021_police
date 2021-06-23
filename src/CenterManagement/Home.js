@@ -96,7 +96,7 @@ function Home(props) {
 	const c_name = centerInfo.centerName;
 	const c_ph = centerInfo.centerPhoneNumber;
     const result = await axios.get(
-    	`http://localhost:3000/home/mail/${target_email}/${c_id}/${c_address}/${c_name}/${c_ph}/${user_id}`
+    	`http://192.168.0.117:3000/home/mail/${target_email}/${c_id}/${c_address}/${c_name}/${c_ph}/${user_id}`
       );
 	}
   };
@@ -129,6 +129,7 @@ function Home(props) {
     } else {
       alert("저장되었습니다");
       setIsOpenAddCall(false);
+	  
     }
   };
   const closeAddCallCancle = (e) => {
