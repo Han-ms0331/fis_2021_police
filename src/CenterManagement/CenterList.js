@@ -44,6 +44,7 @@ function CenterList(props) {
 		getCenterInfo();
 		props.setIsLoading_2(false);
 		setTest(true);
+		const states = JSON.parse(localStorage.getItem("data"));
 	};
 	console.log(record);
 	if(danger_flag === 0)

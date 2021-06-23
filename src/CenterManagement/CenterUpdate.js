@@ -85,7 +85,7 @@ function CenterUpdate(props) {
                 send();
                 console.log(center_id);
                 console.log(c_name);
-                console.log(c_ph);
+                console.log(c_ph)
             }
         }
         props.setIsLoading_2(true);
