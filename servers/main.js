@@ -18,6 +18,7 @@ const { element } = require("prop-types");
 const mail = require("./mail");
 
 const { count } = require("console");
+const { AsyncLocalStorage } = require("async_hooks");
 db.connect();
 const whitelist = ["*"];
 var corsOptions = {
@@ -561,6 +562,12 @@ app.get("/:search_date/statistic", async (req, res) => {
   console.log(result);
   res.send(result);
 });
+
+//call 직원 정보 주기
+app.get("/getusers", async (req, res) => {
+  result = await dbfunc.get_data(`SELECT * FROM user`);
+  res.send(result);
+})
 
 // 콜직원 추가 변경
 app.post("/:userid/setuser", (req, res) => {

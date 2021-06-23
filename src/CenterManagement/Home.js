@@ -123,13 +123,27 @@ function Home(props) {
   const openAddCall = (e) => {
     setIsOpenAddCall(true);
   };
-  const closeAddCall = (error) => {
+  const closeAddCall = async (error) => {
     if (error) {
       alert("작성 내용을 확인해 주세요");
     } else {
       alert("저장되었습니다");
       setIsOpenAddCall(false);
-	  
+      const getCenterInfo = async () => {
+        let result = await axios.get(
+          `http://192.168.0.117:3000/home/${centerInfo.centerName}/search/${centerInfo.centerID}`
+        );
+        console.log(result.data.calls);
+        setCenterInfo({
+          centerName: centerInfo.centerName,
+          centerAddr: centerInfo.centerAddr,
+          centerPhoneNumber: centerInfo.centerPhoneNumber,
+          centerID: centerInfo.centerID,
+          callState_list: result.data.calls,
+          applyState_list: result.data.applies,
+        });
+      };
+      await getCenterInfo();
     }
   };
   const closeAddCallCancle = (e) => {
