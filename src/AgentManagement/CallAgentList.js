@@ -4,16 +4,26 @@ import axios from 'axios';
 function CallAgentList (props) {
     let result;
     let record = '없음';
-
-    const getAgent = async() => {
-        result = await axios.get(
-            'http://192.168.0.117:3000/getusers'
-        );
-        console.log(result);
-    };
-
+    const onClick = (e) => {
+        props.setUpdateCall(true);
+    }
     return props.callagentList ? (
-        <div>callagentList</div>
+        <div>
+            <div>
+                {props.data.u_name}
+            </div>
+            <div>
+                {props.data.u_pwd}
+            </div>
+            <div>
+                {props.data.u_ph}
+            </div>
+            <div>
+                <button onClick={onClick}>
+                    선택
+                </button>
+            </div>
+        </div>
     ) : null;
 
 

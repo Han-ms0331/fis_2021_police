@@ -10,10 +10,12 @@ import CallAgentList from './CallAgentList.js';
 
 function AgentManagement(props) {
 
+
 	const [searchAgent, setSearchAgent] = useState('');
 	const [select, setSelect] = useState('');
 	const [stage, setStage] = useState('');
-	const [result_1ary, setResult_1ary] = useState([]);
+	const [result_agent, setResult_agent] = useState([]);
+	const [result_call, setResult_call] = useState([]);
 	const [addAgent, setAddAgent] = useState(false);
 	const [addCall, setAddCall] = useState(false);
 	const [updateAgent, setUpdateAgent] = useState(false);
@@ -60,15 +62,15 @@ function AgentManagement(props) {
 			setSelect(e.target.value);
 		}
     }
-	const getAgent = async() => {
+	const getCallAgent = async() => {
         const result = await axios.get(
             'http://192.168.0.117:3000/getusers'
         );
-        console.log(result);
+		setResult_call(result);
     };
 
 	const realSearch = (e) => {
-		getAgent();
+		getCallAgent();
 		if(select === '현장요원') {
 			setAddAgent(false);
 			setAddCall(false);
@@ -195,11 +197,17 @@ function AgentManagement(props) {
 				setAgentList={setAgentList}
 				searchAgent={searchAgent}
 			/>
-			<CallAgentList
-				callagentList={callagentList}
-				setCallAgentList={setCallAgentList}
-				searchAgent={searchAgent}
-			/>
+			<ul>
+				<li>
+					<CallAgentList
+						callagentList={callagentList}
+						setCallAgentList={setCallAgentList}
+						setUpdateCall={setUpdateCall}
+						searchAgent={searchAgent}
+						data={result_call}
+					/>
+				</li>
+			</ul>
 			<AgentUpdate
 				updateAgent={updateAgent}
 				searchAgent={searchAgent}
