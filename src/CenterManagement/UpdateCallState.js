@@ -160,7 +160,6 @@ function UpdateCallState(props) {
         />
       </div>
 
-<<<<<<< HEAD
       <div>
         <span>시설 참여 여부: </span>
         <select
@@ -174,20 +173,6 @@ function UpdateCallState(props) {
           <option value="보류">보류</option>
         </select>
       </div>
-=======
-			<div>
-				<span>시설 참여 여부: </span>
-				<select
-					name='participation'
-					defaultValue={data.participation}
-					onChange={onChange}>
-					<option value='선택'>===선택===</option>
-					<option value='참여'>참여</option>
-					<option value='거부'>거부</option>
-					<option value='보류'>보류</option>
-				</select>
-			</div>
->>>>>>> 474e6eb40fba861617ff497e262c2034508f53e3
 
       <div>
         <span>기록자 이름: </span>
