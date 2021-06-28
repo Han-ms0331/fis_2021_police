@@ -34,6 +34,8 @@ function CallState(props) {
 				<button onClick={openUpdateCall}>수정</button>
 			</div>
 			<UpdateCallState
+				centerInfo={props.centerInfo}
+				setCenterInfo={props.setCenterInfo}
 				update={update}
 				data={props.callState_list}
 				centerID={props.centerID}

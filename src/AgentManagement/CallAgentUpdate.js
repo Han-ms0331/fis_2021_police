@@ -79,10 +79,10 @@ function CallAgentUpdate (props) {
                 />
             </div>
             <div>
-                <button onClick={onClick}>
+                <button name='update' onClick={onClick}>
                     저장
                 </button>
-                <button onClick={cancel}>
+                <button name='cancel' onClick={cancel}>
                     취소
                 </button>
             </div>

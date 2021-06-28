@@ -438,6 +438,7 @@ function Home(props) {
                     class="list-items call-state_items"
                   >
                     <CallState
+                      centerInfo={centerInfo}
                       callState_list={data}
                       data={result_1ary}
                       setCurrentResult={setCurrentResult}
