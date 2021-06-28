@@ -28,6 +28,7 @@
   overflow-y: scroll;
   overflow-x: scroll;
 }
+
 .main_search_box {
   text-align: center;
   display: flex;
@@ -102,6 +103,10 @@
   padding: 0px;
 }
 
+.main_info_call-state_list_item {
+  white-space: pre-wrap;
+}
+
 .main_info_apply-state {
   overflow-y: scroll;
 
@@ -122,10 +127,10 @@
   margin-bottom: 50px;
 }
 
-.button_container{
+.button_container {
   display: flex;
   justify-content: space-around;
-  width:50%;
+  width: 50%;
 }
 .main_info_call-state_add {
   width: 100px;
@@ -243,6 +248,6 @@
   justify-content: flex-end;
 }
 
-.danger{
-  color : red;
+.danger {
+  color: red;
 }
