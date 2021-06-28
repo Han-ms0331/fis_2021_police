@@ -87,7 +87,7 @@ module.exports = {
               let filters = /\<.+\@.+\..+\>/;
               if (subject.includes("failure")) {
                 let target = text.body.match(filters);
-                subject = "target" + "에게 보내지지 않았습니다";
+                subject = `${target}` + "에게 보내지지 않았습니다";
                 subject +=
                   "메일 주소를 다시 확인해 주세요" +
                   header.body.date[0] +
