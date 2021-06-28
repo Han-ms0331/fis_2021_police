@@ -19,7 +19,7 @@ function CallAgentAdd (props) {
 
     const send = async() => {
         const result = await axios.post(
-            'http://localhost:3000/userid/setuser', 
+            'http://192.168.0.117:3000/userid/setuser', 
             JSON.stringify({
                 u_name: u_name,
                 u_pwd: u_pwd,
@@ -29,6 +29,7 @@ function CallAgentAdd (props) {
     }
 
     const checkit = (e) => {
+        console.log(u_name);
         window.confirm('추가하시겠습니까?');
         console.log('u_name');
         console.log('u_ph');
@@ -50,7 +51,7 @@ function CallAgentAdd (props) {
                     name='u_name'
                     type='text'
                     placeholder='직원명'
-                    defaultValue={props.searchAgent}
+                    // defaultValue={props.searchAgent}
                     onChange={onChange}
                     required
                 />

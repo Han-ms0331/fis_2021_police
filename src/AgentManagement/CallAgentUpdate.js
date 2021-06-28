@@ -2,9 +2,12 @@ import React, { useState } from 'react';
 import axios from 'axios';
 
 function CallAgentUpdate (props) {
-    const [u_name, setName] = useState('');
-    const [u_pwd, setPwd] = useState('');
-    const [u_ph, setPhone] = useState('');
+
+    const states = JSON.parse(localStorage.getItem("data"));
+
+    const [u_name, setName] = useState(states.u_name);
+    const [u_pwd, setPwd] = useState(states.u_pwd);
+    const [u_ph, setPhone] = useState(states.u_ph);
 
     const onChange = (e) => {
         if (e.target.name === 'u_name') {
@@ -15,10 +18,12 @@ function CallAgentUpdate (props) {
 			setPhone(e.target.value);
 		}
     };
-
+    console.log(props.callagentInfo.u_name);
+    console.log(u_name);
+    console.log(states.u_name);
     const send = async() => {
         const result = await axios.post(
-            'http://192.168.0.117:3000/userid/uid/modifyuser',
+            `http://192.168.0.117:3000/userid/${props.callagentInfo.user_id}/modifyuser`,
             JSON.stringify({
                 u_name: u_name,
                 u_pwd: u_pwd,
@@ -33,6 +38,7 @@ function CallAgentUpdate (props) {
             if(window.confirm('수정된 내용을 저장하시겠습니까?')) {
                 alert('저장되었습니다.');
                 send();
+                console.log(props.callagentInfo.user_id);
                 console.log(u_pwd);
                 console.log(u_ph);
                 props.setUpdateCall(false);
@@ -53,8 +59,8 @@ function CallAgentUpdate (props) {
                 <input
                     name='u_name'
                     type='text'
-                    placeholder='직원명'
-                    defaultValue={props.callagentInfo.u_name}
+                    placeholder={props.callagentInfo.u_name}
+                    // value={props.callagentInfo.u_name}
                     onChange={onChange}
                 />
             </div>
@@ -63,8 +69,8 @@ function CallAgentUpdate (props) {
                 <input
                     name='u_pwd'
                     type='text'
-                    placeholder='비밀번호'
-                    defaultValue={props.callagentInfo.u_pwd}
+                    placeholder={props.callagentInfo.u_pwd}
+                    // value={props.callagentInfo.u_pwd}
                     onChange={onChange}
                 />
             </div>
@@ -73,16 +79,16 @@ function CallAgentUpdate (props) {
                 <input  
                     name='u_ph'
                     type='text'
-                    placeholder='전화번호'
-                    defaultValue={props.callagentInfo.u_ph}
+                    placeholder={props.callagentInfo.u_ph}
+                    // value={props.callagentInfo.u_ph}
                     onChange={onChange}
                 />
             </div>
             <div>
-                <button onClick={onClick}>
+                <button name='update' onClick={onClick}>
                     저장
                 </button>
-                <button onClick={cancel}>
+                <button name='cancel' onClick={cancel}>
                     취소
                 </button>
             </div>

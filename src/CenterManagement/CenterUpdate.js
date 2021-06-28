@@ -23,6 +23,7 @@ function CenterUpdate(props) {
   const [c_latitude, setLatitude] = useState(states.c_latitude);
   const [c_longtitude, setLongtitude] = useState(states.c_longtitude);
 
+
   const onChange = (e) => {
     if (e.target.name === "center_id") {
       setCenterId(e.target.value);
@@ -38,6 +39,7 @@ function CenterUpdate(props) {
       setStatus(e.target.value);
     } else if (e.target.name === "c_address") {
       setAddress(e.target.value);
+      console.log(c_address);
     } else if (e.target.name === "c_zipcode") {
       setZipcode(e.target.value);
     } else if (e.target.name === "c_ph") {
@@ -81,6 +83,7 @@ function CenterUpdate(props) {
     if (e.target.name === "update") {
       if (window.confirm("수정된 내용을 저장하시겠습니까?")) {
         alert("저장되었습니다.");
+        console.log(c_address);
         send();
         const search = async (c_name) => {
           console.log(search);
@@ -97,18 +100,37 @@ function CenterUpdate(props) {
     }
   };
 
+  const delete_center = async () => {
+    const result = await axios.get(
+      `http://192.168.0.117:3000/userid/${states.center_id}/deletecenter`
+    )
+  };
+
+  const deleteCenter =(e) => {
+    console.log(states.center_id);
+    e.preventDefault();
+    if(e.target.name === 'delete') {
+      if(window.confirm(`${states.c_name}의 정보를 삭제하시곘습니까?`)) {
+        alert('삭제되었습니다.');
+        delete_center();
+      }
+    }
+  }
   const cancel = (e) => {
     props.setIsLoading_2(true);
   };
   return check ? null : test ? null : (
     <div class="add_center_list">
+      <button name='delete' onClick={deleteCenter}>
+        삭제
+      </button>
       <div>
         <span>Center ID: </span>
         <input
           name="center_id"
           type="text"
-          placeholder="center_id"
-          defaultValue={states.center_id}
+          placeholder={states.center_id}
+          // defaultValue={states.center_id}
           onChange={onChange}
         />
       </div>
@@ -117,8 +139,8 @@ function CenterUpdate(props) {
         <input
           name="c_sido"
           type="text"
-          placeholder="시도"
-          defaultValue={states.c_sido}
+          placeholder={states.c_sido}
+          // value={states.c_sido}
           onChange={onChange}
         />
       </div>
@@ -127,8 +149,8 @@ function CenterUpdate(props) {
         <input
           name="c_sigungu"
           type="text"
-          placeholder="시군구"
-          defaultValue={states.c_sigungu}
+          placeholder={states.c_sigungu}
+          // value={states.c_sigungu}
           onChange={onChange}
         />
       </div>
@@ -137,8 +159,8 @@ function CenterUpdate(props) {
         <input
           name="c_name"
           type="text"
-          placeholder="시설명"
-          defaultValue={states.c_name}
+          placeholder={states.c_name}
+          // value={states.c_name}
           onChange={onChange}
         />
       </div>
@@ -147,8 +169,8 @@ function CenterUpdate(props) {
         <input
           name="c_type"
           type="text"
-          placeholder="유형"
-          defaultValue={states.c_type}
+          placeholder={states.c_type}
+          // value={states.c_type}
           onChange={onChange}
         />
       </div>
@@ -157,8 +179,8 @@ function CenterUpdate(props) {
         <input
           name="c_status"
           type="text"
-          placeholder="운영현황"
-          defaultValue={states.c_status}
+          placeholder={states.status}
+          // value={states.c_status}
           onChange={onChange}
         />
       </div>
@@ -167,8 +189,8 @@ function CenterUpdate(props) {
         <input
           name="c_address"
           type="text"
-          placeholder="주소"
-          defaultValue={states.c_address}
+          placeholder={states.c_address}
+          // value={states.c_address}
           onChange={onChange}
         />
       </div>
@@ -177,8 +199,8 @@ function CenterUpdate(props) {
         <input
           name="c_zipcode"
           type="text"
-          placeholder="우편번호"
-          defaultValue={states.c_zipcode}
+          placeholder={states.c_zipcode}
+          // value={states.c_zipcode}
           onChange={onChange}
         />
       </div>
@@ -187,8 +209,8 @@ function CenterUpdate(props) {
         <input
           name="c_ph"
           type="text"
-          placeholder="전화번호"
-          defaultValue={states.c_ph}
+          placeholder={states.c_ph}
+          // value={states.c_ph}
           onChange={onChange}
         />
       </div>
@@ -197,8 +219,8 @@ function CenterUpdate(props) {
         <input
           name="c_fax_num"
           type="text"
-          placeholder="팩스번호"
-          defaultValue={states.c_fax_num}
+          placeholder={states.c_fax_num}
+          // defaultValue={states.c_fax_num}
           onChange={onChange}
         />
       </div>
@@ -207,8 +229,8 @@ function CenterUpdate(props) {
         <input
           name="c_people"
           type="text"
-          placeholder="현재인원"
-          defaultValue={states.c_people}
+          placeholder={states.c_people}
+          // defaultValue={states.c_people}
           onChange={onChange}
         />
       </div>
@@ -217,8 +239,8 @@ function CenterUpdate(props) {
         <input
           name="c_hp_address"
           type="text"
-          placeholder="홈페이지주소"
-          defaultValue={states.c_hp_address}
+          placeholder={states.c_hp_address}
+          // defaultValue={states.c_hp_address}
           onChange={onChange}
         />
       </div>
@@ -227,8 +249,8 @@ function CenterUpdate(props) {
         <input
           name="c_latitude"
           type="text"
-          placeholder="위도"
-          defaultValue={states.c_latitude}
+          placeholder={states.c_latitude}
+          // defaultValue={states.c_latitude}
           onChange={onChange}
         />
       </div>
@@ -237,8 +259,8 @@ function CenterUpdate(props) {
         <input
           name="c_longtitude"
           type="text"
-          placeholder="경도"
-          defaultValue={states.c_longtitude}
+          placeholder={states.c_longtitude}
+          // defaultValue={states.c_longtitude}
           onChange={onChange}
         />
       </div>

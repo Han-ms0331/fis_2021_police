@@ -4,7 +4,7 @@ import CenterList from './CenterList.js'
 import CenterAdd from './CenterAdd.js'
 import CenterUpdate from './CenterUpdate.js'
 import { checkPropTypes } from 'prop-types';
-import '../css/CenterManage.css'
+//import { send } from '../../servers/mail.js';
 
 function CenterManage () {
     const [searchCenter, setSearchCenter] = useState("");
@@ -58,19 +58,11 @@ function CenterManage () {
     const AddCenter = (e) => {
         setAddCenter(false);
     }
+
     return check ? (
         addCenter ? (
     <div class="RSbar">
         <div>
-            <input
-                class="RSsearchbtn"
-                name="add"
-                type="submit"
-                value="추가"
-                onClick={AddCenter}
-            />
-        </div>
-        <div>
           <span>시설 : </span>
           <input name="Center" type="text" placeholder="시설명" onChange={onChange} onKeyPress={onKeyPress} />
         </div>
@@ -81,18 +73,19 @@ function CenterManage () {
           value="검색"
           onClick={onClick}
         />
+        <div>
+            <input
+                class="RSsearchbtn"
+                name="add"
+                type="submit"
+                value="추가"
+                onClick={AddCenter}
+            />
+        </div>
     </div>
     ) : (
     <div class="RSbar">
-        <div>
-            <input
-                class="RSsearchbtn"
-                name="add"
-                type="submit"
-                value="추가"
-                onClick={AddCenter}
-            />
-        </div>
+
         <div>
           <span>시설 : </span>
           <input name="Center" type="text" placeholder="시설명" onChange={onChange} onKeyPress={onKeyPress} />
@@ -104,7 +97,15 @@ function CenterManage () {
           value="검색"
           onClick={onClick}
         />
+        <input
+            class="RSsearchbtn"
+            name="add"
+            type="submit"
+            value="추가"
+            onClick={AddCenter}
+        />
         <CenterAdd
+            searchCenter={searchCenter}
             setAddCenter={setAddCenter}
             uid={uid}
         />
@@ -122,6 +123,13 @@ function CenterManage () {
           type="submit"
           value="검색"
           onClick={onClick}
+        />
+        <input
+            class="RSsearchbtn"
+            name="add"
+            type="submit"
+            value="추가"
+            onClick={AddCenter}
         />
 		<div class='main_search_result'>
 			<ul class='main_search_result_list list'>
@@ -164,8 +172,16 @@ function CenterManage () {
           value="검색"
           onClick={onClick}
         />
+        <input
+            class="RSsearchbtn"
+            name="add"
+            type="submit"
+            value="추가"
+            onClick={AddCenter}
+        />
         <div>
         <CenterUpdate 
+            centerInfo={centerInfo}
             searchCenter={searchCenter}
             setIsLoading_2={setIsLoading_2}
             setResult_1ary={setResult_1ary}
@@ -194,10 +210,8 @@ function CenterManage () {
                             centerInfo={centerInfo}
                             setIsLoading_2={setIsLoading_2}
 						/>
-
 					</li>
 				))}
-
 			</ul>
 		</div>
     </div>

@@ -1,5 +1,10 @@
 const nodemailer = require("nodemailer");
 const { resetWarningCache } = require("prop-types");
+const Imap = require("imap-simple");
+const _ = require("lodash");
+const { resolveContent } = require("nodemailer/lib/shared");
+const express = require("express");
+
 const transporter = nodemailer.createTransport({
   host: "smtp.mailplug.co.kr",
   port: 465,
@@ -9,6 +14,17 @@ const transporter = nodemailer.createTransport({
     pass: "fis1234*",
   },
 });
+
+var config = {
+  imap: {
+    user: "fis182@fisolution.co.kr",
+    password: "fis1234*",
+    host: "imap.mailplug.co.kr",
+    port: 993,
+    tls: true,
+    ssl: true,
+  },
+};
 
 module.exports = {
   send: async function (receiver) {
@@ -30,7 +46,14 @@ module.exports = {
     });
     console.log("Message sent: %s", info.messageId);
   },
-  wh_sent: async (center_email, center_id, center_address, center_name, manager_ph, userName) => {
+  wh_sent: async (
+    center_email,
+    center_id,
+    center_address,
+    center_name,
+    manager_ph,
+    userName
+  ) => {
     let date = new Date();
     let info = await transporter.sendMail({
       from: "fis182@fisolution.co.kr", // sender address
@@ -39,4 +62,43 @@ module.exports = {
       text: `보낸이 : ${userName}\n 센터 id : ${center_id}\n 센터 이름 : ${center_name}\n 센터 주소 : ${center_address}\n 센터 email : ${center_email}\n 센터 전화번호 : ${manager_ph}`,
     });
   },
+
+  a: async () => {
+    let result = await Imap.connect(config).then(function (connection) {
+      return connection.openBox("INBOX").then(function () {
+        let min60_ago = new Date();
+        min60_ago.setTime(Date.now() - 3600 * 1000);
+        min60_ago = min60_ago.toISOString();
+        var searchCriteria = [["SINCE", "yesterday"]];
+
+        var fetchOptions = {
+          bodies: ["HEADER", "TEXT"],
+          markSeen: false,
+        };
+        return connection
+          .search(searchCriteria, fetchOptions)
+          .then(function (messages) {
+            let subjects = [];
+            messages.forEach(function (item) {
+              let header = _.find(item.parts, { which: "HEADER" });
+              let text = _.find(item.parts, { which: "TEXT" });
+              let subject = header.body.subject[0];
+              let filters = /\<.+\@.+\..+\>/;
+              if (subject.includes("failure")) {
+                let target = text.body.match(filters);
+                subject = "target" + "에게 보내지지 않았습니다";
+              }
+              subject += "메일 주소를 다시 확인해 주세요";
+              subjects.push(subject);
+            });
+            return subjects;
+          });
+      });
+    });
+    return result;
+  },
 };
+
+//imap 연결 구성
+//tls ssl 사용 구성
+//connection 옵션중 searchCriteria -> 읽을 옵션
