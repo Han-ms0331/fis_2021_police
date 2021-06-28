@@ -55,7 +55,7 @@ function UpdateCallState(props) {
 	const send = async () => {
 		console.log(props.centerID);
 		const result = await axios.post(
-			`http://localhost:3000/home/modify_call/${send_data.no}`,
+			`http://192.168.0.117:3000/home/modify_call/${send_data.no}`,
 			JSON.stringify({
 				c_manager: send_data.name,
 				date: send_data.date,

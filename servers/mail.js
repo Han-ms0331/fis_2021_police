@@ -23,10 +23,6 @@ module.exports = {
           path: "21년 지문등 사전등록 신청서_양식.hwp",
         },
         {
-          filename: "21경찰청신청서예시포함.hwp",
-          path: "21경찰청신청서예시포함.hwp",
-        },
-        {
           filename: "2021_경찰청_팝업_배부용.jpg",
           path: "2021_경찰청_팝업_배부용.jpg",
         },

@@ -18,6 +18,7 @@ const { element } = require("prop-types");
 const mail = require("./mail");
 
 const { count } = require("console");
+const { AsyncLocalStorage } = require("async_hooks");
 db.connect();
 const whitelist = ["*"];
 var corsOptions = {
@@ -278,6 +279,7 @@ app.post("/home/call_write/:cid", async (req, res) => {
   } else {
     console.log(post);
     let result = await dbfunc.set_call_status(post);
+    
     res.send(result);
   }
 });
@@ -501,8 +503,8 @@ app.post("/home/modify_call/:no", (req, res) => {
     res.send(error_code);
   } else {
     let sql = `UPDATE call_status 
-    SET uid = '${uid}', date='${date}', participation='${participation}', in_out='${in_out}', c_manager='${c_manager}', m_ph='${m_ph}', m_email='${m_email}', etc='${etc}') 
-    WHERE no=${no};`;
+    SET uid = '${uid}', date='${date}', participation='${participation}', in_out='${in_out}', c_manager='${c_manager}', m_ph='${m_ph}', m_email='${m_email}', etc='${etc}' 
+    WHERE no=${no}`;
 
     db.query(sql, (err, store_apply) => {
       if (err) {
@@ -561,6 +563,11 @@ app.get("/:search_date/statistic", async (req, res) => {
   res.send(result);
 });
 
+//call 직원 정보 주기
+app.get("/getusers", async (req, res) => {
+  result = await dbfunc.get_data(`SELECT * FROM user`);
+  res.send(result);
+})
 // 콜직원 추가 변경
 app.post("/:userid/setuser", (req, res) => {
   let post = JSON.parse(Object.keys(req.body)[0]);
