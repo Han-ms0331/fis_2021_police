@@ -134,7 +134,8 @@ function AddCallState(props) {
 				<span>담당자 이메일 주소: </span>
 				<input
 					name='email'
-					type='text'
+					type='email
+          '
 					placeholder='담당자 이메일 주소'
 					onChange={handleEmail}
 				/>

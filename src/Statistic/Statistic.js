@@ -1,30 +1,37 @@
 import React, { useState, useRef, useEffect } from 'react';
 import axios from 'axios';
 import { Redirect } from 'react-router';
+import Line from './Line';
+import '../css/Statistic.css';
 
 function Statistic(props) {
 	const [data, setData] = useState([]);
 
 	let isAdmin = false;
-	let inputDate = '';
+	const [inputDate, setInputDate] = useState('');
 
 	if (localStorage.getItem('userName') === 'admin') {
 		isAdmin = true;
 	}
 
 	const send = async () => {
+		console.log(inputDate);
 		let date = new Date(inputDate);
-		let sendData = `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`;
+		let year = date.getFullYear();
+		let month = ('0' + (1 + date.getMonth())).slice(-2);
+		let day = ('0' + date.getDate()).slice(-2);
+		const sendData = year + '-' + month + '-' + day;
+
 		const result = await axios.get(
 			`http://192.168.0.117:3000/${sendData}/statistic`
 		);
 		console.log(result);
-		setData(result);
+		setData(result.data);
 	};
 
 	const onChange = (e) => {
 		if (e.target.name === 'date') {
-			inputDate = e.target.valuel;
+			setInputDate(e.target.value);
 		}
 	};
 
@@ -51,6 +58,9 @@ function Statistic(props) {
 						onClick={onClick}
 						value='검색'
 					/>
+				</div>
+				<div class='static_body'>
+					<Line array={data} />
 				</div>
 			</div>
 		) : (

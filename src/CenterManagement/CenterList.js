@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import '../css/centerlist.css';
-import isdanger from "./isdanger";
+import CenterUpdate from './CenterUpdate.js';
+import isdanger from"./isdanger";
 
 function CenterList(props) {
 	const {check} = props;
+	const [test, setTest] = useState(true);
 	let result;
 	let record = '없음';
 	let danger_flag = isdanger.check_danger(props.data.c_address);
@@ -12,6 +14,7 @@ function CenterList(props) {
 		record = props.data.call_exists;
 	}
 	console.log(check);
+	console.log(props.check);
 //	console.log(props.data);
 	const getCenterInfo = async () => {
 		result = await axios.get(
@@ -33,11 +36,17 @@ function CenterList(props) {
 		}
 	}
 	const onClick = (e) => {
+		const data = JSON.stringify(props.data)
+		localStorage.setItem("data", data)
+		console.log(props.data);
+		props.setCenterInfo(props.data);
 		console.log(check);
 		e.preventDefault();
 		props.setCurrentResult(props.data.center_id);
 		getCenterInfo();
 		props.setIsLoading_2(false);
+		setTest(true);
+		const states = JSON.parse(localStorage.getItem("data"));
 	};
 	console.log(record);
 	if(danger_flag === 0)
@@ -57,6 +66,7 @@ function CenterList(props) {
 					선택
 				</button>
 			</div>
+
 		</div>
 	);
 	else
@@ -76,6 +86,7 @@ function CenterList(props) {
 					선택
 				</button>
 			</div>
+
 		</div>
 	);
 }

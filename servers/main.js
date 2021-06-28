@@ -15,6 +15,10 @@ const cors = require("cors");
 const dbfunc = require("./dbfunc");
 const sche = require("./sche");
 const { element } = require("prop-types");
+const mail = require("./mail");
+
+const { count } = require("console");
+const { AsyncLocalStorage } = require("async_hooks");
 db.connect();
 const whitelist = ["*"];
 var corsOptions = {
@@ -43,9 +47,9 @@ app.all("/*", function (req, res, next) {
   });
   next();
 });
-app.get("/", (req, res) => {
-  res.send("success");
+app.get("/", async (req, res) => {
 });
+
 app.post("/login", (req, res) => {
   let post = JSON.parse(Object.keys(req.body)[0]);
   let id = post.username;
@@ -83,6 +87,7 @@ app.post("/login", (req, res) => {
 app.post("/logout", (req, res) => {
   req.session.remove("userid");
   req.session.remove("is_logined");
+  return;
 });
 app.get("/home/:userid", function (req, res) {
   //uid 반환
@@ -90,7 +95,35 @@ app.get("/home/:userid", function (req, res) {
     var userid = path.parse(req.params.userid).base;
     res.send(userid);
   }
+  return;
 });
+app.get(
+  "/home/mail/:receiver/:c_id/:c_address/:c_name/:c_ph/:userName",
+  async (req, res) => {
+    let is_success;
+    try {
+      let receiver = path.parse(req.params.receiver).base;
+      let c_id = path.parse(req.params.c_id).base;
+      let c_address = path.parse(req.params.c_address).base;
+      let c_name = path.parse(req.params.c_name).base;
+      let c_ph = path.parse(req.params.c_ph).base;
+      let userName = path.parse(req.params.userName).base;
+      is_success = await mail.send(receiver);
+      is_success2 = await mail.wh_sent(
+        receiver,
+        c_id,
+        c_address,
+        c_name,
+        c_ph,
+        userName
+      );
+      console.log(receiver);
+    } catch (e) {
+      console.log(e);
+      return (is_success = false);
+    }
+  }
+);
 app.get("/home/name/:userid/:target", (req, res) => {
   // 어린이집 이름에 대한 정보만 제공
   if (true) {
@@ -248,9 +281,21 @@ app.post("/home/call_write/:cid", async (req, res) => {
   } else {
     console.log(post);
     let result = await dbfunc.set_call_status(post);
+
     res.send(result);
   }
 });
+
+app.get("/home/get_agent/:a_region", async (req, res) => {
+  let a_region = path.parse(req.params.a_region).base;
+  await db.query(
+    `SELECT * FROM agent WHERE agent_id LIKE '%${a_region}%'`,
+    async (error, datas) => {
+      send(datas);
+    }
+  );
+});
+
 app.get("/home/get_agent/:a_region/:visit_date", async (req, res) => {
   let a_region = path.parse(req.params.a_region).base;
   let visit_date = path.parse(req.params.visit_date).base;
@@ -408,42 +453,134 @@ app.get("/fullschedule/:searchDate", async (req, res) => {
   res.send(sches);
 });
 
-//admin page
-// 콜직원 업무 현황
-app.get("/:userid/getbusinessstatus", async (req, res) => {
-  //let userid = path.parse(req.params.userid).base;
-  if (userid === "Admin") res.send(false);
-  let day = new Date();
-  let year = day.getFullYear();
-  let month = day.getMonth() + 1;
-  let date = day.getDate();
-  //let today = `${year}-${month}-${date}`; 현승구야 내가 date_format(now(),'%Y,-%m-01') 으로 바꿨다 ~~
-  let user_info = await dbfunc.get_data("SELECT * FROM user");
-  let business_status = [];
-  for (let i in user_info) {
-    let cur_id = user_info[i].user_id;
-    let cur_name = user_info[i].u_name;
-    let how_many = 0;
-    let call_data = await dbfunc.get_data(
-      `SELECT * FROM call_status WHERE today = date_format(now(),'%Y,-%m-%d') and uid = ${cur_id};`
-    );
-    let data = {};
-    data.call_status = [];
-    for (let j in call_data) {
-      let add_data = {};
-      add_data.cid = call_data[j].cid;
-      let c_name = await dbfunc.get_data(
-        `SELECT * FROM center WHERE today = date_format(now(),'%Y,-%m-%d') and uid = ${cur_id};`
-      )[0].c_name;
-      add_data.participation = call_data[j].participation;
-      data.call_status.push(add_data);
-      how_many++;
+//콜 이력 수정버튼 -> 디비 수정
+// app.get("/home/modify_call/:no", (req, res) => {
+//   let no = path.parse(req.params.no).base;
+//   db.query(
+//     `UPDATE call_status
+//      SET (uid, date, participation, in_out, c_manager, m_ph, m_email, etc) =
+//      (${uid}, ${date}, ${participation}, ${in_out}, ${c_manager}, ${m_ph}, ${m_email}, ${etc})
+//      WHERE no=${no}`,
+//     (err, update_apply) => {
+//       if (err) {
+//         console.log(err);
+//         res.send(false);
+//       }
+//       res.send(true);
+//     }
+//   );
+// });
+
+app.post("/home/modify_call/:no", (req, res) => {
+  let post = JSON.parse(Object.keys(req.body)[0]);
+  let no = path.parse(req.params.no).base;
+  console.log(no, post);
+  // const { cid } = post;
+  const { uid } = post;
+  const { date } = post;
+  const { participation } = post;
+  const { in_out } = post;
+  const { c_manager } = post;
+  const { m_ph } = post;
+  const { m_email } = post;
+  const { etc } = post;
+  let result2 = [];
+  for (let key in post) {
+    switch (key) {
+      case "uid":
+        if (post[key] == "") result2.push(1);
+        break;
+      case "date":
+        if (post[key] == "") result2.push(2);
+        break;
+      case "participation":
+        if (post[key] == "") result2.push(3);
+        break;
+      case "in_out":
+        if (post[key] == "") result2.push(4);
+        break;
+      case "c_manager":
+        if (post[key] == "") result2.push(5);
+        break;
+      case "m_ph":
+        if (post[key] == "") result2.push(6);
+        break;
+      case "m_email":
+        if (post[key] == "") result2.push(7);
+        break;
     }
-    data.how_many = how_many;
-    business_status.push(data);
+  }
+  let error_code = {};
+  if (result2.length > 0) {
+    error_code.error = result2;
+    res.send(error_code);
+  } else {
+    let sql = `UPDATE call_status 
+    SET uid = '${uid}', date='${date}', participation='${participation}', in_out='${in_out}', c_manager='${c_manager}', m_ph='${m_ph}', m_email='${m_email}', etc='${etc}' 
+    WHERE no=${no}`;
+
+    db.query(sql, (err, store_apply) => {
+      if (err) {
+        console.log(err);
+      }
+      res.send(true);
+    });
   }
 });
 
+//admin page
+// 콜직원 업무 현황
+// app.get("/:userid/getbusinessstatus", async (req, res) => {
+//   //let userid = path.parse(req.params.userid).base;
+//   if (userid === "Admin") res.send(false);
+//   let day = new Date();
+//   let year = day.getFullYear();
+//   let month = day.getMonth() + 1;
+//   let date = day.getDate();
+//   //let today = `${year}-${month}-${date}`; 현승구야 내가 date_format(now(),'%Y,-%m-01') 으로 바꿨다 ~~
+//   let user_info = await dbfunc.get_data("SELECT * FROM user");
+//   let business_status = [];
+//   for (let i in user_info) {
+//     let cur_id = user_info[i].user_id;
+//     let cur_name = user_info[i].u_name;
+//     let how_many = 0;
+//     let call_data = await dbfunc.get_data(
+//       `SELECT * FROM call_status WHERE today = date_format(now(),'%Y,-%m-%d') and uid = ${cur_id};`
+//     );
+//     let data = {};
+//     data.call_status = [];
+//     for (let j in call_data) {
+//       let add_data = {};
+//       add_data.cid = call_data[j].cid;
+//       let c_name = await dbfunc.get_data(
+//         `SELECT * FROM center WHERE today = date_format(now(),'%Y,-%m-%d') and uid = ${cur_id};`
+//       )[0].c_name;
+//       add_data.participation = call_data[j].participation;
+//       data.call_status.push(add_data);
+//       how_many++;
+//     }
+//     data.how_many = how_many;
+//     business_status.push(data);
+//   }
+// });
+
+// 콜직원 업무 현황
+app.get("/:search_date/statistic", async (req, res) => {
+  const search_date = path.parse(req.params.search_date).base;
+  console.log(search_date);
+  let result = [];
+  result = await dbfunc.get_data(
+    `SELECT u_name, C.uid, COUNT(uid) AS call_num FROM call_status C INNER JOIN user U ON C.uid = U.user_id WHERE C.today = '${search_date}' GROUP BY C.uid ORDER BY uid`
+  );
+  console.log(result);
+  res.send(result);
+});
+
+//call 직원 정보 주기
+app.get("/getusers", async (req, res) => {
+  result = await dbfunc.get_data(`SELECT * FROM user`);
+  res.send(result);
+});
 // 콜직원 추가 변경
 app.post("/:userid/setuser", (req, res) => {
   let post = JSON.parse(Object.keys(req.body)[0]);
@@ -479,8 +616,9 @@ app.get("/:userid/:user_id/deleteuser", (req, res) => {
 
 // 어린이집 추가 삭제 변경
 app.post("/:userid/setcenter", (req, res) => {
-  const uid = path.parse(req.params.uid).base;
+  const uid = path.parse(req.params.userid).base;
   let post = JSON.parse(Object.keys(req.body)[0]);
+  console.log(post);
   let c_sido = post.c_sido;
   let c_sigungu = post.c_sigungu;
   let c_name = post.c_name;
@@ -498,6 +636,33 @@ app.post("/:userid/setcenter", (req, res) => {
     `INSERT INTO center( c_sido, c_sigungu, c_name, c_type, c_status, c_address, c_zipcode, c_ph, c_fax_num, c_people, c_hp_address, c_latitude, c_longitude )
     VALUES ('${c_sido}', '${c_sigungu}', '${c_name}', '${c_type}', '${c_status}', '${c_address}', '${c_zipcode}', '${c_ph}', '${c_fax_num}', '${c_people}', '${c_hp_address}', '${c_latitude}', '${c_longitude}'); 
     `,
+    () => {
+      res.send(true);
+    }
+  );
+});
+//center update
+app.post("/:userid/center_update", (req, res) => {
+  const uid = path.parse(req.params.userid).base;
+  let post = JSON.parse(Object.keys(req.body)[0]);
+  console.log(post);
+  let c_id = post.center_id;
+  let c_sido = post.c_sido;
+  let c_sigungu = post.c_sigungu;
+  let c_name = post.c_name;
+  let c_type = post.c_type;
+  let c_status = post.c_status;
+  let c_address = post.c_address;
+  let c_zipcode = post.c_zipcode;
+  let c_ph = post.c_ph;
+  let c_fax_num = post.c_fax_num;
+  let c_people = post.c_people;
+  let c_hp_address = post.c_hp_address;
+  let c_latitude = post.c_latitude;
+  let c_longitude = post.c_longitude;
+  db.query(
+    `UPDATE center SET c_sido = '${c_sido}',c_sigungu = '${c_sigungu}',c_name = '${c_name}',c_type = '${c_type}',c_status = '${c_status}',c_address = '${c_address}',c_zipcode = '${c_zipcode}',
+    c_ph = '${c_ph}',c_fax_num = '${c_fax_num}',c_people = '${c_people}',c_hp_address = '${c_hp_address}',c_latitude = '${c_latitude}',c_longitude = '${c_longitude}' WHERE center_id = ${c_id}`,
     () => {
       res.send(true);
     }
@@ -631,6 +796,16 @@ app.get(`/home/digit/:uid/:num`, (req, res) => {
     );
   }
 });
+app.get('/readingmail/read', async (req,res) => {
+  let test;
+  test = await mail.a();
+  let failed_message = [];
+  test.forEach((element) => {
+    if (element.includes("실패") || element.includes("failure")) failed_message.push(element + '\n');
+  });
+  console.log(failed_message);
+  res.send(failed_message);
+})
 
 app.listen(3000, function () {
   console.log("Example app listening on port 3000!");
