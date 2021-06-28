@@ -160,7 +160,7 @@ function Navigation(props) {
 						전체일정 조회
 					</Link>
 				</div>
-				<div
+				{/* <div
 					name='reading_mail'
 					class={
 						currentPage === 'reading_mail'
@@ -171,7 +171,7 @@ function Navigation(props) {
 					<Link name='reading_mail' class='item' to='/readingmail'>
 						실패메일
 					</Link>
-				</div>
+				</div> */}
 				<div name='logout' class='navigation-item'>
 					<Link class='item' to='/logout'>
 						Logout
