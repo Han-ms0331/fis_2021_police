@@ -39,7 +39,7 @@ function CenterList(props) {
 		const data = JSON.stringify(props.data)
 		localStorage.setItem("data", data)
 		console.log(props.data);
-		props.setCenterInfo(props.data);
+		// props.setCenterInfo(props.data);
 		console.log(check);
 		e.preventDefault();
 		props.setCurrentResult(props.data.center_id);

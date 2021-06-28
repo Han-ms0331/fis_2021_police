@@ -6,7 +6,7 @@ function Maillist(props){
     const [result_array,setResult_array] = useState([]);
     props.setIsLogined(localStorage.getItem("isLogined"));
     const result = axios.get(
-        `http://192.168.0.117:3000/readingmail/read`
+        `http://localhost:3000/readingmail/read`
       );
       console.log(result);
       setResult_array(result);
