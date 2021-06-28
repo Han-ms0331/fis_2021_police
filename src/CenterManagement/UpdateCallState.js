@@ -85,17 +85,17 @@ function UpdateCallState(props) {
         // console.log(send_data.etc);
         send();
         const getCenterInfo = async () => {
-          let result = await axios.get(
+          let result2 = await axios.get(
             `http://192.168.0.117:3000/home/${props.centerInfo.centerName}/search/${props.centerInfo.centerID}`
           );
-          console.log(result.data.calls);
+          console.log(result2.data.calls);
           props.setCenterInfo({
             centerName: props.centerInfo.centerName,
             centerAddr: props.centerInfo.centerAddr,
             centerPhoneNumber: props.centerInfo.centerPhoneNumber,
             centerID: props.centerInfo.centerID,
-            callState_list: result.data.calls,
-            applyState_list: result.data.applies,
+            callState_list: result2.data.calls,
+            applyState_list: result2.data.applies,
           });
         };
         await getCenterInfo();
