@@ -47,9 +47,9 @@ app.all("/*", function (req, res, next) {
   });
   next();
 });
-app.get("/", (req, res) => {
-  res.send("success");
+app.get("/", async (req, res) => {
 });
+
 app.post("/login", (req, res) => {
   let post = JSON.parse(Object.keys(req.body)[0]);
   let id = post.username;
@@ -87,6 +87,7 @@ app.post("/login", (req, res) => {
 app.post("/logout", (req, res) => {
   req.session.remove("userid");
   req.session.remove("is_logined");
+  return;
 });
 app.get("/home/:userid", function (req, res) {
   //uid 반환
@@ -94,6 +95,7 @@ app.get("/home/:userid", function (req, res) {
     var userid = path.parse(req.params.userid).base;
     res.send(userid);
   }
+  return;
 });
 app.get(
   "/home/mail/:receiver/:c_id/:c_address/:c_name/:c_ph/:userName",
@@ -279,10 +281,21 @@ app.post("/home/call_write/:cid", async (req, res) => {
   } else {
     console.log(post);
     let result = await dbfunc.set_call_status(post);
-    
+
     res.send(result);
   }
 });
+
+app.get("/home/get_agent/:a_region", async (req, res) => {
+  let a_region = path.parse(req.params.a_region).base;
+  await db.query(
+    `SELECT * FROM agent WHERE agent_id LIKE '%${a_region}%'`,
+    async (error, datas) => {
+      send(datas);
+    }
+  );
+});
+
 app.get("/home/get_agent/:a_region/:visit_date", async (req, res) => {
   let a_region = path.parse(req.params.a_region).base;
   let visit_date = path.parse(req.params.visit_date).base;
@@ -567,7 +580,7 @@ app.get("/:search_date/statistic", async (req, res) => {
 app.get("/getusers", async (req, res) => {
   result = await dbfunc.get_data(`SELECT * FROM user`);
   res.send(result);
-})
+});
 // 콜직원 추가 변경
 app.post("/:userid/setuser", (req, res) => {
   let post = JSON.parse(Object.keys(req.body)[0]);
@@ -783,6 +796,16 @@ app.get(`/home/digit/:uid/:num`, (req, res) => {
     );
   }
 });
+app.get('/readingmail/read', async (req,res) => {
+  let test;
+  test = await mail.a();
+  let failed_message = [];
+  test.forEach((element) => {
+    if (element.includes("실패") || element.includes("failure")) failed_message.push(element + '\n');
+  });
+  console.log(failed_message);
+  res.send(failed_message);
+})
 
 app.listen(3000, function () {
   console.log("Example app listening on port 3000!");
