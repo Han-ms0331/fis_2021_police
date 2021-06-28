@@ -186,6 +186,7 @@ function AgentManagement(props) {
           {result_agent.data.map((result_agent) => (
             <li>
               <AgentList
+                searchAgent={searchAgent}
                 agentList={agentList}
                 setAgentList={setAgentList}
                 setUpdateAgent={setUpdateAgent}
@@ -200,6 +201,7 @@ function AgentManagement(props) {
           {result_call.data.map((result_call) => (
             <li>
               <CallAgentList
+                searchAgent={searchAgent}
                 callagentList={callagentList}
                 setCallAgentList={setCallAgentList}
                 setUpdateCall={setUpdateCall}

@@ -7,7 +7,7 @@ function CenterAdd (props) {
 
     const [c_sido, setSido] = useState('');
     const [c_sigungu, setSigungu] = useState('');
-    const [c_name, setName] = useState('');
+    const [c_name, setName] = useState(props.searchCenter);
     const [c_type, setType] = useState('');
     const [c_status, setStatus] = useState('');
     const [c_address, setAddress] = useState('');
@@ -107,7 +107,7 @@ function CenterAdd (props) {
                 <input 
                     name='c_name'
                     type='text'
-                    placeholder='시설명'
+                    value={props.searchCenter}
                     onChange={onChange}
                     required
                 />

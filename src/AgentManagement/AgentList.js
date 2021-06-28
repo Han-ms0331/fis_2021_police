@@ -31,6 +31,9 @@ function AgentList (props) {
             <div onClick={onClick}>
                 선택
             </div>
+            <div>
+                삭제
+            </div>
         </div>
     );
 }

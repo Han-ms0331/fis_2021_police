@@ -100,18 +100,37 @@ function CenterUpdate(props) {
     }
   };
 
+  const delete_center = async () => {
+    const result = await axios.get(
+      `http://192.168.0.117:3000/userid/${states.center_id}/deletecenter`
+    )
+  };
+
+  const deleteCenter =(e) => {
+    console.log(states.center_id);
+    e.preventDefault();
+    if(e.target.name === 'delete') {
+      if(window.confirm(`${states.c_name}의 정보를 삭제하시곘습니까?`)) {
+        alert('삭제되었습니다.');
+        delete_center();
+      }
+    }
+  }
   const cancel = (e) => {
     props.setIsLoading_2(true);
   };
   return check ? null : test ? null : (
     <div class="add_center_list">
+      <button name='delete' onClick={deleteCenter}>
+        삭제
+      </button>
       <div>
         <span>Center ID: </span>
         <input
           name="center_id"
           type="text"
           placeholder={states.center_id}
-          // value={states.center_id}
+          // defaultValue={states.center_id}
           onChange={onChange}
         />
       </div>
