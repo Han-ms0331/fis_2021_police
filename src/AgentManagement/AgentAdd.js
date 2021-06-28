@@ -90,7 +90,7 @@ function AgentAdd (props) {
                 <input 
                     name='a_address'
                     type='text'
-                    placeholder='전화번호'
+                    placeholder='집주소'
                     onChange={onChange}
                     required
                 />

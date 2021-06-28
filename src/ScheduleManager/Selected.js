@@ -9,6 +9,7 @@ function Selected(props) {
 
   const schedule = JSON.parse(localStorage.getItem("selectedData"));
   const agent = JSON.parse(localStorage.getItem("agentList"));
+  console.log(agent);
   let agent_schedule = [];
 
   const onClick = (e) => {

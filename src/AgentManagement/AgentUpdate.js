@@ -65,7 +65,7 @@ function AgentUpdate (props) {
                     name='agent_id'
                     type='text'
                     placeholder='agent_id'
-                    value={props.agentInfo.agent_id}
+                    // value={props.agentInfo.agent_id}
                     onChange={onChange}
                 />
             </div>
