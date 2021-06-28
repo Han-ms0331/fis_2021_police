@@ -4,7 +4,6 @@ import CenterList from './CenterList.js'
 import CenterAdd from './CenterAdd.js'
 import CenterUpdate from './CenterUpdate.js'
 import { checkPropTypes } from 'prop-types';
-import '../css/CenterManage.css'
 
 function CenterManage () {
     const [searchCenter, setSearchCenter] = useState("");
@@ -166,6 +165,7 @@ function CenterManage () {
         />
         <div>
         <CenterUpdate 
+            centerInfo={centerInfo}
             searchCenter={searchCenter}
             setIsLoading_2={setIsLoading_2}
             setResult_1ary={setResult_1ary}

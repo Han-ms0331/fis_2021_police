@@ -61,7 +61,7 @@ function AgentManagement(props) {
     }
   };
   const getCallAgent = async () => {
-    const result = await axios.get("http://localhost:3000/getusers");
+    const result = await axios.get("http://192.168.0.117:3000/getusers");
     setResult_call(result);
     console.log(result_call);
   };
@@ -126,14 +126,14 @@ function AgentManagement(props) {
   return isAdmin ? (
     props.isLogined ? (
       <div class="RSbar">
-        <div>
+        <div class='search'>
           <select name="select" onChange={onChange}>
             <option value="선택">===선택===</option>
             <option value="현장요원">현장요원</option>
             <option value="call 직원">call 직원</option>
           </select>
         </div>
-        <div>
+        <div class='search'>
           <span>직원 : </span>
           <input
             name="Agent"
@@ -149,7 +149,7 @@ function AgentManagement(props) {
           value="검색"
           onClick={realSearch}
         />
-        <div>
+        <div class='search'>
           <input
             class="RSsearchbtn"
             name="add"
@@ -157,6 +157,20 @@ function AgentManagement(props) {
             value="추가"
             onClick={AddAgent}
           />
+        </div>
+        <div class='update'>
+        <AgentUpdate
+          updateAgent={updateAgent}
+          searchAgent={searchAgent}
+          setUpdateAgent={setUpdateAgent}
+        />
+        <CallAgentUpdate
+          updateCall={updateCall}
+          searchAgent={searchAgent}
+          setUpdateCall={setUpdateCall}
+		      callagentInfo={callagentInfo}
+		      data={result_call}
+        />
         </div>
         <AgentAdd
           addAgent={addAgent}
@@ -194,20 +208,8 @@ function AgentManagement(props) {
                 data={result_call}
               />
             </li>
-		  ))}
+		       ))}
         </ul>
-        <AgentUpdate
-          updateAgent={updateAgent}
-          searchAgent={searchAgent}
-          setUpdateAgent={setUpdateAgent}
-        />
-        <CallAgentUpdate
-          updateCall={updateCall}
-          searchAgent={searchAgent}
-          setUpdateCall={setUpdateCall}
-		  callagentInfo={callagentInfo}
-		  data={result_call}
-        />
       </div>
     ) : (
       <Redirect to="/" />

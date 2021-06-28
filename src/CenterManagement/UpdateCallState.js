@@ -54,6 +54,8 @@ function UpdateCallState(props) {
 
 	const send = async () => {
 		console.log(props.centerID);
+		console.log(props.c_manager);
+		console.log(props.participation);
 		const result = await axios.post(
 			`http://192.168.0.117:3000/home/modify_call/${send_data.no}`,
 			JSON.stringify({
@@ -74,15 +76,15 @@ function UpdateCallState(props) {
 		if (e.target.name === 'save') {
 			if (window.confirm('수정된 내용을 저장하시겠습니까?')) {
 				alert('저장되었습니다.');
-				// console.log(send_data.name);
-				// console.log(send_data.date);
-				// console.log(send_data.in_out);
-				// console.log(send_data.estimate_num);
-				// console.log(send_data.m_email);
-				// console.log(send_data.m_ph);
-				// console.log(send_data.participation);
-				// console.log(send_data.uid);
-				// console.log(send_data.etc);
+				console.log(send_data.name);
+				console.log(send_data.date);
+				console.log(send_data.in_out);
+				console.log(send_data.estimate_num);
+				console.log(send_data.m_email);
+				console.log(send_data.m_ph);
+				console.log(send_data.participation);
+				console.log(send_data.uid);
+				console.log(send_data.etc);
 				send();
 				closeCancel();
 			}
@@ -148,7 +150,7 @@ function UpdateCallState(props) {
 			<div>
 				<span>시설 참여 여부: </span>
 				<select
-					name='attend'
+					name='participation'
 					defaultValue={data.participation}
 					onChange={onChange}>
 					<option value='선택'>===선택===</option>
