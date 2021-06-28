@@ -28,7 +28,7 @@ function ReadingSche(props) {
 	const getSchedule = async () => {
 		console.log(searchDate);
 		result = await axios.get(
-			`http://localhost:3000/fullschedule/${searchDate}/`
+			`http://192.168.0.117:3000/fullschedule/${searchDate}/`
 		);
 		console.log(result.data);
 
