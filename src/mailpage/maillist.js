@@ -3,14 +3,15 @@ import axios from 'axios';
 import { Redirect } from 'react-router';
 import { element } from 'prop-types';
 function Maillist(props) {
-	const [result_array, setResult_array] = useState([]);
+    let result_array;
+	// const [result_array, setResult_array] = useState([]);
 	props.setIsLogined(localStorage.getItem('isLogined'));
 	const mailinfo = async () => {
 		const result = await axios.get(
 			`http://192.168.0.117:3000/readingmail/read`
 		);
 		console.log(result);
-		setResult_array(result);
+		result_array=result;
 		console.log(result_array);
 	};
 	mailinfo();
