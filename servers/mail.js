@@ -69,7 +69,7 @@ module.exports = {
         let min60_ago = new Date();
         min60_ago.setTime(Date.now() - 3600 * 1000);
         min60_ago = min60_ago.toISOString();
-        var searchCriteria = [["SINCE", 'yesterday']];
+        var searchCriteria = [["SINCE", "yesterday"]];
 
         var fetchOptions = {
           bodies: ["HEADER", "TEXT"],
@@ -79,12 +79,18 @@ module.exports = {
           .search(searchCriteria, fetchOptions)
           .then(function (messages) {
             let subjects = [];
-            messages.forEach(function (item){
-              let header = _.find(item.parts, {which : "HEADER"});
-              console.log(header);
-              subjects.push(header.body.subject[0]);
-              console.log(subjects)
-            })
+            messages.forEach(function (item) {
+              let header = _.find(item.parts, { which: "HEADER" });
+              let text = _.find(item.parts, { which: "TEXT" });
+              let subject = header.body.subject[0];
+              let filters = /\<.+\@.+\..+\>/;
+              if (subject.includes("failure")) {
+                let target = text.body.match(filters);
+                subject = "target" + "에게 보내지지 않았습니다";
+              }
+              subject += "메일 주소를 다시 확인해 주세요";
+              subjects.push(subject);
+            });
             return subjects;
           });
       });

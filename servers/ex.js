@@ -40,29 +40,48 @@ async function a() {
       return connection
         .search(searchCriteria, fetchOptions)
         .then(function (messages) {
-          let html_t = [];
+          let subjects = [];
           messages.forEach(function (item) {
-            var all = _.find(item.parts, { which: "TEXT" });
-            var header = _.find(item.parts, { which: "HEADER" });
-            let fil = /.+\r\n/g;
-            let str = all.body.match(fil);
-            let decode = "";
-            for (let element of str) {
-              if (element.includes("Content") || element.includes("--")) {
-                continue;
-              } else decode += Buffer.from(element, "base64").toString("utf-8");
-            }
-            //console.log(decode);
-            //console.log(all);
-            //var html = Buffer.from(all.body, "base64").toString("utf-8");
-            //html_t.push(html);
+            let header = _.find(item.parts, { which: "HEADER" });
+            let text = _.find(item.parts, { which: "TEXT" });
+            let subject = header.body.subject[0];
+            let filters = /\<.+\@.+\..+\>/;
             console.log(header);
-            //console.log(all.body);
-            //console.log(all);
-            html_t.push(decode);
+            if (subject.includes("failure")) {
+              let target = text.body.match(filters);
+              subject = target[0] + "에게 보내지지 않았습니다";
+            }
+            subject += " 메일 주소를 다시 확인해 주세요 " + header.body.date[0] + "에 발송됨";
+            subjects.push(subject);
+            console.log(subject);
           });
-          return html_t;
+          return subjects;
         });
+        // .then(function (messages) {
+          
+        //   // let html_t = [];
+        //   // messages.forEach(function (item) {
+        //   //   var all = _.find(item.parts, { which: "TEXT" });
+        //   //   var header = _.find(item.parts, { which: "HEADER" });
+        //   //   let fil = /.+\r\n/g;
+        //   //   let str = all.body.match(fil);
+        //   //   let decode = "";
+        //   //   for (let element of str) {
+        //   //     if (element.includes("Content") || element.includes("--")) {
+        //   //       continue;
+        //   //     } else decode += Buffer.from(element, "base64").toString("utf-8");
+        //   //   }
+        //   //   //console.log(decode);
+        //   //   //console.log(all);
+        //   //   //var html = Buffer.from(all.body, "base64").toString("utf-8");
+        //   //   //html_t.push(html);
+        //   //   console.log(header);
+        //   //   console.log(all);
+        //   //   //console.log(all);
+        //   //   html_t.push(decode);
+        //   // });
+        //   // return html_t;
+        // });
     });
   });
   return result;
@@ -77,7 +96,7 @@ app.get("/", async (req, res) => {
   //   if (element.includes("발송실패")) failed_message.push(element);
   // });
   // console.log(failed_message);
-  res.send(test[0]);
+  res.send(test);
 });
 
 app.listen(4000, function () {
