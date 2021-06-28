@@ -799,12 +799,8 @@ app.get(`/home/digit/:uid/:num`, (req, res) => {
 app.get('/readingmail/read', async (req,res) => {
   let test;
   test = await mail.a();
-  let failed_message = [];
-  test.forEach((element) => {
-    if (element.includes("실패") || element.includes("failure")) failed_message.push(element + '\n');
-  });
-  console.log(failed_message);
-  res.send(failed_message);
+  console.log(test);
+  res.send(test);
 })
 
 app.listen(3000, function () {

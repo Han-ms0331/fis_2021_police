@@ -53,7 +53,6 @@ async function a() {
             }
             subject += " 메일 주소를 다시 확인해 주세요 " + header.body.date[0] + "에 발송됨";
             subjects.push(subject);
-            console.log(subject);
           });
           return subjects;
         });

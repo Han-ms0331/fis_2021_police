@@ -88,9 +88,18 @@ module.exports = {
               if (subject.includes("failure")) {
                 let target = text.body.match(filters);
                 subject = "target" + "에게 보내지지 않았습니다";
+                subject +=
+                  "메일 주소를 다시 확인해 주세요" +
+                  header.body.date[0] +
+                  "에 발송됨";
+                subjects.push(subject);
+              } else if (subject.includes("실패")) {
+                subject +=
+                  "메일 주소를 다시 확인해 주세요" +
+                  header.body.date[0] +
+                  "에 발송됨";
+                subjects.push(subject);
               }
-              subject += "메일 주소를 다시 확인해 주세요" + header.body.date[0] + "에 발송됨";
-              subjects.push(subject);
             });
             return subjects;
           });
