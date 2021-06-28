@@ -443,7 +443,7 @@ function Home(props) {
 											setIsLoading_2={setIsLoading_2}
 											uid={props.uid}
 											setCenterInfo={setCenterInfo}
-											centerID={centerInfo.centerID}
+											centerInfo={centerInfo}
 										/>
 									</li>
 								))}
