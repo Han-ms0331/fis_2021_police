@@ -25,9 +25,13 @@
 }
 
 .select_agent {
+  font-size: 20px;
+  display: flex;
   height: 200px;
   width: 80px;
   text-align: center;
+  justify-content: space-around;
+  align-items: center;
 }
 
 .update_input {
@@ -40,7 +44,10 @@
 .select_schedule_info_etc {
   white-space: pre-line;
 }
-
+.select_schedule_info_c_name {
+  font-size: 25px;
+  font-weight: bold;
+}
 #add_btn {
   margin-left: 50px;
   font-size: xx-large;
