@@ -48,8 +48,10 @@
   font-size: 25px;
   font-weight: bold;
 }
+
 #add_btn {
   margin-left: 50px;
+  margin-right: 50px;
   font-size: xx-large;
   font-weight: lighter;
   background-color: white;
