@@ -4,12 +4,13 @@ module.exports = {
   sche: async function (search_region, month) {
     return new Promise((resolve) => {
       db.query(
-        `SELECT aid, visit_date, visit_time, estimate_num, cid, no, latest, etc
-                  FROM apply_status            
-                  WHERE visit_date BETWEEN '2021-${month}-01' AND '2021-${month}-31' 
-                        AND latest = 1
-                        AND aid LIKE '%${search_region}%'
-                  ORDER BY visit_date, visit_time;`,
+        `SELECT aid, visit_date, visit_time, estimate_num, cid, no, latest, etc, u_name
+        FROM apply_status       
+        INNER JOIN user U ON apply_status.uid = U.user_id     
+        WHERE visit_date BETWEEN '2021-${month}-01' AND '2021-${month}-31' 
+              AND latest = 1
+              AND aid LIKE '%${search_region}%'
+        ORDER BY visit_date, visit_time;`,
         async function (error, store_schedule) {
           if (error) {
             console.log(error);
