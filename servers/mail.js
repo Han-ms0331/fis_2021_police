@@ -66,10 +66,11 @@ module.exports = {
   a: async () => {
     let result = await Imap.connect(config).then(function (connection) {
       return connection.openBox("INBOX").then(function () {
-        let min60_ago = new Date();
-        min60_ago.setTime(Date.now() - 3600 * 1000);
-        min60_ago = min60_ago.toISOString();
-        var searchCriteria = [["SINCE", "yesterday"]];
+        var delay = 24 * 3600 * 1000;
+        var yesterday = new Date();
+        yesterday.setTime(Date.now() - delay);
+        yesterday = yesterday.toISOString();
+        var searchCriteria = [["SINCE", yesterday]];
 
         var fetchOptions = {
           bodies: ["HEADER", "TEXT"],
