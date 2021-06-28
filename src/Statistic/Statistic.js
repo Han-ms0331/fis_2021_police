@@ -7,13 +7,14 @@ function Statistic(props) {
 
 	let isAdmin = false;
 	let inputDate = '';
-	let date = new Date(inputDate);
-	let sendData = `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`;
+
 	if (localStorage.getItem('userName') === 'admin') {
 		isAdmin = true;
 	}
 
 	const send = async () => {
+		let date = new Date(inputDate);
+		let sendData = `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`;
 		const result = await axios.get(
 			`http://192.168.0.117:3000/${sendData}/statistic`
 		);
