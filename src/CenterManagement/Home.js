@@ -87,18 +87,20 @@ function Home(props) {
     getSearchCenterList_b(searchCenter);
   };
   const onClick_email = async (e) => {
-	if(centerInfo.callState_list.length === 0) return;
-	else if(window.confirm(`${centerInfo.centerName}에게 메일을 보내시겠습니까?`)){
-    const target_email = centerInfo.callState_list[0].m_email;
-	const user_id = localStorage.getItem('userName');
-	const c_id = centerInfo.centerID;
-	const c_address = centerInfo.centerAddr;
-	const c_name = centerInfo.centerName;
-	const c_ph = centerInfo.centerPhoneNumber;
-    const result = await axios.get(
-    	`http://192.168.0.117:3000/home/mail/${target_email}/${c_id}/${c_address}/${c_name}/${c_ph}/${user_id}`
+    if (centerInfo.callState_list.length === 0) return;
+    else if (
+      window.confirm(`${centerInfo.centerName}에게 메일을 보내시겠습니까?`)
+    ) {
+      const target_email = centerInfo.callState_list[0].m_email;
+      const user_id = localStorage.getItem("userName");
+      const c_id = centerInfo.centerID;
+      const c_address = centerInfo.centerAddr;
+      const c_name = centerInfo.centerName;
+      const c_ph = centerInfo.centerPhoneNumber;
+      const result = await axios.get(
+        `http://192.168.0.117:3000/home/mail/${target_email}/${c_id}/${c_address}/${c_name}/${c_ph}/${user_id}`
       );
-	}
+    }
   };
   const onKeyPress = (e) => {
     if (e.key == "Enter") {

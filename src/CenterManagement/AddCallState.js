@@ -40,6 +40,7 @@ function AddCallState(props) {
   };
   const selectEmail = (e) => {
     setEmailform(e.target.value);
+    console.log(emailform);
   };
   const handleNumber = (e) => {
     setNumber(e.target.value);
@@ -60,6 +61,7 @@ function AddCallState(props) {
   };
 
   const send = async () => {
+    console.log(email);
     const result = await axios.post(
       `http://192.168.0.117:3000/home/call_write/${props.centerID}`,
       JSON.stringify({
@@ -67,7 +69,7 @@ function AddCallState(props) {
         date: date,
         in_out: bound,
         estimate_num: expectNumber,
-        m_email: email,
+        m_email: `${email}${emailform}`,
         m_ph: digit,
         participation: attend,
         uid: localStorage.getItem("userID"),
@@ -136,20 +138,27 @@ function AddCallState(props) {
       </div>
 
       <div>
-        <span>담당자 이메일 주소: </span>
+        <span>담당자 이메일: </span>
         <input
           name="email"
           type="email"
-          placeholder="담당자 이메일 주소"
+          placeholder="담당자 이메일"
           onChange={handleEmail}
         />
-        <span class="gol"> @ </span>
-        <select name="formselect_email" size="1" onchange={selectEmail}>
-          <option>선택해주세요</option>
-          <option value="naver.com">naver.com</option>
-          <option value="hanmail.net">hanmail.net</option>
-          <option value="gmail.com">gmail.com</option>
-          <option value="nate.com">nate.com</option>
+        {/* <span class="gol"> @ </span> */}
+        {/* <input
+          class={
+            write === true
+              ? "????????????????????????????????????"
+              : "formselect_email"
+          }
+        /> */}
+        <select name="formselect_email" size="1" onChange={selectEmail}>
+          <option value="">===선택===</option>
+          <option value="@naver.com">@naver.com</option>
+          <option value="@hanmail.net">@hanmail.net</option>
+          <option value="@gmail.com">@gmail.com</option>
+          <option value="@nate.com">@nate.com</option>
           <option value="">직접입력</option>
         </select>
       </div>
