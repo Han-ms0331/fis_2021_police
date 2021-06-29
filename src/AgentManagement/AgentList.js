@@ -5,10 +5,13 @@ function AgentList (props) {
     const onClick = (e) => {
         props.setUpdateAgent(true);
         props.setAgentInfo(props.data);
+        console.log(props.data.agent_id);
+        const data = JSON.stringify(props.data);
+        localStorage.setItem("data", data);
     }
     console.log(props.data);
 
-    return (
+    return props.agentList ? (
         <div>
             <div>
                 {props.data.agent_id}
@@ -35,6 +38,6 @@ function AgentList (props) {
                 삭제
             </div>
         </div>
-    );
+    ) : null;
 }
 export default AgentList;

@@ -10,6 +10,7 @@ import CallAgentList from "./CallAgentList.js";
 
 function AgentManagement(props) {
   const [searchAgent, setSearchAgent] = useState("");
+  const [searchRegion, setSearchRegion] = useState("");
   const [select, setSelect] = useState("");
   const [stage, setStage] = useState("");
   const [result_agent, setResult_agent] = useState({data :[],});
@@ -57,17 +58,29 @@ function AgentManagement(props) {
         setStage("call");
       }
     } else if (e.target.name === "select") {
-      setSelect(e.target.value);
+      setSelect(e.target.value); 
+    } else if (e.target.name === "Region") {
+      setSearchRegion(e.target.value);
     }
   };
+
+  const getAgent = async (search) => {
+    console.log(search);
+    const result = await axios.get(`http://192.168.0.117:3000/home/get_agent/${search}`); //a_region을 변수로 전달!
+    setResult_agent(result);
+    console.log(result);
+    console.log(result_agent);
+  }
   const getCallAgent = async () => {
     const result = await axios.get("http://192.168.0.117:3000/getusers");
     setResult_call(result);
-    console.log(result_call);
+    //console.log(result_call);
   };
 
   const realSearch = (e) => {
     getCallAgent();
+    getAgent(searchRegion);
+    console.log(searchRegion);
     if (select === "현장요원") {
       setAddAgent(false);
       setAddCall(false);
@@ -142,6 +155,15 @@ function AgentManagement(props) {
             onChange={onChange}
           />
         </div>
+        <div>
+          <span>지역: </span>
+          <input 
+            name="Region"
+            type="text"
+            placeholder="지역명"
+            onChange={onChange}
+          />
+        </div>          
         <input
           class="RSsearchbtn"
           name="search"
