@@ -47,8 +47,7 @@ app.all("/*", function (req, res, next) {
   });
   next();
 });
-app.get("/", async (req, res) => {
-});
+app.get("/", async (req, res) => {});
 
 app.post("/login", (req, res) => {
   let post = JSON.parse(Object.keys(req.body)[0]);
@@ -225,7 +224,13 @@ app.get("/home/:userid/search/:cid", async (req, res) => {
       }
       result.calls.reverse();
       result.applies = await dbfunc.get_data(
-        `SELECT * FROM apply_status WHERE cid = ${cid}`
+        // `SELECT * FROM apply_status WHERE cid = ${cid}`
+        `SELECT apply_status.*, u_name
+        FROM apply_status       
+        INNER JOIN user U ON apply_status.uid = U.user_id     
+        WHERE cid = ${cid}
+              AND latest = 1
+       `
       );
       res.send(result);
     } catch {
@@ -796,12 +801,12 @@ app.get(`/home/digit/:uid/:num`, (req, res) => {
     );
   }
 });
-app.get('/readingmail/read', async (req,res) => {
+app.get("/readingmail/read", async (req, res) => {
   let test;
   test = await mail.a();
   console.log(test);
   res.send(test);
-})
+});
 
 app.listen(3000, function () {
   console.log("Example app listening on port 3000!");

@@ -18,7 +18,7 @@ function CenterList(props) {
   //	console.log(props.data);
   const getCenterInfo = async () => {
     result = await axios.get(
-      `http://192.168.0.117:3000/home/${props.uid}/search/${props.data.center_id}`
+      `http://localhost:3000/home/${props.uid}/search/${props.data.center_id}`
     );
     console.log(result.data.calls);
     props.setCenterInfo({
