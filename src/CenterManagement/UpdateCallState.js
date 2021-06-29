@@ -20,7 +20,7 @@ function UpdateCallState(props) {
 	);
 
 	const send_data = {
-		no : data.no,
+		no: data.no,
 		name: data.c_manager,
 		date: data.date,
 		in_out: data.in_out,
@@ -43,7 +43,7 @@ function UpdateCallState(props) {
 			send_data.m_email = e.target.value;
 		} else if (e.target.name === 'm_ph') {
 			send_data.m_ph = e.target.value;
-		} else if (e.target.name === 'participation') {
+		} else if (e.target.name === 'attend') {
 			send_data.participation = e.target.value;
 		} else if (e.target.name === 'uid') {
 			send_data.uid = e.target.value;
@@ -54,8 +54,6 @@ function UpdateCallState(props) {
 
 	const send = async () => {
 		console.log(props.centerID);
-		console.log(props.c_manager);
-		console.log(props.participation);
 		const result = await axios.post(
 			`http://192.168.0.117:3000/home/modify_call/${send_data.no}`,
 			JSON.stringify({
@@ -71,21 +69,36 @@ function UpdateCallState(props) {
 		);
 	};
 
-	const check = (e) => {
+	const check = async (e) => {
 		e.preventDefault();
 		if (e.target.name === 'save') {
 			if (window.confirm('수정된 내용을 저장하시겠습니까?')) {
 				alert('저장되었습니다.');
-				console.log(send_data.name);
-				console.log(send_data.date);
-				console.log(send_data.in_out);
-				console.log(send_data.estimate_num);
-				console.log(send_data.m_email);
-				console.log(send_data.m_ph);
-				console.log(send_data.participation);
-				console.log(send_data.uid);
-				console.log(send_data.etc);
+				// console.log(send_data.name);
+				// console.log(send_data.date);
+				// console.log(send_data.in_out);
+				// console.log(send_data.estimate_num);
+				// console.log(send_data.m_email);
+				// console.log(send_data.m_ph);
+				// console.log(send_data.participation);
+				// console.log(send_data.uid);
+				// console.log(send_data.etc);
 				send();
+				const getCenterInfo = async () => {
+					let result2 = await axios.get(
+						`http://192.168.0.117:3000/home/${props.centerInfo.centerName}/search/${props.centerInfo.centerID}`
+					);
+					console.log(result2.data.calls);
+					props.setCenterInfo({
+						centerName: props.centerInfo.centerName,
+						centerAddr: props.centerInfo.centerAddr,
+						centerPhoneNumber: props.centerInfo.centerPhoneNumber,
+						centerID: props.centerInfo.centerID,
+						callState_list: result2.data.calls,
+						applyState_list: result2.data.applies,
+					});
+				};
+				await getCenterInfo();
 				closeCancel();
 			}
 		}
@@ -150,7 +163,7 @@ function UpdateCallState(props) {
 			<div>
 				<span>시설 참여 여부: </span>
 				<select
-					name='participation'
+					name='attend'
 					defaultValue={data.participation}
 					onChange={onChange}>
 					<option value='선택'>===선택===</option>

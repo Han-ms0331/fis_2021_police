@@ -20,6 +20,8 @@ function Navigation(props) {
 			setCurrentPage('agent_delete_put');
 		} else if (e.target.name === 'print') {
 			setCurrentPage('print');
+		} else if (e.target.name === 'reading_mail') {
+			setCurrentPage('reading_mail');
 		}
 		console.log(currentPage);
 	};
@@ -99,6 +101,18 @@ function Navigation(props) {
 						통계 및 기록
 					</Link>
 				</div>
+				<div
+					name='reading_mail'
+					class={
+						currentPage === 'reading_mail'
+							? 'navigation-item-select'
+							: 'navigation-item'
+					}
+					onClick={onClick}>
+					<Link name='reading_mail' class='item' to='/readingmail'>
+						실패메일
+					</Link>
+				</div>
 				<div name='logout' class='navigation-item'>
 					<Link class='item' to='/logout'>
 						Logout
@@ -146,6 +160,18 @@ function Navigation(props) {
 						전체일정 조회
 					</Link>
 				</div>
+				{/* <div
+					name='reading_mail'
+					class={
+						currentPage === 'reading_mail'
+							? 'navigation-item-select'
+							: 'navigation-item'
+					}
+					onClick={onClick}>
+					<Link name='reading_mail' class='item' to='/readingmail'>
+						실패메일
+					</Link>
+				</div> */}
 				<div name='logout' class='navigation-item'>
 					<Link class='item' to='/logout'>
 						Logout

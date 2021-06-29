@@ -9,7 +9,7 @@ function Selected(props) {
 
   const schedule = JSON.parse(localStorage.getItem("selectedData"));
   const agent = JSON.parse(localStorage.getItem("agentList"));
-  console.log(agent);
+  console.log(schedule);
   let agent_schedule = [];
 
   const onClick = (e) => {
@@ -24,6 +24,9 @@ function Selected(props) {
 
   return (
     <div class="select_body">
+      <button id="back_btn" name="back" onClick={onClick}>
+        뒤로가기
+      </button>
       {agent.map((data) => {
         agent_schedule.splice(0, agent_schedule.length);
         for (let i in schedule) {
@@ -31,6 +34,7 @@ function Selected(props) {
             agent_schedule.push(schedule[i]);
           }
         }
+
         return (
           <div class="select_container">
             <div class="select_agent">{data.agent_id}</div>
@@ -39,15 +43,31 @@ function Selected(props) {
               return (
                 <div class="select_schedule">
                   <div class="select_schedule_info_container">
-                    <div class="select_schedule_info">{data_2.c_name}</div>
-                    <div class="select_schedule_info">{data_2.c_address}</div>
-                    <div class="select_schedule_info">{data_2.c_ph}</div>
-                    <div class="select_schedule_info">{data_2.visit_date}</div>
-                    <div class="select_schedule_info">{data_2.visit_time}</div>
-                    <div class="select_schedule_info">
-                      {data_2.estimate_num}명
+                    <div class="select_schedule_info_c_name">
+                      {data_2.c_name}
                     </div>
-                    <td class="select_schedule_info_etc">{data_2.etc}</td>
+                    <div>ㅤ</div>
+                    <div class="select_schedule_info">
+                      주ㅤㅤ소:ㅤㅤ{data_2.c_address}
+                    </div>
+                    <div class="select_schedule_info">
+                      전화번호:ㅤㅤ{data_2.c_ph}
+                    </div>
+                    <div class="select_schedule_info">
+                      방문날짜:ㅤㅤ{data_2.visit_date}
+                    </div>
+                    <div class="select_schedule_info">
+                      방문시간:ㅤㅤ{data_2.visit_time}
+                    </div>
+                    <div class="select_schedule_info">
+                      예상인원:ㅤㅤ{data_2.estimate_num}명
+                    </div>
+                    <td class="select_schedule_info_etc">
+                      특이사항:ㅤㅤ{data_2.etc}
+                    </td>
+                    <div class="select_schedule_info">
+                      기록자ㅤ:ㅤㅤ{data_2.u_name}
+                    </div>
                     <DeleteSchedule
                       data={data_2}
                       agent_id={data.agent_id}
@@ -77,10 +97,6 @@ function Selected(props) {
           </div>
         );
       })}
-
-      <button id="back_btn" name="back" onClick={onClick}>
-        뒤로가기
-      </button>
     </div>
   );
 }
