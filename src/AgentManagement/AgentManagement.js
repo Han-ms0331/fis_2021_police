@@ -13,8 +13,8 @@ function AgentManagement(props) {
   const [searchRegion, setSearchRegion] = useState("");
   const [select, setSelect] = useState("");
   const [stage, setStage] = useState("");
-  const [result_agent, setResult_agent] = useState({data :[],});
-  const [result_call, setResult_call] = useState({data: [],});
+  const [result_agent, setResult_agent] = useState({ data: [] });
+  const [result_call, setResult_call] = useState({ data: [] });
   const [addAgent, setAddAgent] = useState(false);
   const [addCall, setAddCall] = useState(false);
   const [updateAgent, setUpdateAgent] = useState(false);
@@ -61,12 +61,14 @@ function AgentManagement(props) {
 
   const getAgent = async () => {
     console.log(searchRegion);
-    const _result = await axios.get(`http://192.168.0.117:3000/home/get_agent/${searchRegion}`); 
+    const _result = await axios.get(
+      `http://192.168.0.117:3000/home/get_agent/${searchRegion}`
+    );
     console.log(_result);
     setResult_agent(_result);
     console.log(_result);
     console.log(result_agent);
-  }
+  };
   const getCallAgent = async () => {
     const result = await axios.get("http://192.168.0.117:3000/getusers");
     setResult_call(result);
@@ -109,14 +111,14 @@ function AgentManagement(props) {
   };
   const agentSearch = (e) => {
     getAgent();
-    console.log(searchRegion)
+    console.log(searchRegion);
     setAddAgent(false);
     setAddCall(false);
     setUpdateAgent(false);
     setUpdateCall(false);
     setCallAgentList(false);
     setAgentList(true);
-  }
+  };
   const AddCallAgent = (e) => {
     /*
     if (select === "현장요원") {
@@ -156,18 +158,18 @@ function AgentManagement(props) {
     setUpdateAgent(false);
     setAddCall(false);
     setAddAgent(true);
-  }
+  };
 
   const onKeyPress = (e) => {
-    if(e.key === 'Enter') {
+    if (e.key === "Enter") {
       callSearch();
     }
-  }
+  };
   const onKeypress = (e) => {
-    if(e.key === 'Enter') {
+    if (e.key === "Enter") {
       agentSearch();
     }
-  }
+  };
   let isAdmin = false;
   if (localStorage.getItem("userName") === "admin") {
     isAdmin = true;
@@ -223,14 +225,10 @@ function AgentManagement(props) {
         </div>
         */}
 
-        <div class='menu'>
+        <div class="menu">
           <span>콜직원: </span>
-          <button onClick={callSearch}>
-            검색
-          </button>
-          <button onClick={AddCallAgent}>
-            추가
-          </button>
+          <button onClick={callSearch}>검색</button>
+          <button onClick={AddCallAgent}>추가</button>
 
           <span>현장요원: </span>
           <input
@@ -240,15 +238,11 @@ function AgentManagement(props) {
             onChange={onChange}
             onKeyPress={onKeypress}
           />
-          <button onClick={agentSearch}>
-            검색
-          </button>
-          <button onClick={AddAgent}>
-            추가
-          </button>
+          <button onClick={agentSearch}>검색</button>
+          <button onClick={AddAgent}>추가</button>
         </div>
 
-        <div class='update'>
+        <div class="update">
           <AgentUpdate
             updateAgent={updateAgent}
             searchAgent={searchAgent}
@@ -258,8 +252,8 @@ function AgentManagement(props) {
             updateCall={updateCall}
             searchAgent={searchAgent}
             setUpdateCall={setUpdateCall}
-		        callagentInfo={callagentInfo}
-		        data={result_call}
+            callagentInfo={callagentInfo}
+            data={result_call}
           />
         </div>
         <div>
@@ -298,12 +292,12 @@ function AgentManagement(props) {
                   callagentList={callagentList}
                   setCallAgentList={setCallAgentList}
                   setUpdateCall={setUpdateCall}
-				          setCallAgentInfo = {setCallAgentInfo}
+                  setCallAgentInfo={setCallAgentInfo}
                   searchAgent={searchAgent}
                   data={result_call}
                 />
               </li>
-		         ))}
+            ))}
           </ul>
         </div>
       </div>
