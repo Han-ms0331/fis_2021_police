@@ -293,7 +293,7 @@ app.post("/home/call_write/:cid", async (req, res) => {
 
 app.get("/home/get_agent/:a_region", async (req, res) => {
   let a_region = path.parse(req.params.a_region).base;
-  await db.query(
+  db.query(
     `SELECT * FROM agent WHERE agent_id LIKE '%${a_region}%'`,
     async (error, datas) => {
       res.send(datas);
@@ -806,6 +806,7 @@ app.get(`/home/digit/:uid/:num`, (req, res) => {
 app.get("/readingmail/read", async (req, res) => {
   let test;
   test = await mail.a();
+  test = test.reverse();
   console.log(test);
   res.send(test);
 });
