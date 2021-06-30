@@ -94,6 +94,7 @@ function ReadingSche(props) {
 												<div class='RSitem'>{data2.visit_time}</div>
 												<div class='RSitem'>{data2.estimate_num}명</div>
 												<div class='RSitem'>특이사항: {data2.etc}</div>
+												{/*<div class='RSitem'>기록자: {data2.u_name}</div>*/}
 											</div>
 										);
 									})}

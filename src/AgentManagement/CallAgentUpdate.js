@@ -18,9 +18,9 @@ function CallAgentUpdate (props) {
 			setPhone(e.target.value);
 		}
     };
-    console.log(props.callagentInfo.u_name);
-    console.log(u_name);
-    console.log(states.u_name);
+    // console.log(props.callagentInfo.u_name);
+    // console.log(u_name);
+    // console.log(states.u_name);
     const send = async() => {
         const result = await axios.post(
             `http://192.168.0.117:3000/userid/${props.callagentInfo.user_id}/modifyuser`,

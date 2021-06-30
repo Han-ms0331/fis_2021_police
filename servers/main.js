@@ -296,7 +296,7 @@ app.get("/home/get_agent/:a_region", async (req, res) => {
   await db.query(
     `SELECT * FROM agent WHERE agent_id LIKE '%${a_region}%'`,
     async (error, datas) => {
-      send(datas);
+      res.send(datas);
     }
   );
 });
