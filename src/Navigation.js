@@ -22,7 +22,7 @@ function Navigation(props) {
 		} else if (e.target.name === 'print') {
 			setCurrentPage('print');
 		} else if (e.target.name === 'reading_mail') {
-			const result = await axios.get(`http://localhost:3000/readingmail/read`);
+			const result = await axios.get(`http://192.168.0.117:3000/readingmail/read`);
 			console.log(result);
 			await setResult_array3(result.data);
 			setCurrentPage('reading_mail');
