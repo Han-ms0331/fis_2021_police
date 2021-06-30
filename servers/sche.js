@@ -30,8 +30,9 @@ module.exports = {
   scheAll: async function (before3day, after7day) {
     return new Promise((resolve) => {
       db.query(
-        `SELECT aid, visit_date, visit_time, estimate_num, cid, no, latest, etc
-                  FROM apply_status            
+        `SELECT aid, visit_date, visit_time, estimate_num, cid, no, latest, etc, u_name
+                  FROM apply_status     
+                  INNER JOIN user U ON apply_status.uid = U.user_id          
                   WHERE visit_date BETWEEN '${before3day}' AND '${after7day}' 
                         AND latest = 1
                   ORDER BY visit_date, aid, visit_time;`,
