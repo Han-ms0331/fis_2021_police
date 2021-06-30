@@ -47,8 +47,7 @@ app.all("/*", function (req, res, next) {
   });
   next();
 });
-app.get("/", async (req, res) => {
-});
+app.get("/", async (req, res) => {});
 
 app.post("/login", (req, res) => {
   let post = JSON.parse(Object.keys(req.body)[0]);
@@ -225,7 +224,13 @@ app.get("/home/:userid/search/:cid", async (req, res) => {
       }
       result.calls.reverse();
       result.applies = await dbfunc.get_data(
-        `SELECT * FROM apply_status WHERE cid = ${cid}`
+        // `SELECT * FROM apply_status WHERE cid = ${cid}`
+        `SELECT apply_status.*, u_name
+        FROM apply_status       
+        INNER JOIN user U ON apply_status.uid = U.user_id     
+        WHERE cid = ${cid}
+              AND latest = 1
+       `
       );
       res.send(result);
     } catch {
@@ -418,6 +423,8 @@ app.get("/schedule/:search_region/:month", async (req, res) => {
   let realmonth;
   if (month < 10) {
     realmonth = "0" + `${month}`;
+  } else {
+    realmonth = month;
   }
   console.log(month);
   result.sches = await sche.sche(search_region, realmonth);
@@ -716,7 +723,7 @@ app.get("/:userid/:cid/deletecenter", (req, res) => {
 
 // 요원 추가 변경
 app.get("/:userid/:agent_id/deleteagent", (req, res) => {
-  let center_id = path.parse(req.params.cid).base;
+  let agent_id = path.parse(req.params.cid).base;
   db.query(`DELETE FROM agent WHERE agent_id = ${agent_id}`, () => {
     res.send(true);
   });
@@ -796,13 +803,13 @@ app.get(`/home/digit/:uid/:num`, (req, res) => {
     );
   }
 });
-app.get('/readingmail/read', async (req,res) => {
+app.get("/readingmail/read", async (req, res) => {
   let test;
   test = await mail.a();
   test = test.reverse();
   console.log(test);
   res.send(test);
-})
+});
 
 app.listen(3000, function () {
   console.log("Example app listening on port 3000!");

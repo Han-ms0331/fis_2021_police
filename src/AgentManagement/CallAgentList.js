@@ -26,7 +26,7 @@ function CallAgentList (props) {
             }
         }
     }
-    console.log(props.data);
+    // console.log(props.data);
     return props.callagentList ? (
         <div class='agent_list'>
             <div class='agent_info'>

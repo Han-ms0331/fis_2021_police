@@ -10,3 +10,11 @@
   text-align: center;
   align-items: center;
 }
+ul {
+  list-style: none;
+}
+
+.menu {
+  position: absolute;
+  top: 80px;
+}

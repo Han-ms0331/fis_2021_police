@@ -24,6 +24,9 @@ function Selected(props) {
 
   return (
     <div class="select_body">
+      <button id="back_btn" name="back" onClick={onClick}>
+        뒤로가기
+      </button>
       {agent.map((data) => {
         agent_schedule.splice(0, agent_schedule.length);
         for (let i in schedule) {
@@ -31,6 +34,7 @@ function Selected(props) {
             agent_schedule.push(schedule[i]);
           }
         }
+
         return (
           <div class="select_container">
             <div class="select_agent">{data.agent_id}</div>
@@ -93,10 +97,6 @@ function Selected(props) {
           </div>
         );
       })}
-
-      <button id="back_btn" name="back" onClick={onClick}>
-        뒤로가기
-      </button>
     </div>
   );
 }

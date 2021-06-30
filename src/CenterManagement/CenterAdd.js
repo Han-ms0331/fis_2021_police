@@ -107,7 +107,7 @@ function CenterAdd (props) {
                 <input 
                     name='c_name'
                     type='text'
-                    value={props.searchCenter}
+                    placeholder='시설명'
                     onChange={onChange}
                     required
                 />
