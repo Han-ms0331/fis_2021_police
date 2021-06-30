@@ -62,7 +62,7 @@ function AgentManagement(props) {
   const getAgent = async () => {
     console.log(searchRegion);
     const _result = await axios.get(
-      `http://localhost:3000/home/get_agent/${searchRegion}`
+      `http://192.168.0.117:3000/home/get_agent/${searchRegion}`
     );
     console.log(_result);
     setResult_agent(_result);
