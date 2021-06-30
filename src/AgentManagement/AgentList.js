@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+// import { send } from '../../servers/mail';
 
 function AgentList (props) {
     const onClick = (e) => {
@@ -11,32 +12,48 @@ function AgentList (props) {
     }
     console.log(props.data);
 
+    const send = async () => {
+        const result = await axios.get(
+            `http://192.168.0.117:3000/${props.userName}/${props.data.agent_id}/deleteagent` //userid랑 agentid 변수로
+        )
+    }
+
+    const delete_data = (e) => {
+        e.preventDefault();
+        if(e.target.name === 'delete') {
+            if(window.confirm(`${props.data.a_name}님의 정보를 삭제하시겠습니까?`)) {
+                alert('삭제되었습니다.');
+                send();
+            }
+        }
+    }
+
     return props.agentList ? (
-        <div>
-            <div>
+        <div class='agent_list'>
+            <div class='agent_info'>
                 {props.data.agent_id}
             </div>
-            <div>
+            <div class='agent_info'>
                 {props.data.a_name}
             </div>
-            <div>
+            <div class='agent_info'>
                 {props.data.a_ph}
             </div>
-            <div>
+            <div class='agent_info'>
                 {props.data.a_address}
             </div>
-            <div>
+            <div class='agent_info'>
                 {props.data.a_latitude}
             </div>
-            <div>
+            <div class='agent_info'>
                 {props.data.a_longtitude}
             </div>
-            <div onClick={onClick}>
+            <button onClick={onClick}>
                 선택
-            </div>
-            <div>
+            </button>
+            <button name='delete' onClick={delete_data}>
                 삭제
-            </div>
+            </button>
         </div>
     ) : null;
 }

@@ -286,6 +286,7 @@ function AgentManagement(props) {
                   setAgentInfo={setAgentInfo}
                   searchAgent={searchAgent}
                   data={result_agent}
+                  userid={localStorage.getItem("userName")}
                 />
               </li>
             ))}
