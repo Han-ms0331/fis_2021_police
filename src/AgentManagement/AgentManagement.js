@@ -246,6 +246,7 @@ function AgentManagement(props) {
           <AgentUpdate
             updateAgent={updateAgent}
             searchAgent={searchAgent}
+            agentInfo={agentInfo}
             setUpdateAgent={setUpdateAgent}
           />
           <CallAgentUpdate
