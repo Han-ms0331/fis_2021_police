@@ -224,7 +224,13 @@ app.get('/home/:userid/search/:cid', async (req, res) => {
 			}
 			result.calls.reverse();
 			result.applies = await dbfunc.get_data(
-				`SELECT * FROM apply_status WHERE cid = ${cid}`
+				// `SELECT * FROM apply_status WHERE cid = ${cid}`
+				`SELECT apply_status.*, u_name
+        FROM apply_status       
+        INNER JOIN user U ON apply_status.uid = U.user_id     
+        WHERE cid = ${cid}
+              AND latest = 1
+       `
 			);
 			res.send(result);
 		} catch {
