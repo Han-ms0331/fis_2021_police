@@ -5,9 +5,9 @@ function CallAgentUpdate (props) {
 
     const states = JSON.parse(localStorage.getItem("data"));
 
-    const [u_name, setName] = useState(states.u_name);
-    const [u_pwd, setPwd] = useState(states.u_pwd);
-    const [u_ph, setPhone] = useState(states.u_ph);
+    const [u_name, setName] = useState(props.data.u_name);
+    const [u_pwd, setPwd] = useState(props.data.u_pwd);
+    const [u_ph, setPhone] = useState(props.data.u_ph);
 
     const onChange = (e) => {
         if (e.target.name === 'u_name') {
