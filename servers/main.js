@@ -723,7 +723,7 @@ app.get("/:userid/:cid/deletecenter", (req, res) => {
 
 // 요원 추가 변경
 app.get("/:userid/:agent_id/deleteagent", (req, res) => {
-  let center_id = path.parse(req.params.cid).base;
+  let agent_id = path.parse(req.params.cid).base;
   db.query(`DELETE FROM agent WHERE agent_id = ${agent_id}`, () => {
     res.send(true);
   });
