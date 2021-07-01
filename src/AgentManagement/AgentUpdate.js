@@ -2,12 +2,12 @@ import React, { useState } from 'react';
 import axios from 'axios';
 
 function AgentUpdate (props) {    
-    const [agent_id, setAgentID] = useState('');
-    const [a_name, setName] = useState('');
-    const [a_ph, setPhone] = useState('');
-    const [a_address, setAddress] = useState('');
-    const [a_latitude, setLatitude] = useState('');
-    const [a_longtitude, setLongtitude] = useState('');
+    const [agent_id, setAgentID] = useState(props.agentInfo.agent_id);
+    const [a_name, setName] = useState(props.agentInfo.a_name);
+    const [a_ph, setPhone] = useState(props.agentInfo.a_ph);
+    const [a_address, setAddress] = useState(props.agentInfo.a_address);
+    const [a_latitude, setLatitude] = useState(props.agentInfo.a_latitude);
+    const [a_longtitude, setLongtitude] = useState(props.agentInfo.a_longtitude);
 
     const onChange = (e) => {
         if (e.target.name === 'agent_id') {
@@ -34,7 +34,7 @@ function AgentUpdate (props) {
                 a_ph: a_ph,
                 a_address: a_address,
                 a_latitude: a_latitude,
-                a_longtitude
+                a_longtitude: a_longtitude
             })
         );
     }
@@ -64,7 +64,7 @@ function AgentUpdate (props) {
                 <input
                     name='agent_id'
                     type='text'
-                    placeholder='agent_id'
+                    placeholder={props.agentInfo.agent_id}
                     // value={props.agentInfo.agent_id}
                     onChange={onChange}
                 />
@@ -74,8 +74,8 @@ function AgentUpdate (props) {
                 <input
                     name='a_name'
                     type='text'
-                    placeholder='이름'
-                    value={props.agentInfo.a_name}
+                    placeholder={props.agentInfo.a_name}
+                    // value={props.agentInfo.a_name}
                     onChange={onChange}
                 />
             </div>
@@ -84,8 +84,8 @@ function AgentUpdate (props) {
                 <input  
                     name='a_ph'
                     type='text'
-                    placeholder='전화번호'
-                    value={props.agentInfo.a_ph}
+                    placeholder={props.agentInfo.a_ph}
+                    // value={props.agentInfo.a_ph}
                     onChange={onChange}
                 />
             </div>
@@ -94,8 +94,8 @@ function AgentUpdate (props) {
                 <input 
                     name='a_address'
                     type='text'
-                    placeholder='집주소'
-                    value={props.agentInfo.a_address}
+                    placeholder={props.agentInfo.a_address}
+                    // value={props.agentInfo.a_address}
                     onChange={onChange}
                 />
             </div>
@@ -104,8 +104,8 @@ function AgentUpdate (props) {
                 <input
                     name='a_latitude'
                     type='text'
-                    placeholder='위도'
-                    value={props.agentInfo.a_latitude}
+                    placeholder={props.agentInfo.a_latitude}
+                    // value={props.agentInfo.a_latitude}
                     onChange={onChange}
                 />
             </div>
@@ -114,13 +114,13 @@ function AgentUpdate (props) {
                 <input
                     name='a_longtitude'
                     type='text'
-                    placeholder='경도'
-                    value={props.agentInfo.a_longtitude}
+                    placeholder={props.agentInfo.a_longtitude}
+                    // value={props.agentInfo.a_longtitude}
                     onChange={onChange}
                 />
             </div>
             <div>
-                <button onClick={onClick}>
+                <button name='update' onClick={onClick}>
                     저장
                 </button>
                 <button onClick={cancel}>

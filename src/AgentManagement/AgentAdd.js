@@ -41,9 +41,10 @@ function AgentAdd (props) {
     }
 
     const checkit = (e) => {
+        e.preventDefault();
         window.confirm('추가하시겠습니까?');
-        console.log('agent_id');
-        console.log('a_ph');
+        console.log(agent_id);
+        console.log(a_ph);
         props.setAddAgent(false);
         send();
     }

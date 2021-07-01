@@ -19,6 +19,8 @@ function AgentList (props) {
     }
 
     const delete_data = (e) => {
+        console.log(props.userName);
+        console.log(props.data.agent_id);
         e.preventDefault();
         if(e.target.name === 'delete') {
             if(window.confirm(`${props.data.a_name}님의 정보를 삭제하시겠습니까?`)) {
@@ -48,12 +50,14 @@ function AgentList (props) {
             <div class='agent_info'>
                 {props.data.a_longtitude}
             </div>
-            <button onClick={onClick}>
-                선택
-            </button>
-            <button name='delete' onClick={delete_data}>
-                삭제
-            </button>
+            <div>
+                <button onClick={onClick}>
+                    선택
+                </button>
+                <button name='delete' onClick={delete_data}>
+                    삭제
+                </button>
+            </div>
         </div>
     ) : null;
 }

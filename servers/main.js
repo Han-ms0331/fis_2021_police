@@ -756,12 +756,12 @@ app.post("/:userid/:aid/modifyagent", (req, res) => {
 app.post("/:userid/setagent", (req, res) => {
   const aid = path.parse(req.params.aid).base;
   let post = JSON.parse(Object.keys(req.body)[0]);
-  let agent_id = agent_id;
-  let a_name = a_name;
-  let a_ph = a_ph;
-  let a_address = a_address;
-  let a_latitude = a_latitude;
-  let a_longitude = a_longitude;
+  let agent_id = post.agent_id;
+  let a_name = post.a_name;
+  let a_ph = post.a_ph;
+  let a_address = post.a_address;
+  let a_latitude = post.a_latitude;
+  let a_longitude = post.a_longitude;
   db.query(
     `INSERT INTO agent( agent_id, a_name, a_ph, a_address, a_latitude, a_longitude ) 
     VALUES ('${agent_id}', '${a_name}', '${a_ph}', '${a_address}', '${a_latitude}', '${a_longitude}')`,

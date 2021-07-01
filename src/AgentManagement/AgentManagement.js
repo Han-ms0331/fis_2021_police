@@ -66,12 +66,12 @@ function AgentManagement(props) {
     );
     console.log(_result);
     setResult_agent(_result);
-    console.log(_result);
     console.log(result_agent);
   };
   const getCallAgent = async () => {
     const result = await axios.get("http://192.168.0.117:3000/getusers");
     setResult_call(result);
+    console.log(result_call);
     // console.log(result_call);
   };
 
@@ -246,6 +246,7 @@ function AgentManagement(props) {
           <AgentUpdate
             updateAgent={updateAgent}
             searchAgent={searchAgent}
+            agentInfo={agentInfo}
             setUpdateAgent={setUpdateAgent}
           />
           <CallAgentUpdate
@@ -280,7 +281,7 @@ function AgentManagement(props) {
                   setAgentInfo={setAgentInfo}
                   searchAgent={searchAgent}
                   data={result_agent}
-                  userid={localStorage.getItem("userName")}
+                  userName={localStorage.getItem("userName")}
                 />
               </li>
             ))}
