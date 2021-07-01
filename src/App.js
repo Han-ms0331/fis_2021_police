@@ -17,6 +17,7 @@ function App() {
   const [isLogined, setIsLogined] = useState(false);
   const [UID, setUID] = useState("");
   const [currentPage, setCurrentPage] = useState("");
+	const [result_array3, setResult_array3] = useState([]);
 
   const loginState = (condition) => {
     setIsLogined(condition);
@@ -25,11 +26,11 @@ function App() {
   return (
     <BrowserRouter>
       {isLogined ? (
-        <Navigation currentPage={currentPage} setCurrentPage={setCurrentPage} />
+        <Navigation currentPage={currentPage} setCurrentPage={setCurrentPage} result_array3={result_array3} setResult_array3={setResult_array3} />
       ) : null}
 
       <Route
-        path="/"
+        exact path="/"
         render={() => (
           <Login
             userName={userName}
@@ -84,7 +85,7 @@ function App() {
       <Route
         path="/readingmail"
         render={() => (
-          <Maillist isLogined={isLogined} setIsLogined={setIsLogined} />
+          <Maillist isLogined={isLogined} setIsLogined={setIsLogined} result_array3={result_array3}/>
         )}
       />
       <Route

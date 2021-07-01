@@ -2,10 +2,12 @@ import React, { useState, useRef, useEffect } from 'react';
 import axios from 'axios';
 import { Redirect } from 'react-router';
 import { element } from 'prop-types';
-async function Maillist(props) {
-	// let result_array;
-	const [result_array, setResult_array] = useState([]);
-	props.setIsLogined(localStorage.getItem('isLogined'));
+import '../css/Maillist.css';
+function Maillist(props) {
+	//  let result_array;
+	// const [result_array, setResult_array] = useState([]);
+	// const result_array = props.result_array;
+	//props.setIsLogined(localStorage.getItem('isLogined'));
 	// const mailinfo = async () => {
 	// 	const result = await axios.get(
 	// 		`http://192.168.0.117:3000/readingmail/read`
@@ -15,18 +17,20 @@ async function Maillist(props) {
 	// 	console.log(result_array);
 	// };
 	// mailinfo();
-	const result = await axios.get(`http://192.168.0.117:3000/readingmail/read`);
-	setResult_array(result);
+	// const result = await axios.get(`http://192.168.0.117:3000/readingmail/read`);
+	// setResult_array(result);
+	//console.log('xxx');
 	return props.isLogined ? (
-		<div>
-			{result_array &&
-				result_array.map((data) => {
-					return <div>data</div>;
+		<div class='maillist_container'>
+			{props.result_array3 &&
+				props.result_array3.map((data) => {
+					return <div class='maillist_data'>{data}</div>;
 				})}
 		</div>
 	) : (
 		<Redirect to='/' />
 	);
+	return <div>xxx</div>;
 }
 
 export default Maillist;

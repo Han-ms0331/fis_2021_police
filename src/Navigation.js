@@ -2,11 +2,12 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import './css/Navigation.css';
 import imgA from './image/fislogo.png';
+import axios from 'axios';
 
 function Navigation(props) {
-	const { currentPage, setCurrentPage } = props;
+	const { currentPage, setCurrentPage, result_array3 ,setResult_array3 } = props;
 	const cur_name = localStorage.getItem('userName');
-	const onClick = (e) => {
+	const onClick = async (e) => {
 		e.preventDefault();
 		if (e.target.name === 'center_management') {
 			setCurrentPage('center_management');
@@ -21,6 +22,9 @@ function Navigation(props) {
 		} else if (e.target.name === 'print') {
 			setCurrentPage('print');
 		} else if (e.target.name === 'reading_mail') {
+			const result = await axios.get(`http://192.168.0.117:3000/readingmail/read`);
+			console.log(result);
+			await setResult_array3(result.data);
 			setCurrentPage('reading_mail');
 		}
 		console.log(currentPage);
@@ -160,7 +164,7 @@ function Navigation(props) {
 						전체일정 조회
 					</Link>
 				</div>
-				{/* <div
+				{ <div
 					name='reading_mail'
 					class={
 						currentPage === 'reading_mail'
@@ -171,7 +175,7 @@ function Navigation(props) {
 					<Link name='reading_mail' class='item' to='/readingmail'>
 						실패메일
 					</Link>
-				</div> */}
+				</div> }
 				<div name='logout' class='navigation-item'>
 					<Link class='item' to='/logout'>
 						Logout
