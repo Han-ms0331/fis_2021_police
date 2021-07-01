@@ -6,17 +6,20 @@ function AgentList (props) {
     const onClick = (e) => {
         props.setUpdateAgent(true);
         props.setAgentInfo(props.data);
-        console.log(props.data.agent_id);
+        // console.log(props.data.agent_id);
         const data = JSON.stringify(props.data);
         localStorage.setItem("data", data);
     }
     console.log(props.data);
 
     const send = async () => {
+        console.log(props.userName);
+        console.log(props.data.agent_id);
         const result = await axios.get(
             `http://192.168.0.117:3000/${props.userName}/${props.data.agent_id}/deleteagent` //userid랑 agentid 변수로
         )
     }
+    //main.js 에서 path.parse가 이상한듯? cid는 주지 않습니다
 
     const delete_data = (e) => {
         console.log(props.userName);
@@ -28,6 +31,7 @@ function AgentList (props) {
                 send();
             }
         }
+        props.setAgentList(false);
     }
 
     return props.agentList ? (
@@ -48,7 +52,7 @@ function AgentList (props) {
                 {props.data.a_latitude}
             </div>
             <div class='agent_info'>
-                {props.data.a_longtitude}
+                {props.data.a_longitude}
             </div>
             <div>
                 <button onClick={onClick}>
