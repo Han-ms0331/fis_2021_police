@@ -33,7 +33,7 @@ function AgentAdd(props) {
     console.log(a_latitude);
     console.log(a_longitude);
     const result = await axios.post(
-      "http://localhost:3000/userid/setagent",
+      "http://192.168.0.117:3000/userid/setagent",
       JSON.stringify({
         agent_id: agent_id,
         a_name: a_name,

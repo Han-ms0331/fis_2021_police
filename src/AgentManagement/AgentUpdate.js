@@ -27,7 +27,7 @@ function AgentUpdate(props) {
   // console.log(props.agentInfo.a_longitude);
   const send = async () => {
     const result = await axios.post(
-      `http://localhost:3000/userid/${props.agentInfo.agent_id}/modifyagent`,
+      `http://192.168.0.117:3000/userid/${props.agentInfo.agent_id}/modifyagent`,
       JSON.stringify({
         agent_id: agent_id,
         a_name: a_name,
