@@ -27,14 +27,14 @@ function AgentUpdate(props) {
 
   const send = async () => {
     const result = await axios.post(
-      "http://192.168.0.117:3000/userid/aid/modifyagent",
+      "http://localhost:3000/userid/aid/modifyagent",
       JSON.stringify({
         agent_id: agent_id,
         a_name: a_name,
         a_ph: a_ph,
         a_address: a_address,
         a_latitude: a_latitude,
-        a_longtitude,
+        a_longtitude: a_longtitude,
       })
     );
   };
@@ -47,6 +47,7 @@ function AgentUpdate(props) {
         send();
         console.log(agent_id);
         console.log(a_name);
+        console.log(a_longtitude);
         props.setUpdateAgent(false);
       }
     }
@@ -119,7 +120,9 @@ function AgentUpdate(props) {
         />
       </div>
       <div>
-        <button onClick={onClick}>저장</button>
+        <button name="update" onClick={onClick}>
+          저장
+        </button>
         <button onClick={cancel}>취소</button>
       </div>
     </div>

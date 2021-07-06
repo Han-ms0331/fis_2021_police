@@ -103,6 +103,11 @@ CREATE TABLE apply_status(
     FOREIGN key (aid) REFERENCES agent(agent_id)
 );
 
+alter table apply_status add foreign key (aid)
+REFERENCES agent(agent_id) ON DELETE cascade ON UPDATE cascade;
+
+
+FOREIGN key (aid) REFERENCES agent(agent_id) ON DELETE cascade ON UPDATE cascade,
 alter table apply_status add latest INT not null comment '가장 마지막 저장된 정보 1로 저장'
 alter table apply_status add etc varchar(300)  null comment '기타 및 비고';
 
