@@ -17,7 +17,7 @@ function CenterAdd (props) {
     const [c_people, setPeople] = useState('');
     const [c_hp_address, setHome] = useState('');
     const [c_latitude, setLatitude] = useState('');
-    const [c_longtitude, setLongtitude] = useState('');
+    const [c_longitude, setLongtitude] = useState('');
 
 	const onChange = (e) => {
         if (e.target.name === 'c_sido') {
@@ -44,7 +44,7 @@ function CenterAdd (props) {
             setHome(e.target.value);
         } else if (e.target.name === 'c_latitude') {
             setLatitude(e.target.value);
-        } else if (e.target.name === 'c_longtitude') {
+        } else if (e.target.name === 'c_longitude') {
             setLongtitude(e.target.value);
         }
 	};
@@ -65,7 +65,7 @@ function CenterAdd (props) {
                 c_people: c_people,
                 c_hp_address: c_hp_address,
                 c_latitude: c_latitude,
-                c_longtitude: c_longtitude
+                c_longitude: c_longitude
             })
         );
     }
@@ -200,7 +200,7 @@ function CenterAdd (props) {
             <div>
                 <span>경도: </span>
                 <input 
-                    name='c_longtitude'
+                    name='c_longitude'
                     type='text'
                     placeholder='경도'
                     onChange={onChange}

@@ -723,7 +723,7 @@ app.get("/:userid/:cid/deletecenter", (req, res) => {
 
 // 요원 추가 변경
 app.get("/:userid/:agent_id/deleteagent", (req, res) => {
-  let agent_id = path.parse(req.params.cid).base;
+  let agent_id = path.parse(req.params.agent_id).base;
   db.query(`DELETE FROM agent WHERE agent_id = ${agent_id}`, () => {
     res.send(true);
   });
@@ -732,12 +732,12 @@ app.get("/:userid/:agent_id/deleteagent", (req, res) => {
 app.post("/:userid/:aid/modifyagent", (req, res) => {
   const aid = path.parse(req.params.aid).base;
   let post = JSON.parse(Object.keys(req.body)[0]);
-  let agent_id = agent_id;
-  let a_name = a_name;
-  let a_ph = a_ph;
-  let a_address = a_address;
-  let a_latitude = a_latitude;
-  let a_longitude = a_longitude;
+  let agent_id = post.agent_id;
+  let a_name = post.a_name;
+  let a_ph = post.a_ph;
+  let a_address = post.a_address;
+  let a_latitude = post.a_latitude;
+  let a_longitude = post.a_longitude;
   db.query(
     `UPDATE agent SET 
     agent_id    ='${agent_id}',

@@ -5,9 +5,9 @@ function CallAgentUpdate (props) {
 
     const states = JSON.parse(localStorage.getItem("data"));
 
-    const [u_name, setName] = useState(props.data.u_name);
-    const [u_pwd, setPwd] = useState(props.data.u_pwd);
-    const [u_ph, setPhone] = useState(props.data.u_ph);
+    const [u_name, setName] = useState(props.callagentInfo.u_name);
+    const [u_pwd, setPwd] = useState(props.callagentInfo.u_pwd);
+    const [u_ph, setPhone] = useState(props.callagentInfo.u_ph);
 
     const onChange = (e) => {
         if (e.target.name === 'u_name') {
@@ -43,8 +43,7 @@ function CallAgentUpdate (props) {
                 console.log(u_ph);
                 props.setUpdateCall(false);
             }
-        }
-        
+        }  
     }
 
     const cancel = (e) => {
