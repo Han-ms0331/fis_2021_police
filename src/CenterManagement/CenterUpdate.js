@@ -22,7 +22,7 @@ function CenterUpdate(props) {
   const [c_people, setPeople] = useState(states.c_people);
   const [c_hp_address, setHome] = useState(states.c_hp_address);
   const [c_latitude, setLatitude] = useState(states.c_latitude);
-  const [c_longtitude, setLongtitude] = useState(states.c_longtitude);
+  const [c_longitude, setLongtitude] = useState(states.c_longitude);
 
   const onChange = (e) => {
     if (e.target.name === "center_id") {
@@ -52,7 +52,7 @@ function CenterUpdate(props) {
       setHome(e.target.value);
     } else if (e.target.name === "c_latitude") {
       setLatitude(e.target.value);
-    } else if (e.target.name === "c_longtitude") {
+    } else if (e.target.name === "c_longitude") {
       setLongtitude(e.target.value);
     }
   };
@@ -74,7 +74,7 @@ function CenterUpdate(props) {
         c_people: c_people,
         c_hp_address: c_hp_address,
         c_latitude: c_latitude,
-        c_longtitude: c_longtitude,
+        c_longitude: c_longitude,
       })
     );
   };
@@ -257,9 +257,9 @@ function CenterUpdate(props) {
       <div>
         <span>경도: </span>
         <input
-          name="c_longtitude"
+          name="c_longitude"
           type="text"
-          placeholder={states.c_longtitude}
+          placeholder={states.c_longitude}
           // defaultValue={states.c_longtitude}
           onChange={onChange}
         />

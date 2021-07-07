@@ -76,39 +76,45 @@ function ReadingSche(props) {
             value="검색"
           />
         </div>
-        <div class="RSbox">
-          {ary.map((data) => {
-            if (data.length > 1) {
-              return (
-                <div class="RSbox_date">
-                  {data.map((data2, index) => {
-                    // console.log(index);
-                    // console.log(data2);
+        <div class="RSscroll">
+          <div class="RSbox">
+            {ary.map((data) => {
+              if (data.length > 1) {
+                return (
+                  <div class="RSbox_date">
+                    {data.map((data2, index) => {
+                      // console.log(index);
+                      // console.log(data2);
 
-                    return index === 0 ? (
-                      <div class="RSdate">{data2}</div>
-                    ) : (
-                      <div class="RSdate_sche">
-                        <div class="RSitem">{data2.aid}</div>
-                        <div class="RSitem">{data2.c_address}</div>
-                        <div class="RSitem">{data2.c_name}</div>
-                        <div class="RSitem">{data2.visit_time}</div>
-                        <div class="RSitem">{data2.estimate_num}명</div>
-                        <div class="RSitem">특이사항: {data2.etc}</div>
-                        <div class="RSitem">[기록자: {data2.u_name}]</div>
-                      </div>
-                    );
-                  })}
-                </div>
-              );
-            } else {
-              return (
-                <div class="RSbox_date">
-                  {<div class="RSdate">{data[0]}</div>}
-                </div>
-              );
-            }
-          })}
+                      return index === 0 ? (
+                        <div class="RSdate">{data2}</div>
+                      ) : (
+                        <div class="RSdate_sche">
+                          <div class="RSitem_aid">{data2.aid}</div>
+                          <div class="RSitem_c_address">
+                            [{data2.c_address}]
+                          </div>
+                          <div class="RSitem_c_name">{data2.c_name}</div>
+                          <div class="RSitem_visit_time">
+                            {data2.visit_time}
+                          </div>
+                          <div class="RSitem">{data2.estimate_num}명</div>
+                          <div class="RSitem_etc">특이사항: {data2.etc}</div>
+                          <div class="RSitem">[기록자: {data2.u_name}]</div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                );
+              } else {
+                return (
+                  <div class="RSbox_date">
+                    {<div class="RSdate">{data[0]}</div>}
+                  </div>
+                );
+              }
+            })}
+          </div>
         </div>
       </div>
     ) : (

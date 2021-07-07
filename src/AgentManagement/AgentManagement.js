@@ -28,8 +28,8 @@ function AgentManagement(props) {
     a_name: "",
     a_ph: "",
     a_address: "",
-    a_langtitude: "",
-    a_longtitude: "",
+    a_latitude: "",
+    a_longitude: "",
   });
 
   const [callagentInfo, setCallAgentInfo] = useState({
@@ -38,24 +38,11 @@ function AgentManagement(props) {
     u_ph: "",
   });
 
-  // const search = async (search) => {
-  //     console.log(search);
-  //     const result = await axios.get(
-  //         `http://192.168.0.117:3000/home/name/${uid}/${search}`
-  //     );
-  //     setResult_1ary(result);
-  //     console.log(result);
-  //     resettingRef.current = true;
-  //     setCheck(false);
-  // }
-
   const onChange = (e) => {
     if (e.target.name === "Agent") {
       setSearchRegion(e.target.value);
-      console.log(searchRegion);
     } else if (e.target.name === "callAgent") {
       setSearchAgent(e.target.value);
-      console.log(searchAgent);
     }
   };
 
@@ -66,42 +53,16 @@ function AgentManagement(props) {
     );
     console.log(_result);
     setResult_agent(_result);
-    console.log(_result);
     console.log(result_agent);
   };
   const getCallAgent = async () => {
     const result = await axios.get("http://192.168.0.117:3000/getusers");
     setResult_call(result);
-    // console.log(result_call);
+    console.log(result_call);
   };
 
   const callSearch = (e) => {
     getCallAgent();
-    //getAgent();
-    /*
-    if (select === "현장요원") {
-      setAddAgent(false);
-      setAddCall(false);
-      setUpdateAgent(false);
-      setUpdateCall(false);
-      setCallAgentList(false);
-      setAgentList(true);
-    } else if (select === "call 직원") {
-      setAddAgent(false);
-      setAddCall(false);
-      setUpdateAgent(false);
-      setUpdateCall(false);
-      setAgentList(false);
-      setCallAgentList(true);
-    } else if (select === "===선택===") {
-      setAddAgent(false);
-      setAddCall(false);
-      setUpdateAgent(false);
-      setUpdateCall(false);
-      setAgentList(false);
-      setCallAgentList(false);
-    }
-    */
     setAddAgent(false);
     setAddCall(false);
     setUpdateAgent(false);
@@ -111,7 +72,6 @@ function AgentManagement(props) {
   };
   const agentSearch = (e) => {
     getAgent();
-    console.log(searchRegion);
     setAddAgent(false);
     setAddCall(false);
     setUpdateAgent(false);
@@ -120,30 +80,6 @@ function AgentManagement(props) {
     setAgentList(true);
   };
   const AddCallAgent = (e) => {
-    /*
-    if (select === "현장요원") {
-      setAgentList(false);
-      setCallAgentList(false);
-      setUpdateCall(false);
-      setUpdateAgent(false);
-      setAddCall(false);
-      setAddAgent(true);
-    } else if (select === "call 직원") {
-      setAgentList(false);
-      setCallAgentList(false);
-      setUpdateAgent(false);
-      setUpdateCall(false);
-      setAddAgent(false);
-      setAddCall(true);
-    } else if (select === "===선택===") {
-      setAgentList(false);
-      setCallAgentList(false);
-      setUpdateCall(false);
-      setUpdateAgent(false);
-      setAddAgent(false);
-      setAddCall(false);
-    }
-    */
     setAgentList(false);
     setCallAgentList(false);
     setUpdateAgent(false);
@@ -179,52 +115,6 @@ function AgentManagement(props) {
   return isAdmin ? (
     props.isLogined ? (
       <div class="RSbar">
-        {/*
-        <div class='search'>
-          <select name="select" onChange={onChange}>
-            <option value="선택">===선택===</option>
-            <option value="현장요원">현장요원</option>
-            <option value="call 직원">call 직원</option>
-          </select>
-        </div>
-        <div class='search'>
-          <span>직원 : </span>
-          <input
-            name="Agent"
-            type="text"
-            placeholder="직원명"
-            onChange={onChange}
-          />
-        </div>
-        <div>
-          <span>지역: </span>
-          <input 
-            name="Region"
-            type="text"
-            placeholder="지역명"
-            onChange={onChange}
-          />
-        </div>   
-        <div>       
-        <input
-          class="RSsearchbtn"
-          name="search"
-          type="submit"
-          value="검색"
-          onClick={realSearch}
-        />
-        </div>
-        <div> 
-          <input
-            class="RSsearchbtn"
-            name="add"
-            type="submit"
-            value="추가"
-            onClick={AddAgent}
-          />
-        </div>
-        */}
-
         <div class="menu">
           <span>콜직원: </span>
           <button onClick={callSearch}>검색</button>
@@ -248,6 +138,7 @@ function AgentManagement(props) {
             searchAgent={searchAgent}
             agentInfo={agentInfo}
             setUpdateAgent={setUpdateAgent}
+            data={result_agent}
           />
           <CallAgentUpdate
             updateCall={updateCall}
@@ -281,7 +172,8 @@ function AgentManagement(props) {
                   setAgentInfo={setAgentInfo}
                   searchAgent={searchAgent}
                   data={result_agent}
-                  userid={localStorage.getItem("userName")}
+                  userName={localStorage.getItem("userName")}
+                  callSearch={callSearch}
                 />
               </li>
             ))}
