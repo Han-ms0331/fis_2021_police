@@ -10,12 +10,19 @@
 	margin-left: 10px;
 }
 .RSdate {
-	background-color: white;
+	background-color: rgb(238, 244, 255);
 	border: 2px solid cornflowerblue;
 	border-radius: 5px;
-	padding: 5px;
+	padding: 10px;
 	display: inline-block;
-	font-size: 25px;
+	font-size: 30px;
+	margin-left: 20px;
+	margin-right: 20px;
+	margin-top: 10px;
+	margin-bottom: 0;
+
+	position: sticky;
+	top: 100px;
 }
 .RSdate_sche {
 	margin: 20px;
@@ -82,4 +89,10 @@
 }
 .RSitem_etc {
 	padding: 10px;
+}
+.RSindex {
+	padding-left: 10px;
+	padding-bottom: 10px;
+	color: cornflowerblue;
+	font-weight: bold;
 }

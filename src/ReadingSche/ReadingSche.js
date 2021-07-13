@@ -85,11 +85,27 @@ function ReadingSche(props) {
 										{data.map((data2, index) => {
 											// console.log(index);
 											// console.log(data2);
-
+											let day;
+											const day_name = [
+												'일',
+												'월',
+												'화',
+												'수',
+												'목',
+												'금',
+												'토',
+											];
+											if (index === 0) {
+												const thisday = new Date(data2);
+												day = day_name[thisday.getDay()] + '요일';
+											}
 											return index === 0 ? (
-												<div class='RSdate'>{data2}</div>
+												<div class='RSdate'>
+													{data2} {day}
+												</div>
 											) : (
 												<div class='RSdate_sche'>
+													<div class='RSindex'>{index}</div>
 													<div class='RSitem_aid'>{data2.aid}</div>
 													<div class='RSitem_c_name'>{data2.c_name}</div>
 													<div class='RSitem_c_address'>
