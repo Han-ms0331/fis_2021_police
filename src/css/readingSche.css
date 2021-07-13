@@ -1,40 +1,40 @@
 .RSbar {
-  margin-top: 40px;
-  display: flex;
-  text-align: center;
-  justify-content: center;
-  align-items: center;
+	margin-top: 40px;
+	display: flex;
+	text-align: center;
+	justify-content: center;
+	align-items: center;
 }
 
 .RSsearchbtn {
-  margin-left: 10px;
+	margin-left: 10px;
 }
 .RSdate {
-  background-color: white;
-  border: 2px solid cornflowerblue;
-  border-radius: 5px;
-  padding: 5px;
-  display: inline-block;
-  font-size: 25px;
+	background-color: white;
+	border: 2px solid cornflowerblue;
+	border-radius: 5px;
+	padding: 5px;
+	display: inline-block;
+	font-size: 25px;
 }
 .RSdate_sche {
-  margin: 20px;
-  margin-top: 40px;
-  font-size: 25px;
-  padding: 25px;
-  border: 2px solid rgb(202, 202, 202);
-  border-radius: 5px;
+	margin: 20px;
+	margin-top: 40px;
+	font-size: 25px;
+	padding: 25px;
+	border: 2px solid rgb(202, 202, 202);
+	border-radius: 5px;
 }
 .RSbox {
-  display: flex;
-  white-space: nowrap;
-  /* overflow-x: scroll; */
-  /* position: sticky; */
-  margin-top: 100px;
-  margin-left: 2%;
-  margin-right: 2%;
-  margin-bottom: 2%;
-  padding-bottom: 10px;
+	display: flex;
+	white-space: nowrap;
+	/* overflow-x: scroll; */
+	/* position: sticky; */
+	margin-top: 100px;
+	margin-left: 2%;
+	margin-right: 2%;
+	margin-bottom: 2%;
+	padding-bottom: 10px;
 }
 
 /* .RSscroll {
@@ -45,37 +45,41 @@
 } */
 
 .RSbox_date {
-  background-color: white;
-  border: 2px solid cornflowerblue;
-  border-radius: 5px;
-  padding: 10px;
-  display: flex;
-  flex-direction: column;
-  display: inline-block;
+	background-color: white;
+	border: 2px solid cornflowerblue;
+	border-radius: 5px;
+	padding: 10px;
+	display: flex;
+	flex-direction: column;
+	display: inline-block;
 }
 .RSitem {
-  /* width: ; */
-  display: inline;
-  padding: 10px;
+	/* width: ; */
+	display: inline;
+	padding: 10px;
 }
 .RSitem_c_name {
-  display: inline;
-  padding: 10px;
-  font-weight: bold;
+	display: inline;
+	padding: 10px;
+	font-weight: bold;
 }
 .RSitem_visit_time {
-  display: inline;
-  padding: 10px;
-  color: orangered;
+	display: inline;
+	padding: 10px;
+	color: orangered;
 }
 .RSitem_c_address {
-  padding: 10px;
+	padding: 10px;
+}
+.RSitem_c_ph {
+	padding: 10px;
+	margin-bottom: 5px;
 }
 .RSitem_aid {
-  display: inline;
-  padding: 10px;
-  font-size: 30px;
+	display: block;
+	padding: 10px;
+	font-size: 30px;
 }
 .RSitem_etc {
-  padding: 10px;
+	padding: 10px;
 }
