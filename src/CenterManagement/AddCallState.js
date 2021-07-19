@@ -159,8 +159,8 @@ function AddCallState(props) {
           <option value="@hanmail.net">@hanmail.net</option>
           <option value="@gmail.com">@gmail.com</option>
           <option value="@nate.com">@nate.com</option>
-          <option value="@nate.com">@sen.go.kr</option>
-          <option value="@nate.com">@korea.kr</option>
+          <option value="@sen.go.kr">@sen.go.kr</option>
+         <option value="@korea.kr">@korea.kr</option>
           <option value="">직접입력</option>
         </select>
       </div>
