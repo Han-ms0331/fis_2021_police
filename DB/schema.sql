@@ -63,7 +63,7 @@ CREATE TABLE call_status(
     cid             BIGINT              NOT NULL                        comment 'center_id',
     uid             INT                 NOT NULL                        comment 'user_id',  
     date            varchar(100)        NOT NULL                        comment '입력날짜',
-    participation   varchar(100)        NOT NULL                        comment '참여여부(참여/거부/보류/기타)',
+    participation   varchar(100)        NOT NULL                        comment '참여여부(참여/거부/보류/확정)',
     in_out          varchar(100)        NOT NULL                        comment '접수방법',
     c_manager       varchar(100)        NOT NULL                        comment '시설 담당자 성명',
     m_ph            varchar(100)        NOT NULL                        comment '시설 담당자 전화번호',
