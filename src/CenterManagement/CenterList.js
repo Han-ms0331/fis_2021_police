@@ -91,7 +91,9 @@ function CenterList(props) {
               ? "center_info_num-reject"
               : record === "보류"
               ? "center_info_num-thinking"
-              : "center_info_num"
+              : record === "확정"
+              ? "center_info_num-comp" 
+              :"center_info_num"
           }
         >
           {record}
