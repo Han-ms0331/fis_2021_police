@@ -170,6 +170,7 @@ function UpdateCallState(props) {
 					<option value='참여'>참여</option>
 					<option value='거부'>거부</option>
 					<option value='보류'>보류</option>
+					<option value='확정'>확정</option>
 				</select>
 			</div>
 
