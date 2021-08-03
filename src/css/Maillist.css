@@ -1,0 +1,15 @@
+.maillist_data {
+	width: 90%;
+	text-align: start;
+	margin: 10px 0px;
+	padding: 10px 0px;
+}
+
+.maillist_container {
+	height: 800px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	overflow-y: scroll;
+	white-space: nowrap;
+}

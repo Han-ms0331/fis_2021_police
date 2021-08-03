@@ -1,0 +1,62 @@
+.date-header {
+  display: flex;
+  font-size: xx-large;
+}
+.agent-id {
+  font-size: x-large;
+  margin-left: 20px;
+}
+.agent_list {
+  list-style: none;
+}
+.time_list {
+  list-style: none;
+}
+/* .sche_list {
+    float: left;
+} */
+
+.agent-container {
+  border: 2px solid rgb(0, 0, 0, 0.3);
+  border-radius: 5px;
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+  padding: 5px;
+  margin: 10px;
+}
+
+.agent-schedule-list {
+  list-style: none;
+  white-space: nowrap;
+  overflow: auto;
+}
+.agent-schedule-item {
+  /* float: left; */
+  background-color: #fffafa;
+  border: 2px solid rgb(0, 0, 0, 0.3);
+  border-radius: 5px;
+  margin: 10px;
+  width: 700px;
+  display: inline-block;
+}
+.sche_list {
+  background-color: #e6e6fa;
+  border: 2px solid rgb(0, 0, 0, 0.3);
+  border-radius: 5px;
+  width: 400px;
+  height: 130px;
+}
+
+.sche_list_update {
+  background-color: #b0e0e6;
+  border: 2px solid rgb(0, 0, 0, 0.3);
+  border-radius: 5px;
+  width: 400px;
+  height: 130px;
+}
+
+.time_sche {
+  font-size: large;
+}

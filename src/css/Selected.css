@@ -1,0 +1,81 @@
+.select_container {
+  display: flex;
+  align-items: center;
+  margin-left: 50px;
+  border-radius: 5px;
+  background-color: white;
+  border: 2px solid cornflowerblue;
+  padding: 5px;
+  margin: 5px;
+}
+.select_schedule {
+  display: flex;
+}
+.select_schedule_info_container {
+  border-radius: 5px;
+  background-color: white;
+  border: 2px solid cornflowerblue;
+  padding: 10px;
+  margin: 5px;
+}
+.select_schedule_btn {
+  display: inline;
+  float: right;
+  margin-right: 10px;
+}
+
+.select_agent {
+  font-size: 20px;
+  display: flex;
+  height: 200px;
+  width: 80px;
+  text-align: center;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.update_input {
+  border-radius: 5px;
+  background-color: lightgray;
+  padding: 5px;
+  margin: 10px 0px;
+}
+
+.select_schedule_info_etc {
+  white-space: pre-line;
+}
+.select_schedule_info_c_name {
+  font-size: 25px;
+  font-weight: bold;
+}
+
+#add_btn {
+  margin-left: 50px;
+  margin-right: 50px;
+  font-size: xx-large;
+  font-weight: lighter;
+  background-color: white;
+  width: 50px;
+  height: 50px;
+  border-radius: 25px;
+  border: 1px solid cornflowerblue;
+  color: cornflowerblue;
+
+  text-align: center;
+  text-decoration: none;
+}
+
+#add_btn:hover {
+  color: white;
+  background-color: rgb(173, 199, 247);
+}
+#back_btn {
+  margin: 5px;
+  margin-top: 20px;
+  width: 100px;
+  height: 50px;
+  color: white;
+  background-color: rgb(173, 199, 247);
+  border-radius: 5px;
+  border: 1px solid cornflowerblue;
+}
