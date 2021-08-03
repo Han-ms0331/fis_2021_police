@@ -14,16 +14,9 @@ const FileStore = require("session-file-store")(session);
 const cors = require("cors");
 const dbfunc = require("./dbfunc");
 const sche = require("./sche");
-<<<<<<< HEAD
+const mail = require("./mail");
 const { element } = require("prop-types");
-const mail = require("./mail");
 
-const { count } = require("console");
-const { AsyncLocalStorage } = require("async_hooks");
-=======
-const mail = require("./mail");
-
->>>>>>> 0a881907276a6c708f97a8edde8527a2390624b5
 db.connect();
 const whitelist = ["*"];
 var corsOptions = {
@@ -201,6 +194,71 @@ app.get("/home/address/:userid/:target", (req, res) => {
     }
   }
 });
+
+/* 20210803 user이름으로 검색 */
+
+app.get("/home/recorder/:userid/:target", (req, res) => {
+  // 어린이집 이름에 대한 정보만 제공
+
+  if (true) {
+    let target = path.parse(req.params.target).base;
+    let result = {};
+    if (target) {
+      //target 이름의 어린이집 출력
+      console.log(target);
+      db.query(
+        `SELECT user_id FROM user WHERE u_name like '%${target}%'`,
+
+        async function (error, results) {
+          if (error) {
+            console.log(error);
+          }
+          console.log(results);
+          console.log(results[0].user_id);
+          let user = results[0].user_id;
+          result = await dbfunc.get_data(
+            `SELECT * FROM center C INNER JOIN call_status S ON C.center_id = S.cid WHERE S.uid = '${user}' order by S.date desc limit 500`,
+            async function (e, results) {
+              if (e) {
+                console.log(e);
+              }
+              for (let element of results) {
+                element.call_exists = element.participation;
+              }
+            }
+          );
+
+          // //보낼 부분
+          // let center_info_list = []; // target이 포함된 어린이 집 목록들
+          // for (let element of results) {
+          //   //element는 results의 배열단위
+          //   let call_exists = 0;
+          //   let op = await dbfunc.get_data(
+          //     `SELECT * FROM call_status WHERE cid = ${element.center_id}`
+
+          //   );
+          //   if (op.length !== 0) {
+          //     call_exists = op[op.length - 1].participation;
+          //   }
+          //   let center_info = {};
+          //   center_info.call_exists = call_exists;
+          //   center_info.center_id = element.center_id;
+          //   center_info.c_sido = element.c_sido;
+          //   center_info.c_sigungu = element.c_sigungu;
+          //   center_info.c_name = element.c_name;
+          //   center_info.c_address = element.c_address;
+          //   center_info.c_ph = element.c_ph;
+          //   center_info_list.push(center_info);
+          // }
+          res.send(result);
+        }
+      );
+    }
+  }
+});
+
+/* 20210803 user이름으로 검색 */
+
 //어린이집 정보 제공
 // async 와 await 과 promise로 간단히 만들어 보기
 // data db에서 가져오기
@@ -816,8 +874,6 @@ app.get("/readingmail/read", async (req, res) => {
   res.send(test);
 });
 
-<<<<<<< HEAD
-=======
 // app.get("*", async (req, res)=>{
 //   console.log(req);
 //   res.set({
@@ -827,8 +883,6 @@ app.get("/readingmail/read", async (req, res) => {
 // }
 // );
 
-
->>>>>>> 0a881907276a6c708f97a8edde8527a2390624b5
 app.listen(3000, function () {
   console.log("Example app listening on port 3000!");
 });
