@@ -14,16 +14,8 @@ const FileStore = require("session-file-store")(session);
 const cors = require("cors");
 const dbfunc = require("./dbfunc");
 const sche = require("./sche");
-<<<<<<< HEAD
-const { element } = require("prop-types");
 const mail = require("./mail");
 
-const { count } = require("console");
-const { AsyncLocalStorage } = require("async_hooks");
-=======
-const mail = require("./mail");
-
->>>>>>> 0a881907276a6c708f97a8edde8527a2390624b5
 db.connect();
 const whitelist = ["*"];
 var corsOptions = {
@@ -816,8 +808,6 @@ app.get("/readingmail/read", async (req, res) => {
   res.send(test);
 });
 
-<<<<<<< HEAD
-=======
 // app.get("*", async (req, res)=>{
 //   console.log(req);
 //   res.set({
@@ -828,7 +818,6 @@ app.get("/readingmail/read", async (req, res) => {
 // );
 
 
->>>>>>> 0a881907276a6c708f97a8edde8527a2390624b5
 app.listen(3000, function () {
   console.log("Example app listening on port 3000!");
 });
