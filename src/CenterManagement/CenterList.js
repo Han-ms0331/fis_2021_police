@@ -13,6 +13,9 @@ function CenterList(props) {
   if (props.data.call_exists !== 0) {
     record = props.data.call_exists;
   }
+  if (props.data.participation !== 0) {
+    record = props.data.participation;
+  }
   console.log(check);
   console.log(props.check);
   //	console.log(props.data);
@@ -65,8 +68,8 @@ function CenterList(props) {
               : record === "보류"
               ? "center_info_num-thinking"
               : record === "확정"
-              ? "center_info_num-comp" 
-              :"center_info_num"
+              ? "center_info_num-comp"
+              : "center_info_num"
           }
         >
           {record}
@@ -94,8 +97,8 @@ function CenterList(props) {
               : record === "보류"
               ? "center_info_num-thinking"
               : record === "확정"
-              ? "center_info_num-comp" 
-              :"center_info_num"
+              ? "center_info_num-comp"
+              : "center_info_num"
           }
         >
           {record}
