@@ -883,10 +883,6 @@ app.get("/readingmail/read", async (req, res) => {
 // }
 // );
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 60136ae5fc881325869bd012f87b2467f4af7dfc
 app.listen(3000, function () {
   console.log("Example app listening on port 3000!");
 });
