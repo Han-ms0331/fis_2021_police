@@ -15,10 +15,7 @@ const cors = require("cors");
 const dbfunc = require("./dbfunc");
 const sche = require("./sche");
 const mail = require("./mail");
-<<<<<<< HEAD
-=======
 const { element } = require("prop-types");
->>>>>>> 60136ae5fc881325869bd012f87b2467f4af7dfc
 
 db.connect();
 const whitelist = ["*"];
