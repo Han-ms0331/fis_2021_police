@@ -42,7 +42,7 @@ let danger_list = [
 
 let danger_list2 = ["경기도 평택", "경기도 화성", "경기도 안성"];
 
-let except_list_p = ["안중읍", "청북읍", "진위면"];
+let except_list_p = ["안중읍", "포승읍", "팽성읍", "현덕면"];
 
 let except_list_a = ["공도읍"];
 
